@@ -1,0 +1,50 @@
+
+
+/*
+For the title bar logging span
+ */
+.recording{
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% {
+        color: inherit;
+    }
+    50% {
+        color: rgb(255, 0, 0);
+    }
+    100% {
+        color: inherit;
+    }
+}
+
+
+
+
+
+
+
+
+/*
+For the disabled channels
+ */
+
+.disabled{
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.board-gauge-disabled{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.inline-gauge-disabled{
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.hidden{
+    visibility: hidden;
+}

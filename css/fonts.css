@@ -1,0 +1,116 @@
+@font-face {
+    font-family: Pervitina;
+    src: url(../Pervitina-Dex.ttf);
+}
+
+
+html{
+    font-family: Pervitina, serif;
+}
+
+
+
+fault{
+    color:red;
+}
+warning{
+    color:orange;
+}
+#fault-state{
+    color:green;
+}
+
+
+/*
+h6 is h4 but bigger for State Window
+ */
+
+h6{
+    font-size: 2.8vw;
+    font-weight: normal;
+
+
+    margin-top: 1.2vw;
+    margin-bottom: 1.2vw;
+}
+
+h5{
+    font-size: 1.1vw;
+    font-weight: normal;
+}
+
+/*
+h4 is normally used as a descriptor for h3
+ */
+h4{
+    font-size: 2vw;
+    font-weight: normal;
+
+
+    margin-top: 1.4vw;
+    margin-bottom: 1.4vw;
+}
+/*
+h3 is a small info text
+ */
+h3{
+    font-size: 2.5vw;
+    font-weight: normal;
+
+    line-height: 0.2vw;
+    margin-top: 1vw;
+    margin-bottom: 3vw;
+}
+h2{
+    font-size: 5vw;
+    font-weight: normal;
+
+    margin-top: 0;
+    margin-bottom: 0;
+}
+h1{
+    font-size: 7vw;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+
+
+
+
+
+/*
+Special cases
+ */
+
+h4.h1-label {
+    margin-top: 1vw;
+    margin-bottom: 0.5vw;
+}
+
+div.channel-control-button h3 {
+    margin: 1.5vw;
+}
+
+
+#ontime {
+    font-size: 2vw;
+}
+
+#sessionEconomyValue {
+    font-size: 1.5vw;
+}
+
+#sessionRangeValue {
+    font-size: 1.5vw;
+}
+
+#userGPO {
+    margin-top: 0;
+}
+
+#userGPODescriptor {
+    margin-bottom: 1.4vw;
+}

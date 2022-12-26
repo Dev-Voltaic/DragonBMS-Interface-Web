@@ -1,0 +1,48 @@
+#tilebar{
+    background-color: white;
+}
+
+.dropdown-content {
+    background-color: #d2d2d2;
+}
+
+
+
+body{
+    background-color: white;
+    color: black;
+}
+
+.gauge-div{
+    border: 4px solid darkgrey;
+}
+
+.gauge-div-border{
+    border-radius: 1em;
+    border: 4px solid darkgrey;
+}
+
+.channel-control-button{
+    border: 2px solid darkgrey;
+}
+
+
+/*
+for all td elements inside a table with class table-4channels
+ */
+table.table-4fields td {
+    border-right: dotted 2px #7b7b7b;
+}
+
+
+
+
+#nothingConnectedOverlay{
+    background-color:rgba(255, 255, 255, 0.8);
+    text-shadow: 2px 2px #00c1dc;
+}
+
+#connectLastInlineButton{
+    text-shadow: 1px 1px #00c1dc;
+}
+

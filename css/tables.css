@@ -1,0 +1,143 @@
+
+
+
+
+
+/*
+     FOR THE MAIN TABLE
+ */
+
+#main-table {
+    display: grid;
+    grid-auto-flow: column;
+    border-collapse: collapse;
+    width: 100%;
+    padding: 0;
+
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+}
+
+/*
+all main table tds
+ */
+td.main-table-td-2row {
+    width: 50vw;
+    height: 50vw;
+
+
+    text-align: left;
+    -webkit-box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+    border: dotted 1px #7b7b7b;
+}
+td.main-table-td-4row {
+    width: 25vw;
+    height: 25vw;
+
+
+    text-align: left;
+    -webkit-box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+    border: dotted 1px #7b7b7b;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+    TABLE FOR 4 FIELDS
+
+ */
+
+.table-4fields {
+    width: 100%;
+    height: 20%;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/*
+for all td elements inside a table with class table-4channels
+ */
+table.table-4fields td {
+    -webkit-box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    width: 25%;
+
+    text-align: center;
+
+
+    border-right: dotted 2px #7b7b7b;
+}
+/*
+no right border for all the rightmost tds in a table-4fields
+ */
+table.table-4fields td:last-of-type {
+    border-right: none;
+}
+/*
+size adjustment for buttons inside the fields
+ */
+table.table-4fields button{
+    font-weight: normal;
+    font-size: 1vw;
+    padding: 0.2vw;
+}
+/*
+both vertically and horizontally centering the table cell contents
+ */
+table.table-4fields td>div{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height:100%;
+}
+
+
+
+
+
+
+
+
+/*
+
+    TABLE FOR 3 Channel controls
+
+ */
+
+table.table-3-channel-controls {
+    width: 100%;
+    height: 100%;
+}
+
+table.table-3-channel-controls td {
+    padding: 0;
+    margin: 0;
+    width: 33%;
+    border-right: dotted 2px #7b7b7b;
+
+    text-align: center;
+}
+/*
+no right border for all the rightmost tds in a table-4fields
+ */
+table.table-3-channel-controls td:last-of-type{
+    border-right: none;
+}
