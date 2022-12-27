@@ -25,7 +25,6 @@ let elementsDiv = document.getElementById("elementsDiv");
 
 let connectLastDeviceButton = document.getElementById('autoconnectBMS');
 let connectLastInlineButton = document.getElementById('autoconnectInline');
-let chooseDeviceButton = document.getElementById('chooseDevice');
 
 let connectLastInlineOverlay = document.getElementById("connectLastInlineButton");
 

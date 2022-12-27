@@ -2,7 +2,7 @@ function resetAutoconnectBMS(){
     autoConnectBMSError();
 
     setTimeout(()=>{
-        autoconnectBMSText.innerHTML = "Autoconnect</br>BMS";
+        autoconnectBMSText.innerHTML = "Connect</br>BMS";
         autoconnectBMSText.style.color = "";
     }, 1000);
 }
@@ -30,7 +30,7 @@ function resetAutoconnectBMSSilent() {
     setTimeout(() => {
         autoconnectingBMSText.style.visibility = "";
         autoconnectingBMSText.style.position = "";
-        autoconnectBMSText.innerHTML = "Autoconnect</br>BMS";
+        autoconnectBMSText.innerHTML = "Connect</br>BMS";
         autoconnectBMSText.style.color = "";
     }, 1000);
 }
@@ -38,7 +38,7 @@ function resetAutoconnectBMSSilent() {
 function resetAutoconnectBMSSilentInstant() {
     autoconnectingBMSText.style.visibility = "";
     autoconnectingBMSText.style.position = "";
-    autoconnectBMSText.innerHTML = "Autoconnect</br>BMS";
+    autoconnectBMSText.innerHTML = "Connect</br>BMS";
     autoconnectBMSText.style.color = "";
 }
 
@@ -47,7 +47,7 @@ function resetAutoconnectTacho() {
     autoconnectTachoError();
 
     setTimeout(() => {
-        autoconnectTachoText.innerHTML = "Autoconnect</br>Tacho";
+        autoconnectTachoText.innerHTML = "Connect</br>Tacho";
         autoconnectTachoText.style.color = "";
     }, 1000);
 }
@@ -56,7 +56,7 @@ function resetAutoconnectTachoSilent() {
     setTimeout(() => {
         autoconnectingBMSText.style.visibility = "";
         autoconnectingBMSText.style.position = "";
-        autoconnectTachoText.innerHTML = "Autoconnect</br>Tacho";
+        autoconnectTachoText.innerHTML = "Connect</br>Tacho";
         autoconnectTachoText.style.color = "";
     }, 1000);
 }
@@ -65,7 +65,7 @@ function resetAutoconnectTachoSilentInstant() {
 
     autoconnectingTachoText.style.visibility = "";
     autoconnectingTachoText.style.position = "";
-    autoconnectTachoText.innerHTML = "Autoconnect</br>Tacho";
+    autoconnectTachoText.innerHTML = "Connect</br>Tacho";
     autoconnectTachoText.style.color = "";
 }
 
@@ -119,9 +119,8 @@ function nothingConnectedOverlayTimeout() {
 
 
 connectLastInlineOverlay.addEventListener("click", () => {
-    contextBridge.send("open-ble-selection-window");
     connectTacho();
-    connectLastInlineOverlay.innerHTML = "<h2>Autoconnecting..</h2>";
+    connectLastInlineOverlay.innerHTML = "<h2>Connecting..</h2>";
 });
 
 

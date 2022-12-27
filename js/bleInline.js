@@ -32,6 +32,8 @@ function connectTacho() {
         searchingForTacho = false;
         setAutoconnectTachoText("Found Device");
         startInlineNotifications(device);
+
+        connectLastInlineOverlay.innerHTML = "<h2>Connect Tacho</h2>";
     }).catch(error => {
         console.log('User most likely cancelled! ' + error);
 

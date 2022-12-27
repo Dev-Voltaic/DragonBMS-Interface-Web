@@ -624,15 +624,7 @@ function toggleDarkmode(){
 function adjustDarkmode(mode){
     if(!mode){
         document.getElementsByTagName("link")[1].href = "css/index-light.css";
-        contextBridge.send("set-darkmode4", "light");
-        contextBridge.send("set-darkmode3", "light");
-        contextBridge.send("set-darkmode2", "light");
-        contextBridge.send("set-darkmode1", "light");
     }else{
         document.getElementsByTagName("link")[1].href = "css/index-dark.css";
-        contextBridge.send("set-darkmode4", "dark");
-        contextBridge.send("set-darkmode3", "dark");
-        contextBridge.send("set-darkmode2", "dark");
-        contextBridge.send("set-darkmode1", "dark");
     }
 }

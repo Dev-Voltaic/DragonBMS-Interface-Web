@@ -1,7 +1,11 @@
 
 // BLUETOOTH
-document.getElementById("tileBarChooseDevice").addEventListener("click", ()=>{
-    chooseDevice();
+document.getElementById("tileBarConnectBMS").addEventListener("click", ()=>{
+    connectBMS();
+});
+
+document.getElementById("tileBarConnectTacho").addEventListener("click", ()=>{
+    connectTacho();
 });
 
 document.getElementById("tileBarDisconnect").addEventListener("click", ()=>{
@@ -81,20 +85,6 @@ document.getElementById("tileBarStopDatalogging").addEventListener("click", ()=>
 document.getElementById("tileBarAbout").addEventListener("click", ()=>{
 });
 
-
-
-
-// DEV
-
-let devPasswordEntered = false;
-
-document.getElementById("tileBarDev").addEventListener("click", ()=>{
-    if(!devPasswordEntered){
-        return;
-    }
-
-    toggleDevField();
-});
 
 
 

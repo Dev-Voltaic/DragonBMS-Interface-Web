@@ -41,7 +41,7 @@ settingsSwipeContainer.addEventListener("touchmove", (event) => {
     const swipeDistance = settingsSwipeContainer.scrollTop;
 
     console.log(swipeDistance);
-    if (swipeDistance >= minDistance) {
+    if (swipeDistance >= (minDistance * 0.9)) {
         //console.log("swiped up");
         settingsEnabled = true;
     }

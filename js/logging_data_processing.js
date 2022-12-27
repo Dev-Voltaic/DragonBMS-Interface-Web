@@ -407,7 +407,8 @@ function processData(event) {
 
     setChannelInfo(averagedArray(averagingBufferV, 1).concat(averagedArray(averagingBufferA, 2)));
 
-    contextBridge.send("calib-averaged-data", averagingBuffer);
+    // to be implemented within the site
+    //contextBridge.send("calib-averaged-data", averagingBuffer);
 
     if (dataLoggingEnabled) {
 

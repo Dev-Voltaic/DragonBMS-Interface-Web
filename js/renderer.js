@@ -1,5 +1,3 @@
-let selectionDeviceTypes;
-
 // needed for queuing
 let searchingForBMS = false;
 let searchingForTacho = false;
@@ -25,9 +23,9 @@ connectLastDeviceButton.addEventListener('click', async () => {
     }
 
     document.getElementById("inline-gauge").classList.add("inline-gauge-disabled");
-    connectBMS(true);
+    connectBMS();
 
-    bleBMSTimeout = false;
+    let bleBMSTimeout = false;
 
     // timeout
     setTimeout(() => {
@@ -49,7 +47,7 @@ connectLastInlineButton.addEventListener('click', async () => {
     connectTacho();
 
 
-    bleInlineTimeout = false;
+    let bleInlineTimeout = false;
 
     // timeout
     setTimeout(() => {
@@ -58,53 +56,6 @@ connectLastInlineButton.addEventListener('click', async () => {
     }, 5000);
 });
 
-chooseDeviceButton.addEventListener('click', ()=>{
-    chooseDevice();
-});
-
-
-function chooseDevice(){
-    // open a window even before ble sees any devices
-
-    // actually request device - handler in app.js
-    navigator.bluetooth.requestDevice({
-        acceptAllDevices: true,
-        optionalServices: [
-            // services for bms
-            bmsDataLoggingServiceUuid,
-            developmentServiceUuid,
-            bmsConfigServiceUuid,
-            alertwarningServiceUuid,
-            runtimeControlServiceUuid,
-            'device_information',
-
-            // services for tacho
-            inlineConfigServiceUuid,
-            inlineDataLoggingServiceUuid
-        ]
-    }).then(device => {
-        //console.log(selectionDeviceTypes);
-        //console.log(device);
-        selectionDeviceTypes.forEach((selectionDeviceType) => {
-            // yeah this is shit but the deviceUUID is only shown in the advertising data and can therefore not really be used here
-            if(selectionDeviceType.deviceName === device.name){
-                console.log("selected device is of type: " + selectionDeviceType.type);
-                if(selectionDeviceType.type === "bms"){
-                    startBMSNotifications(device);
-                }
-                if(selectionDeviceType.type === "tacho"){
-                    startInlineNotifications(device);
-                }
-            }
-        });
-    }).catch(error => {
-        console.log("Error finding a device: " + error);
-
-        resetChooseDeviceSilent();
-    });
-
-    // no need for timeout :P
-}
 
 
 

@@ -56,7 +56,7 @@ var averagedArray = (array, averaging) => {
     return averageArray;
 }
 
-function connectBMS(autoconnect){
+function connectBMS(){
     setAutoconnectBMSText("Searching");
 
     navigator.bluetooth.requestDevice({
