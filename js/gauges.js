@@ -341,8 +341,7 @@ function setSpeedGaugeValues(values){
 }
 
 function setTachoGauges(values){
-    tripOdometerValue.innerHTML = (values.tripOdo / 1000000).toFixed() + "km";
-    tripOdometerValue.title = (values.tripOdo / 1000).toFixed(2) + "m";
+    tripOdometerValue.innerHTML = (values.tripOdo / 100000).toFixed(2) + "km";
 
     vehicleOdometerValue.innerHTML = (Math.floor((values.vehicleOdo / 10)) / 10).toFixed(1) + "km";
 

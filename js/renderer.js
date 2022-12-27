@@ -23,6 +23,8 @@ connectLastDeviceButton.addEventListener('click', async () => {
     }
 
     document.getElementById("inline-gauge").classList.add("inline-gauge-disabled");
+
+    disconnect();
     connectBMS();
 
     let bleBMSTimeout = false;
@@ -43,6 +45,8 @@ connectLastInlineButton.addEventListener('click', async () => {
         setAucotonnectTachoTextNoAutoconnect("Queued");
         await until(_ => searchingForBMS === false);
     }
+
+    disconnectInline();
 
     connectTacho();
 

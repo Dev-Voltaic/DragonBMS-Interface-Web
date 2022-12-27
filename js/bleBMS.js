@@ -182,7 +182,7 @@ async function startBMSNotifications(device) {
                         configBuffer = getBMSConfigFromBuffer(configValues);
                         updateConfigRelatedGauges(configBuffer);
                     }).catch(error => {
-                        console.log('Argh! ' + error);
+                        console.log(error);
                     });
                 });
                 service.getCharacteristic(calibCharacteristicUuid).then((characteristic) => {
@@ -210,7 +210,7 @@ async function startBMSNotifications(device) {
         })
         .then(characteristics => {
             bmsDataLoggingCharacteristic = characteristics;
-            setAutoconnectBMSText("Enabling Dataloggging");
+            setAutoconnectBMSText("Enabling Datalogging");
             return bmsDataLoggingCharacteristic.startNotifications();
         })
         .then(_ => {
@@ -231,7 +231,7 @@ async function startBMSNotifications(device) {
             bmsDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', processData);
         })
         .catch(error => {
-            console.log('Argh! ' + error);
+            console.log(error);
 
             resetAutoconnectBMS();
         });
