@@ -122,119 +122,126 @@ async function startBMSNotifications(device) {
         }
 
         console.log("Disconnected");
+
+        device.gatt.connect()
+            .then(server => {
+                bmsDeviceConnected(server)
+            });
     });
 
     setAutoconnectBMSText("Connecting Device");
     device.gatt.connect()
         .then(server => {
-            server.connect().then(() => {
-                console.log("server connected");
-            });
-            //setConnectionStatus('Getting Services...');
-            setAutoconnectBMSText("Getting Services");
+            bmsDeviceConnected(server)
+        });
 
-            // Device information service
-            server.getPrimaryService('device_information').then((service) => {
-                let decoder = new TextDecoder('utf-8');
-                // hardware revision string
-                service.getCharacteristic(BluetoothUUID.getCharacteristic('hardware_revision_string')).then((characteristic) => {
-                    characteristic.readValue().then(value => {
-                        bleBMSDeviceHardwareRevision = decoder.decode(value);
-                    });
-                });
-                // firmware revision string
-                service.getCharacteristic(BluetoothUUID.getCharacteristic('firmware_revision_string')).then((characteristic) => {
-                    characteristic.readValue().then(value => {
-                        bleBMSDeviceFirmwareRevision = decoder.decode(value);
-                    });
-                });
-            });
+}
 
-            server.getPrimaryService(developmentServiceUuid).then((service) => {
-                service.getCharacteristic(prechargeControlCharacteristicUuid).then((characteristic) => {
-                    prechargeControlCharacteristic = characteristic;
-                });
-                service.getCharacteristic(channelControlCharacteristicUuid).then((characteristic) => {
-                    channelControlCharacteristic = characteristic;
-                });
-                service.getCharacteristic(uptimeCharacteristicUuid).then((characteristic) => {
-                    uptimeCharacteristic = characteristic;
-                });
-            });
+async function bmsDeviceConnected(server) {
+    server.connect().then(() => {
+        console.log("server connected");
+    });
+    //setConnectionStatus('Getting Services...');
+    setAutoconnectBMSText("Getting Services");
 
-            server.getPrimaryService(runtimeControlServiceUuid).then((service)=> {
-                service.getCharacteristic(shutdownControlCharacteristicUuid).then((characteristic) => {
-                    shutdownControlCharacteristic = characteristic;
-                });
-                service.getCharacteristic(turnOnCharacteristicUuid).then((characteristic) => {
-                    turnOnCharacteristic = characteristic;
-                });
-                service.getCharacteristic(userGPOCharacteristicUuid).then((characteristic) => {
-                    userGPOCharacteristic = characteristic;
-                });
+    // Device information service
+    server.getPrimaryService('device_information').then((service) => {
+        let decoder = new TextDecoder('utf-8');
+        // hardware revision string
+        service.getCharacteristic(BluetoothUUID.getCharacteristic('hardware_revision_string')).then((characteristic) => {
+            characteristic.readValue().then(value => {
+                bleBMSDeviceHardwareRevision = decoder.decode(value);
             });
-
-            server.getPrimaryService(bmsConfigServiceUuid).then((service)=>{
-                service.getCharacteristic(bmsConfigCharacteristicUuid).then((characteristic) => {
-                    bmsConfigCharacteristic = characteristic;
-                    // automatically read config characteristic to update the gauges
-                    bmsConfigCharacteristic.readValue().then(configValues => {
-                        configBuffer = getBMSConfigFromBuffer(configValues);
-                        updateConfigRelatedGauges(configBuffer);
-                    }).catch(error => {
-                        console.log(error);
-                    });
-                });
-                service.getCharacteristic(calibCharacteristicUuid).then((characteristic) => {
-                    calibCharacteristic = characteristic;
-                });
+        });
+        // firmware revision string
+        service.getCharacteristic(BluetoothUUID.getCharacteristic('firmware_revision_string')).then((characteristic) => {
+            characteristic.readValue().then(value => {
+                bleBMSDeviceFirmwareRevision = decoder.decode(value);
             });
+        });
+    });
 
-            server.getPrimaryService(alertwarningServiceUuid).then((service)=>{
-                service.getCharacteristic(warningCharacteristicUuid).then((characteristic) => {
-                    warningCharacteristic = characteristic;
-                    characteristic.startNotifications();
-                    characteristic.addEventListener('characteristicvaluechanged', handleWarningIndication);
-                });
-                service.getCharacteristic(alertCharacteristicUuid).then((characteristic) => {
-                    alertCharacteristic = characteristic;
-                    characteristic.startNotifications();
-                    characteristic.addEventListener('characteristicvaluechanged', handleAlertIndication);
-                });
+    server.getPrimaryService(developmentServiceUuid).then((service) => {
+        service.getCharacteristic(prechargeControlCharacteristicUuid).then((characteristic) => {
+            prechargeControlCharacteristic = characteristic;
+        });
+        service.getCharacteristic(channelControlCharacteristicUuid).then((characteristic) => {
+            channelControlCharacteristic = characteristic;
+        });
+        service.getCharacteristic(uptimeCharacteristicUuid).then((characteristic) => {
+            uptimeCharacteristic = characteristic;
+        });
+    });
+
+    server.getPrimaryService(runtimeControlServiceUuid).then((service) => {
+        service.getCharacteristic(shutdownControlCharacteristicUuid).then((characteristic) => {
+            shutdownControlCharacteristic = characteristic;
+        });
+        service.getCharacteristic(turnOnCharacteristicUuid).then((characteristic) => {
+            turnOnCharacteristic = characteristic;
+        });
+        service.getCharacteristic(userGPOCharacteristicUuid).then((characteristic) => {
+            userGPOCharacteristic = characteristic;
+        });
+    });
+
+    server.getPrimaryService(bmsConfigServiceUuid).then((service) => {
+        service.getCharacteristic(bmsConfigCharacteristicUuid).then((characteristic) => {
+            bmsConfigCharacteristic = characteristic;
+            // automatically read config characteristic to update the gauges
+            bmsConfigCharacteristic.readValue().then(configValues => {
+                configBuffer = getBMSConfigFromBuffer(configValues);
+                updateConfigRelatedGauges(configBuffer);
+            }).catch(error => {
+                console.log(error);
             });
+        });
+        service.getCharacteristic(calibCharacteristicUuid).then((characteristic) => {
+            calibCharacteristic = characteristic;
+        });
+    });
 
-            return server.getPrimaryService(bmsDataLoggingServiceUuid);
-        })
-        .then((dataLog) => {
-            return dataLog.getCharacteristic(bmsDataLoggingCharacteristicUuid);
-        })
-        .then(characteristics => {
+    server.getPrimaryService(alertwarningServiceUuid).then((service) => {
+        service.getCharacteristic(warningCharacteristicUuid).then((characteristic) => {
+            warningCharacteristic = characteristic;
+            characteristic.startNotifications();
+            characteristic.addEventListener('characteristicvaluechanged', handleWarningIndication);
+        });
+        service.getCharacteristic(alertCharacteristicUuid).then((characteristic) => {
+            alertCharacteristic = characteristic;
+            characteristic.startNotifications();
+            characteristic.addEventListener('characteristicvaluechanged', handleAlertIndication);
+        });
+    });
+
+    server.getPrimaryService(bmsDataLoggingServiceUuid).then((dataLog) => {
+        dataLog.getCharacteristic(bmsDataLoggingCharacteristicUuid).then(characteristics => {
             bmsDataLoggingCharacteristic = characteristics;
             setAutoconnectBMSText("Enabling Datalogging");
-            return bmsDataLoggingCharacteristic.startNotifications();
-        })
-        .then(_ => {
-            setAutoconnectBMSText("Successfully connected!");
+            bmsDataLoggingCharacteristic.startNotifications().then(_ => {
+                setAutoconnectBMSText("Successfully connected!");
 
-            bleBMSConnected = true;
+                bleBMSConnected = true;
 
 
-            setTimeout(() => {
-                enableBoardGauges();
-                disableNothingConnectedOverlay();
-            }, 1000);
+                setTimeout(() => {
+                    enableBoardGauges();
+                    disableNothingConnectedOverlay();
+                }, 1000);
 
-            if (bleInlineConnected) {
-                zoom.to({element: inlineGaugeTd, padding: 0, pan: false});
-            }
+                if (bleInlineConnected) {
+                    zoom.to({element: inlineGaugeTd, padding: 0, pan: false});
+                }
 
-            bmsDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', processData);
-        })
-        .catch(error => {
-            console.log(error);
+                bmsDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', processData);
+            })
+                .catch(error => {
+                    console.log(error);
 
-            resetAutoconnectBMS();
+                    resetAutoconnectBMS();
+                });
         });
+    });
 }
 
 function disconnect() {

@@ -79,65 +79,71 @@ async function startInlineNotifications(device) {
 
             resetInlineValues();
         }
+
+        device.gatt.connect().then(server => {
+            inlineDeviceConnected(server);
+        });
     });
 
     setAutoconnectTachoText("Connecting Device");
-    device.gatt.connect()
-        .then(server => {
-            server.connect();
+    device.gatt.connect().then(server => {
+        inlineDeviceConnected(server);
+    });
+}
 
-            setAutoconnectTachoText("Getting Services");
+async function inlineDeviceConnected(server){
+    server.connect();
+
+    setAutoconnectTachoText("Getting Services");
 
 
-            server.getPrimaryService(inlineConfigServiceUuid).then((service)=>{
-                service.getCharacteristic(inlineConfigCharacteristicUuid).then((characteristic) => {
-                    inlineConfigCharacteristic = characteristic;
-                });
-                service.getCharacteristic(inlineOdometerCharacteristicUuid).then((characteristic) => {
-                    inlineOdometerCharacteristic = characteristic;
-                });
-            });
+    server.getPrimaryService(inlineConfigServiceUuid).then((service)=>{
+        service.getCharacteristic(inlineConfigCharacteristicUuid).then((characteristic) => {
+            inlineConfigCharacteristic = characteristic;
+        });
+        service.getCharacteristic(inlineOdometerCharacteristicUuid).then((characteristic) => {
+            inlineOdometerCharacteristic = characteristic;
+        });
+    });
 
-            return server.getPrimaryService(inlineDataLoggingServiceUuid);
-
-        })
+    server.getPrimaryService(inlineDataLoggingServiceUuid)
         .then((dataLog) => {
-            return dataLog.getCharacteristic(inlineDataLoggingCharacteristicUuid);
-        })
-        .then(characteristics => {
-            inlineDataLoggingCharacteristic = characteristics;
+            dataLog.getCharacteristic(inlineDataLoggingCharacteristicUuid)
+                .then(characteristics => {
+                    inlineDataLoggingCharacteristic = characteristics;
 
-            setAutoconnectTachoText("Enabling Dataloggging");
-            return inlineDataLoggingCharacteristic.startNotifications();
-        })
-        .then(_ => {
+                    setAutoconnectTachoText("Enabling Dataloggging");
+                    inlineDataLoggingCharacteristic.startNotifications()
+                        .then(_ => {
 
-            setAutoconnectTachoText("Successfully connected!");
+                            setAutoconnectTachoText("Successfully connected!");
 
-            bleInlineConnected = true;
+                            bleInlineConnected = true;
 
 
-            if(!bleBMSConnected){
-                setTimeout(() => {
-                    inlineConnected();
-                    disableNothingConnectedOverlay();
-                }, 1000);
-            }else{
-                setTimeout(()=>{
-                    inlineConnected();
-                    disableNothingConnectedOverlay();
-                }, 500);
-            }
+                            if (!bleBMSConnected) {
+                                setTimeout(() => {
+                                    inlineConnected();
+                                    disableNothingConnectedOverlay();
+                                }, 1000);
+                            } else {
+                                setTimeout(() => {
+                                    inlineConnected();
+                                    disableNothingConnectedOverlay();
+                                }, 500);
+                            }
 
-            inlineDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', handleInlineLoggingNotifications);
-        })
-        .catch(error => {
-            console.log('Argh! ' + error);
+                            inlineDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', handleInlineLoggingNotifications);
+                        })
+                        .catch(error => {
+                            console.log('Argh! ' + error);
 
-            inlineDisconnected();
-            resetAutoconnectTacho();
+                            inlineDisconnected();
+                            resetAutoconnectTacho();
 
-            connectLastInlineOverlay.innerHTML = "<h2>Connect Tacho</h2>";
+                            connectLastInlineOverlay.innerHTML = "<h2>Connect Tacho</h2>";
+                        });
+                });
         });
 }
 
