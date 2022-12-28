@@ -126,7 +126,7 @@ function processData(event) {
 
     let packetSequenceNumber = (value.getUint8(2) << 8) | value.getUint8(1);
 
-    if(loggingDataInterval < configBuffer.dataloggingUpdateInterval * 0.8){
+    if(loggingDataInterval < configBuffer.dataloggingUpdateInterval * 0.5){
         console.log("dropped");
         return;
     }
@@ -145,7 +145,7 @@ function processData(event) {
         }
     });
 
-    document.getElementById("bms-hz").innerHTML = "BMS-Hz: " +  hertzSampleBuffer.length + "/" + (1000/configBuffer.dataloggingUpdateInterval).toFixed(1);
+    document.getElementById("bms-hz").innerHTML = "BMS-Hz: " +  hertzSampleBuffer.length + " /" + (1000/configBuffer.dataloggingUpdateInterval).toFixed(1);
 
 
     let V_Strang1 = (((value.getUint8(10) << 8) | value.getUint8(9)) / 100);
@@ -535,6 +535,10 @@ let inlineTempBuffer = [];
 
 let inlineDataloggingAveragingBuffer = [];
 
+let lastInlineLoggingDataTimeStamp = Date.now();
+let inlineHertzSampleBuffer = [];
+
+
 function processInlineData(data){
     let d = new Date();
     let stamp = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds() + "." + d.getMilliseconds();
@@ -549,6 +553,29 @@ function processInlineData(data){
         vehicleOdo: (((data.getUint8(16) << 24) | (data.getUint8(15) << 16) | (data.getUint8(14) << 8) | data.getUint8(13))),
         calibPulseCount: handleSignedBullshit(((data.getUint8(18) << 8) | data.getUint8(17)))
     };
+
+    let inlineLoggingDataInterval = Date.now() - lastInlineLoggingDataTimeStamp;
+    lastInlineLoggingDataTimeStamp = Date.now();
+    if(inlineLoggingDataInterval < 25){
+        console.log("dropped tacho");
+        return;
+    }
+
+
+    inlineHertzSampleBuffer.push([
+        lastInlineLoggingDataTimeStamp
+    ]);
+    inlineHertzSampleBuffer.forEach((element) => {
+        if(element[0] + 1000 < Date.now()){
+            const index = inlineHertzSampleBuffer.indexOf(element);
+            if (index > -1) { // only splice array when item is found
+                inlineHertzSampleBuffer.splice(index, 1); // 2nd parameter means remove one item only
+            }
+        }
+    });
+
+    document.getElementById("tacho-hz").innerHTML = "Tch-Hz: " +  inlineHertzSampleBuffer.length + " /20";
+
 
 
     bleInlineDataPacket = [
@@ -651,8 +678,6 @@ function processInlineData(data){
 
 
 
-
-    contextBridge.send("inline-calib-pulse-count", values.calibPulseCount);
 
 
     if (dataLoggingEnabled && !bleBMSConnected) {
