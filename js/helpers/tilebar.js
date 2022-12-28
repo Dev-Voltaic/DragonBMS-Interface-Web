@@ -9,6 +9,8 @@ document.getElementById("tileBarConnectTacho").addEventListener("click", ()=>{
 });
 
 document.getElementById("tileBarDisconnect").addEventListener("click", ()=>{
+    automaticReconnectTacho = false;
+    automaticReconnectBMS = false;
     disconnect();
     disconnectInline();
 });

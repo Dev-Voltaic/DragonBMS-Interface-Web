@@ -32,11 +32,14 @@ let alertCharacteristic;
 
 let dataLoggingEnabled = false;
 
-var bleBMSDevice;
-var bleBMSDeviceName;
-var bleBMSDeviceId;
-var bleBMSDeviceHardwareRevision;
-var bleBMSDeviceFirmwareRevision;
+let bleBMSDevice;
+let bleBMSDeviceName;
+let bleBMSDeviceId;
+let bleBMSDeviceHardwareRevision;
+let bleBMSDeviceFirmwareRevision;
+
+
+automaticReconnectBMS = false;
 
 var averagedArray = (array, averaging) => {
     let summedArray = [];
@@ -123,10 +126,13 @@ async function startBMSNotifications(device) {
 
         console.log("Disconnected");
 
-        device.gatt.connect()
-            .then(server => {
-                bmsDeviceConnected(server)
-            });
+        if(automaticReconnectBMS){
+            console.log("starting auto reconnect bms");
+            device.gatt.connect()
+                .then(server => {
+                    bmsDeviceConnected(server)
+                });
+        }
     });
 
     setAutoconnectBMSText("Connecting Device");
@@ -221,17 +227,21 @@ async function bmsDeviceConnected(server) {
             bmsDataLoggingCharacteristic.startNotifications().then(_ => {
                 setAutoconnectBMSText("Successfully connected!");
 
+                automaticReconnectBMS = true;
+
                 bleBMSConnected = true;
 
 
                 setTimeout(() => {
                     enableBoardGauges();
                     disableNothingConnectedOverlay();
+
+                    if (bleInlineConnected) {
+                        zoom.to({element: table, padding: 0, pan: false});
+                    }
                 }, 1000);
 
-                if (bleInlineConnected) {
-                    zoom.to({element: inlineGaugeTd, padding: 0, pan: false});
-                }
+
 
                 bmsDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', processData);
             })

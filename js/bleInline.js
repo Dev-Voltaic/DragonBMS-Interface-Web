@@ -13,6 +13,8 @@ let bleInlineDevice;
 
 let bleInlineTimeout = false;
 
+let automaticReconnectTacho = false;
+
 
 function connectTacho() {
     setAutoconnectTachoText("Searching");
@@ -80,9 +82,12 @@ async function startInlineNotifications(device) {
             resetInlineValues();
         }
 
-        device.gatt.connect().then(server => {
-            inlineDeviceConnected(server);
-        });
+        if(automaticReconnectTacho){
+            console.log("starting auto reconnect tacho");
+            device.gatt.connect().then(server => {
+                inlineDeviceConnected(server);
+            });
+        }
     });
 
     setAutoconnectTachoText("Connecting Device");
@@ -118,6 +123,8 @@ async function inlineDeviceConnected(server){
 
                             setAutoconnectTachoText("Successfully connected!");
 
+                            automaticReconnectTacho = true;
+
                             bleInlineConnected = true;
 
 
@@ -145,16 +152,6 @@ async function inlineDeviceConnected(server){
                         });
                 });
         });
-}
-
-// not in use but maybe usefull some day - also here for completeness.
-function stopInlineNotifications() {
-    if (bleInlineConnected) {
-        inlineDataLoggingCharacteristic.stopNotifications().then(_ => {
-            inlineDataLoggingCharacteristic.removeEventListener('characteristicvaluechanged',
-                handleInlineLoggingNotifications);
-        }).catch(error => {console.log('Argh! ' + error);});
-    }
 }
 
 function disconnectInline() {
