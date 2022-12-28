@@ -53,6 +53,8 @@ let remainingEnergy3 = 0; // Watt hours
 
 let stateMachineStateBuffer;
 
+let hertzSampleBuffer = [];
+
 
 // poll faults from characteristic when datalogging gives state 4 (fault)
 function pollFaults(){
@@ -110,6 +112,7 @@ const mod = (n, m) => (m + n % m) % m;
 const cap = (value, low, high) => low + mod(value - low, high - low + 1);
 
 
+
 function processData(event) {
     let value = event.target.value;
 
@@ -122,6 +125,28 @@ function processData(event) {
     lastLoggingDataTimeStamp = Date.now();
 
     let packetSequenceNumber = (value.getUint8(2) << 8) | value.getUint8(1);
+
+    if(loggingDataInterval < configBuffer.dataloggingUpdateInterval * 0.8){
+        console.log("dropped");
+        return;
+    }
+
+
+    hertzSampleBuffer.push([
+        packetSequenceNumber,
+        lastLoggingDataTimeStamp
+    ]);
+    hertzSampleBuffer.forEach((element) => {
+        if(element[1] + 1000 < Date.now()){
+            const index = hertzSampleBuffer.indexOf(element);
+            if (index > -1) { // only splice array when item is found
+                hertzSampleBuffer.splice(index, 1); // 2nd parameter means remove one item only
+            }
+        }
+    });
+
+    document.getElementById("bms-hz").innerHTML = "BMS-Hz: " +  hertzSampleBuffer.length + "/" + (1000/configBuffer.dataloggingUpdateInterval).toFixed(1);
+
 
     let V_Strang1 = (((value.getUint8(10) << 8) | value.getUint8(9)) / 100);
     let V_Strang2 = (((value.getUint8(12) << 8) | value.getUint8(11)) / 100);
@@ -153,6 +178,7 @@ function processData(event) {
     let energyUsed1 = handleSignedBullshit32((((value.getUint8(25) << 24) | (value.getUint8(24) << 16)) | (value.getUint8(23) << 8)) | (value.getUint8(22)));
     let energyUsed2 = handleSignedBullshit32((((value.getUint8(29) << 24) | (value.getUint8(28) << 16)) | (value.getUint8(27) << 8)) | (value.getUint8(26)));
     let energyUsed3 = handleSignedBullshit32((((value.getUint8(33) << 24) | (value.getUint8(32) << 16)) | (value.getUint8(31) << 8)) | (value.getUint8(30)));
+
 
 
     let W_Strang1 = (V_Strang1 * A_Strang1);
