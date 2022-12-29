@@ -1,3 +1,22 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    MANY FUNCTIONS FOR CONNECTION GUI
+ */
+
 function resetAutoconnectBMS(){
     autoConnectBMSError();
 
@@ -85,23 +104,6 @@ function setAutoconnectTachoText(text) {
 
 function setAucotonnectTachoTextNoAutoconnect(text) {
     autoconnectTachoText.innerHTML = text;
-}
-
-
-function setChooseDeviceText(text) {
-    chooseDeviceButton.innerHTML = "<h2>" + text + "</h2>";
-}
-
-function chooseDeviceError() {
-    chooseDeviceButton.innerHTML = "<h2>Didn't</br>work</h2>";
-    chooseDeviceButton.style.color = "red";
-}
-
-function resetChooseDeviceSilent() {
-    setTimeout(() => {
-        chooseDeviceButton.innerHTML = "<h2>Choose</br>Device</h2>";
-        chooseDeviceButton.style.color = "";
-    }, 1000);
 }
 
 

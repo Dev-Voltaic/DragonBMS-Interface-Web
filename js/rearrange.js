@@ -1,5 +1,3 @@
-let table = document.getElementById("main-table");
-
 function swap(node1, node2) {
 
     const afterNode2 = node2.nextElementSibling;

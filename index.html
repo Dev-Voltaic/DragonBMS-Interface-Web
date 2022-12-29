@@ -46,24 +46,23 @@
             </div>
         </div>
         <div class="dropdown">
-            <span>Board</span>
+            <span>Settings</span>
             <div class="dropdown-content">
-                <p id="tileBarBoardInfo">Board Info</p>
+                <a id="tileBarBoardInfo" href="#swipe-for-settings-container">Board Info</a>
                 </br>
-                <p id="tileBarBoardConfig">Board Configuration</p>
+                <a id="tileBarBoardConfig" href="#board-configuration">Board Configuration</a>
                 </br>
-                <p id="tileBarBoardCalib">Board Calibration</p>
+                <a id="tileBarBoardCalib">Board Calibration</a>
                 </br>
-                <p id="tileBarTachoConfig">Tacho Configuration</p>
+                <a id="tileBarTachoConfig">Tacho Configuration</a>
+                <a id="settings-hide" class="hidden">
+                    </br>
+                    Hide Settings
+                </a>
             </div>
         </div>
         <div class="dropdown">
-            <span>Dashboard</span>
-            <div class="dropdown-content">
-            </div>
-        </div>
-        <div class="dropdown">
-            <span id="logging-span">Logging</span>
+            <span id="logging-span" style="pointer-events: none">Logging</span>
             <div class="dropdown-content">
                 <p id="tileBarSelectDataloggingDirectory">Select Directory</p>
                 </br>
@@ -86,10 +85,6 @@
 
 
         <div id="tilebar-right">
-            <div id="settings-hide" class="hidden">
-                <span>Hide Settings</span>
-            </div>
-
             <div>
                 <span id="bms-hz">BMS-Hz: </span>
             </div>
@@ -624,11 +619,119 @@
 
 
 
-<div id="swipe-for-settings-container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="swipe-for-settings-container" class="touch">
     <div class="swipe-for-settings-text snap-align">
-        <h4>Swipe up for settings!</h4>
+        <h4 class="touchUI">Swipe up for settings!</h4>
+        <h4 class="non-touchUI"> Double click for settings!</h4>
     </div>
-    <div class="swipe-for-settings-action">
+    <div class="swipe-for-settings-action touchUI">
         <h4>Settings enabled.</h4>
     </div>
 </div>
@@ -636,7 +739,7 @@
 
 
 <div id="interface-info-container" class="hidden">
-    <img class="logo" src="img/icon.png">
+    <img class="logo" src="img/icon/512x512.png">
     <h2>DragonBMS Interface</h2>
     <h3>Version:</h3>
     <p id="version"></p>
@@ -991,7 +1094,7 @@
 
 <script src="js/serviceworker/sw_init.js"></script>
 
-<script src="js/helpers/tilebar.js"></script>
+<script src="js/tilebar.js"></script>
 <script src="js/settingsDetection.js"></script>
 
 <script src="js/rearrange.js"></script>

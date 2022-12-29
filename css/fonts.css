@@ -79,6 +79,21 @@ h1{
 
 
 
+/*
+Make a in the tilebar look like all the other entries
+ */
+a, a:hover, a:focus{
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+
 
 
 /*

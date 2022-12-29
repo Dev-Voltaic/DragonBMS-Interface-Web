@@ -1,3 +1,8 @@
+// MAIN TABLE
+let table = document.getElementById("main-table");
+
+
+
 
 // BUTTONS AND SUCH
 
