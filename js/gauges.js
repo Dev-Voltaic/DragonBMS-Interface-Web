@@ -1,58 +1,3 @@
-let prechargeEnabled = false;
-
-let currentPrechargeValue = 0;
-
-precharge_button_div.addEventListener("click", function (){
-    prechargeEnabled = !prechargeEnabled;
-    if(prechargeEnabled){
-        console.log(parseInt(document.getElementById("prechargePWMInput").value));
-        prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([
-            parseInt(document.getElementById("prechargePWMInput").value)
-        ]).buffer);
-        currentPrechargeValue = parseInt(document.getElementById("prechargePWMInput").value);
-        precharge_button_div.style.background = "green";
-        precharge_button.style.color = "white";
-        precharge_button.innerHTML = "stop Precharge";
-    }else {
-        currentPrechargeValue = 0;
-        prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
-        precharge_button_div.style.background = "";
-        precharge_button.style.color = "green";
-        precharge_button.innerHTML = "start Precharge";
-    }
-});
-
-
-
-let channel1enabled = false, channel2enabled = false, channel3enabled = false;
-channel1_button.addEventListener("click", function (){
-    channel1enabled = !channel1enabled;
-    sendChannelControlData(0, channel1enabled, channel2enabled, channel3enabled);
-    if(channel1enabled){
-        channel1_button.src = "img/on-button.png";
-    }else {
-        channel1_button.src = "img/off.jpg";
-    }
-});
-channel2_button.addEventListener("click", function (){
-    channel2enabled = !channel2enabled;
-    sendChannelControlData(0, channel1enabled, channel2enabled, channel3enabled);
-    if(channel2enabled){
-        channel2_button.src = "img/on-button.png";
-    }else {
-        channel2_button.src = "img/off.jpg";
-    }
-});
-channel3_button.addEventListener("click", function (){
-    channel3enabled = !channel3enabled;
-    sendChannelControlData(0, channel1enabled, channel2enabled, channel3enabled);
-    if(channel3enabled){
-        channel3_button.src = "img/on-button.png";
-    }else {
-        channel3_button.src = "img/off.jpg";
-    }
-});
-
 
 clearAlertsButton.addEventListener("click", () => {
     clearAlerts(0, "")
@@ -76,10 +21,10 @@ function clearAlerts(counter, error){
             updateWarningFields();
         })
         .catch(error => {
-        setTimeout( ()=>{
-            clearAlerts(counter + 1, error);
-        }, 100);
-    });
+            setTimeout( ()=>{
+                clearAlerts(counter + 1, error);
+            }, 100);
+        });
 }
 
 
@@ -367,15 +312,10 @@ resetTripButton.addEventListener("click", () => {
 
 
 
-// moved here because of definition problems
-function connectLastInlineOverlayVisible(){ connectLastInlineOverlay.classList.remove("hidden");}
-function connectLastInlineOverlayInVisible(){ connectLastInlineOverlay.classList.add("hidden");}
-
-
 
 function inlineConnected() {
     inlineGaugeDiv.classList.remove("inline-gauge-disabled");
-    connectLastInlineOverlayInVisible();
+    connectLastInlineOverlay.classList.add("hidden");
 
 
     if (!bleBMSConnected) {
@@ -386,7 +326,7 @@ function inlineConnected() {
 
 function inlineDisconnected(){
     inlineGaugeDiv.classList.add("inline-gauge-disabled");
-    connectLastInlineOverlayVisible();
+    connectLastInlineOverlay.classList.remove("hidden");
 }
 
 inlineDisconnected();
@@ -610,20 +550,71 @@ function updateWarningFields() {
 }
 
 
-let darkMode = true;
 
-function toggleDarkmode(){
-    darkMode = !darkMode;
 
-    localStorage.setItem('lastDarkmode', darkMode ? "dark" : "light"); // for the next session
 
-    adjustDarkmode(darkMode);
-}
 
-function adjustDarkmode(mode){
-    if(!mode){
-        document.getElementsByTagName("link")[1].href = "css/index-light.css";
-    }else{
-        document.getElementsByTagName("link")[1].href = "css/index-dark.css";
+
+
+
+
+
+/*
+    Only needed for dev field (almost obsolete)
+ */
+
+
+let prechargeEnabled = false;
+
+let currentPrechargeValue = 0;
+
+precharge_button_div.addEventListener("click", function (){
+    prechargeEnabled = !prechargeEnabled;
+    if(prechargeEnabled){
+        console.log(parseInt(document.getElementById("prechargePWMInput").value));
+        prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([
+            parseInt(document.getElementById("prechargePWMInput").value)
+        ]).buffer);
+        currentPrechargeValue = parseInt(document.getElementById("prechargePWMInput").value);
+        precharge_button_div.style.background = "green";
+        precharge_button.style.color = "white";
+        precharge_button.innerHTML = "stop Precharge";
+    }else {
+        currentPrechargeValue = 0;
+        prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
+        precharge_button_div.style.background = "";
+        precharge_button.style.color = "green";
+        precharge_button.innerHTML = "start Precharge";
     }
-}
+});
+
+
+
+let channel1enabled = false, channel2enabled = false, channel3enabled = false;
+channel1_button.addEventListener("click", function (){
+    channel1enabled = !channel1enabled;
+    sendChannelControlData(0, channel1enabled, channel2enabled, channel3enabled);
+    if(channel1enabled){
+        channel1_button.src = "img/on-button.png";
+    }else {
+        channel1_button.src = "img/off.jpg";
+    }
+});
+channel2_button.addEventListener("click", function (){
+    channel2enabled = !channel2enabled;
+    sendChannelControlData(0, channel1enabled, channel2enabled, channel3enabled);
+    if(channel2enabled){
+        channel2_button.src = "img/on-button.png";
+    }else {
+        channel2_button.src = "img/off.jpg";
+    }
+});
+channel3_button.addEventListener("click", function (){
+    channel3enabled = !channel3enabled;
+    sendChannelControlData(0, channel1enabled, channel2enabled, channel3enabled);
+    if(channel3enabled){
+        channel3_button.src = "img/on-button.png";
+    }else {
+        channel3_button.src = "img/off.jpg";
+    }
+});

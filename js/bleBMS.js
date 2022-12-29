@@ -277,13 +277,63 @@ function handleWarningIndication(event) {
 
 // the error popup windows are too annoying
 // - franz
-// also basically useless now since alert always gets pulled when in fault mode
+// also basically useless now since alert always gets polled when in fault mode
 function handleAlertIndication(event) {
     let alertValue = event.target.value;
-    let byte = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0));
+    alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0));
 }
 
 
-// hack to make gauges render with display normal first and then make them disappear
-document.getElementsByClassName("elementsdiv")[0].style.display = "none";
 
+
+// poll faults from characteristic when datalogging gives state 4 (fault)
+function pollFaults(){
+    if(stateMachineStateBuffer === 4 && bleBMSConnected){
+        // try catch for "gatt operation already in progress"
+        try {
+            alertCharacteristic.readValue().then(alertValue => {
+                alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0))
+                console.log(alertBuffer);
+            });
+        } catch (error) { //"gatt operation already in progress"
+        }
+
+        // try catch for "gatt operation already in progress"
+        try {
+            warningCharacteristic.readValue().then(warningValue => {
+                warningBuffer = (((warningValue.getUint8(3) << 24) | (warningValue.getUint8(2) << 16)) | (warningValue.getUint8(1) << 8)) | (warningValue.getUint8(0))
+            });
+            updateWarningFields();
+        } catch (error) { //"gatt operation already in progress"
+        }
+    }
+    setTimeout(pollFaults, 500);
+}
+
+pollFaults();
+
+
+
+
+// get uptime from development service
+function pollUptime() {
+    // not really able to filter this, has to be done all the time while connected
+    if (bleBMSConnected) {
+        try {
+            uptimeCharacteristic.readValue().then(alertValue => {
+                let uptimeValue =
+                    handleSignedBullshit64(
+                        (alertValue.getUint8(7) << 56) | (alertValue.getUint8(6) << 48) |
+                        (alertValue.getUint8(5) << 40) | (alertValue.getUint8(4) << 32) |
+                        (alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16) |
+                        (alertValue.getUint8(1) << 8) | (alertValue.getUint8(0)));
+                setOnTime(Math.floor(-uptimeValue / 1000));
+            });
+        } catch (error) { //"gatt operation already in progress"
+        }
+
+    }
+    setTimeout(pollUptime, 400);
+}
+
+pollUptime();

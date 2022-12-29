@@ -346,3 +346,13 @@ Channel control button (inside the above mentioned table)
     margin: auto;
     color: red;
 }
+
+
+
+
+/*
+    the elementsdiv is mostly redundant but was used to contain all the currently not displayed gauges
+ */
+.elementsdiv{
+    display: none;
+}

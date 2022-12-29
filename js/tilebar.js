@@ -1,3 +1,5 @@
+// mostly no variables needed since they are very simply used as buttons
+
 
 // BLUETOOTH
 document.getElementById("tileBarConnectBMS").addEventListener("click", ()=>{

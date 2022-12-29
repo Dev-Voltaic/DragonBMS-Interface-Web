@@ -1,13 +1,3 @@
-function to16bit(number){
-    if(number >= 65536){
-        return;
-    }
-    var lsb = number % 256;
-    var msb = Math.floor(number / 256);
-
-    return [lsb, msb];
-}
-
 
 
 

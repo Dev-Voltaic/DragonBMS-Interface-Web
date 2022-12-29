@@ -1,4 +1,57 @@
 
+// needed for queuing
+let searchingForBMS = false;
+let searchingForTacho = false;
+
+
+// handler for the Nothing Connected overlay - autoconnect bms
+connectLastDeviceButton.addEventListener('click', async () => {
+    if (!searchingForTacho) {
+        searchingForBMS = true;
+    } else {
+        setAucotonnectBMSTextNoAutoconnect("Queued");
+        await until(_ => searchingForTacho === false);
+    }
+
+    document.getElementById("inline-gauge").classList.add("inline-gauge-disabled");
+
+    disconnect();
+    connectBMS();
+
+    let bleBMSTimeout = false;
+
+    // timeout
+    setTimeout(() => {
+        bleBMSTimeout = true;
+        searchingForBMS = false;
+    }, 5000);
+});
+
+// handler for the nothing connected overlay - autoconnect tacho
+connectLastInlineButton.addEventListener('click', async () => {
+
+    if (!searchingForBMS) {
+        searchingForTacho = true;
+    } else {
+        setAucotonnectTachoTextNoAutoconnect("Queued");
+        await until(_ => searchingForBMS === false);
+    }
+
+    disconnectInline();
+
+    connectTacho();
+
+
+    let bleInlineTimeout = false;
+
+    // timeout
+    setTimeout(() => {
+        bleInlineTimeout = true;
+        searchingForTacho = false;
+    }, 5000);
+});
+
+
 
 
 
@@ -16,6 +69,8 @@
 /*
     MANY FUNCTIONS FOR CONNECTION GUI
  */
+
+
 
 function resetAutoconnectBMS(){
     autoConnectBMSError();

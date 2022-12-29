@@ -47,9 +47,6 @@ function toggleDevField(){
             emptyTd.className = emptyTdClassName;
             gaugeToAdd = emptyTd.cloneNode(true);
             let clonedElement = document.getElementById("dev-field");
-            // debug stuff
-            //console.log(clonedElement);
-            //clonedElement.id = "dev-field-cloned";
             gaugeToAdd.appendChild(clonedElement);
         }
     }

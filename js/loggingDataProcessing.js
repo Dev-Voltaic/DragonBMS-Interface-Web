@@ -11,34 +11,6 @@ let maxValueBuffer = [];
 
 let bleBMSConnected = false;
 
-
-/* DATALOGGING NOTIFICATION HANDLING */
-function handleSignedBullshit(input) {
-    if (input > Math.pow(2, 15)) {
-        return Math.pow(2, 16) - input;
-    }
-    return -input;
-}
-
-function handleSignedBullshit32(input) {
-    if (input > Math.pow(2, 31)) {
-        return Math.pow(2, 32) - input;
-    }
-    return -input;
-}
-
-function handleSignedBullshit64(input) {
-    if (input > Math.pow(2, 63)) {
-        return Math.pow(2, 64) - input;
-    }
-    return -input;
-}
-
-
-let bleInlineDataPacket = [];
-let dataLoggingBufferInline = [];
-
-
 let lastLoggingDataTimeStamp = Date.now();
 let usedEnergy1 = 0; // Watt hours
 let usedEnergy2 = 0; // Watt hours
@@ -56,60 +28,9 @@ let stateMachineStateBuffer;
 let hertzSampleBuffer = [];
 
 
-// poll faults from characteristic when datalogging gives state 4 (fault)
-function pollFaults(){
-    if(stateMachineStateBuffer === 4 && bleBMSConnected){
-        // try catch for "gatt operation already in progress"
-        try {
-            alertCharacteristic.readValue().then(alertValue => {
-                alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0))
-                console.log(alertBuffer);
-            });
-        } catch (error) { //"gatt operation already in progress"
-        }
-
-        // try catch for "gatt operation already in progress"
-        try {
-            warningCharacteristic.readValue().then(warningValue => {
-                warningBuffer = (((warningValue.getUint8(3) << 24) | (warningValue.getUint8(2) << 16)) | (warningValue.getUint8(1) << 8)) | (warningValue.getUint8(0))
-            });
-            updateWarningFields();
-        } catch (error) { //"gatt operation already in progress"
-        }
-    }
-    setTimeout(pollFaults, 500);
-}
-
-pollFaults();
 
 
-// get uptime from development service
-function pollUptime() {
-    // not really able to filter this, has to be done all the time while connected
-    if (bleBMSConnected) {
-        try {
-            uptimeCharacteristic.readValue().then(alertValue => {
-                let uptimeValue =
-                    handleSignedBullshit64(
-                        (alertValue.getUint8(7) << 56) | (alertValue.getUint8(6) << 48) |
-                        (alertValue.getUint8(5) << 40) | (alertValue.getUint8(4) << 32) |
-                        (alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16) |
-                        (alertValue.getUint8(1) << 8) | (alertValue.getUint8(0)));
-                setOnTime(Math.floor(-uptimeValue / 1000));
-            });
-        } catch (error) { //"gatt operation already in progress"
-        }
 
-    }
-    setTimeout(pollUptime, 400);
-}
-
-pollUptime();
-
-
-// function for capping a value between two numbers
-const mod = (n, m) => (m + n % m) % m;
-const cap = (value, low, high) => low + mod(value - low, high - low + 1);
 
 
 
@@ -525,10 +446,29 @@ function processData(event) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // values for calculation of wh/km and therefore also range
 let drivenDistanceOffset = -1;
 let usedEnergyOffset;
 
+
+
+
+let bleInlineDataPacket = [];
+let dataLoggingBufferInline = [];
 let maxInlineValueBuffer = [];
 let inlineTempBuffer = [];
 

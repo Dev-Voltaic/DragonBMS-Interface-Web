@@ -13,18 +13,13 @@ let settingsHide = document.getElementById("settings-hide");
 
 let settingsEnabled = false;
 
-function isTouchDevice() {
-    return (('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0));
-}
-
 
 if(isTouchDevice()){
 
     settingsSwipeContainer.classList.remove("non-touch");
     settingsSwipeContainer.classList.add("touch");
 
-    settingsSwipeContainer.addEventListener("touchmove", (event) => {
+    settingsSwipeContainer.addEventListener("touchmove", () => {
 
         if(settingsEnabled === true){
             visualiseSettingsAvailable();
@@ -45,7 +40,7 @@ if(isTouchDevice()){
     settingsSwipeContainer.classList.remove("touch");
     settingsSwipeContainer.classList.add("non-touch");
 
-    settingsSwipeText.addEventListener("dblclick", ()=>{
+    settingsSwipeText.addEventListener("dblclick", () => {
         settingsEnabled = true;
         visualiseSettingsAvailable();
     });
@@ -74,7 +69,7 @@ function visualiseSettingsAvailable(){
 
 
 // reset everything connected to the settings
-settingsHide.addEventListener("click", (event) =>{
+settingsHide.addEventListener("click", () => {
     settingsEnabled = false;
 
     // hide settings-hide again
