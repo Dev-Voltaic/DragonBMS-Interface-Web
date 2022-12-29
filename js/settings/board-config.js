@@ -1,16 +1,39 @@
-let body = document.getElementById("main-table");
+document.getElementById("board-config-read").addEventListener("click", () => {
+    readBMSConfig();
+});
 
-
-function getIdValue(id) {
-    return document.getElementById(id).value;
+function readBMSConfig(){
+    bmsConfigCharacteristic.readValue().then(configValues => {
+        console.log(configValues);
+        setConfigValues(getBMSConfigFromBuffer(configValues));
+        configBuffer = getBMSConfigFromBuffer(configValues);
+        updateConfigRelatedGauges(configBuffer);
+    }).catch(_ => {
+        indicateFailure();
+    });
 }
 
-function getIdChecked(id) {
-    return document.getElementById(id).checked;
-}
+document.getElementById("board-config-write").addEventListener("click", () => {
+    // writing config characteristic
+    console.log(getBMSBufferFromConfig(getConfigValues()));
+    bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getConfigValues())).buffer).then(_ => {
+        indicateSuccess();
+        console.log("successfully wrote config");
+    }).catch(error => {
+        indicateFailure();
+    });
+    setTimeout(() => {
+        readBMSConfig();
+    }, 200);
+});
+
+
+
+
+
 
 function getEnabledChannelsByte() {
-    var byte = 0;
+    let byte = 0;
     byte += getIdChecked("enabled-channels-1") * 1;
     byte += getIdChecked("enabled-channels-2") * 2;
     byte += getIdChecked("enabled-channels-3") * 4;
@@ -23,20 +46,6 @@ function setEnabledChannelsByte(byte) {
     document.getElementById("enabled-channels-3").checked = byte & 0b00000100;
 }
 
-function setValueBacktoBoundaries(id, min, max) {
-    let v = parseFloat(document.getElementById(id).value);
-    if (v < min) {
-        document.getElementById(id).value = min;
-        document.getElementById(id).style.color = "red";
-        return;
-    }
-    if (v > max) {
-        document.getElementById(id).value = max;
-        document.getElementById(id).style.color = "red";
-        return;
-    }
-    document.getElementById(id).style.color = "";
-}
 
 function checkPlausibility() {
     setValueBacktoBoundaries("battery-cells", 4, 30);
@@ -89,14 +98,13 @@ function getConfigValues() {
 
 
 function setConfigValues(config) {
-    console.log("Got config: ");
-    console.log(config);
     document.getElementById("battery-cells").value = config.battCellCount;
     document.getElementById("battery-capacity").value = config.battNomCapacity;
 
     document.getElementById("max-cell-voltage").value = config.protMaxCellVoltage;
     document.getElementById("min-cell-voltage").value = config.protMinCellVoltage;
     document.getElementById("strand-max-current").value = config.protMaxCurrent / 100;
+    document.getElementById("strand-max-reverse-current").value = config.protMaxReverseCurrent / 100;
     document.getElementById("strand-max-imbalance-current").value = config.protMaxImbalanceCurrent / 100;
 
     document.getElementById("datalogging-update-interval").value = config.dataloggingUpdateInterval;
@@ -111,30 +119,28 @@ function setConfigValues(config) {
     document.getElementById("auto-poweroff").value = config.boardPoweroffTime;
     setEnabledChannelsByte(config.boardEnabledChannels);
     document.getElementById("updatecount").innerHTML = config.boardUpdateCount;
-
-    document.getElementById("strand-max-reverse-current").value = config.protMaxReverseCurrent / 100;
 }
 
 
 function indicateSuccess() {
-    body.style.color = "#64ff79";
+    boardConfigTable.style.color = "#64ff79";
     setTimeout(() => {
-        body.style.color = "";
+        boardConfigTable.style.color = "";
     }, 3000);
 }
 
 function indicateFailure() {
-    body.style.color = "#ff6464";
+    boardConfigTable.style.color = "#ff6464";
     setTimeout(() => {
-        body.style.color = "";
+        boardConfigTable.style.color = "";
     }, 2000);
 }
 
 
-body.addEventListener("mousemove", () => {
+boardConfigTable.addEventListener("mousemove", () => {
     checkPlausibility();
 });
-body.addEventListener("change", () => {
+boardConfigTable.addEventListener("change", () => {
     checkPlausibility();
 });
 
@@ -154,10 +160,10 @@ body.addEventListener("change", () => {
 
 
 
-let batterySelector = document.getElementById("battery-type-select");
+let boardConfigBatterySelector = document.getElementById("battery-type-select");
 
 function blurAppropriateVoltageFields(){
-    var val = batterySelector.options[batterySelector.selectedIndex].value;
+    var val = boardConfigBatterySelector.options[boardConfigBatterySelector.selectedIndex].value;
 
     if(val === "li-ion" || val === "li-po" || val === "li-fe-po"){
         let toBeBlurred = document.getElementsByClassName("pack-field");
@@ -216,7 +222,7 @@ function blurAppropriateVoltageFields(){
     }
 }
 function setStandardBatteryValues(){
-    var val = batterySelector.options[batterySelector.selectedIndex].value;
+    var val = boardConfigBatterySelector.options[boardConfigBatterySelector.selectedIndex].value;
 
     if(val === "li-ion"){
         document.getElementById("max-cell-voltage").value = "4200";
@@ -250,7 +256,7 @@ function calculatePackVoltages(){
 
 blurAppropriateVoltageFields();
 setStandardBatteryValues();
-batterySelector.addEventListener("change", ()=>{
+boardConfigBatterySelector.addEventListener("change", ()=>{
     blurAppropriateVoltageFields();
     setStandardBatteryValues();
 });

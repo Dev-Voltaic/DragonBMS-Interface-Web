@@ -39,9 +39,9 @@ let bleBMSDeviceHardwareRevision;
 let bleBMSDeviceFirmwareRevision;
 
 
-automaticReconnectBMS = false;
+let automaticReconnectBMS = false;
 
-var averagedArray = (array, averaging) => {
+let averagedArray = (array, averaging) => {
     let summedArray = [];
     let averageArray = [];
     array.forEach(sub => {
@@ -222,6 +222,9 @@ async function bmsDeviceConnected(server) {
                 setAutoconnectBMSText("Enabling Datalogging");
                 bmsDataLoggingCharacteristic.startNotifications().then(_ => {
                     setAutoconnectBMSText("Successfully connected!");
+
+                    // initial readout
+                    readBMSConfig();
 
                     automaticReconnectBMS = true;
 

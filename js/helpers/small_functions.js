@@ -54,6 +54,30 @@ function handleSignedBullshit64(input) {
     return -input;
 }
 
+function getIdValue(id) {
+    return document.getElementById(id).value;
+}
+
+function getIdChecked(id) {
+    return document.getElementById(id).checked;
+}
+
+function setValueBacktoBoundaries(id, min, max) {
+    let element = document.getElementById(id);
+    let v = parseFloat(element.value);
+    if (v < min) {
+        element.value = min;
+        element.style.color = "red";
+        return;
+    }
+    if (v > max) {
+        element.value = max;
+        element.style.color = "red";
+        return;
+    }
+    element.style.color = "";
+}
+
 
 
 

@@ -137,3 +137,13 @@ let configInfoOtp = document.getElementById("config-info-otp");
 
 let gpo1Button = document.getElementById("GPO1");
 let gpo2Button = document.getElementById("GPO2");
+
+
+
+
+
+
+
+
+// Board Config
+let boardConfigTable = document.getElementById("board-config-table");
