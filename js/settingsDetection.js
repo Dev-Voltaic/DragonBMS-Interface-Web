@@ -46,7 +46,8 @@ if(isTouchDevice()){
     settingsSwipeContainer.classList.add("non-touch");
 
     settingsSwipeText.addEventListener("dblclick", ()=>{
-        console.log("moin");
+        settingsEnabled = true;
+        visualiseSettingsAvailable();
     });
 }
 
