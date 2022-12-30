@@ -761,7 +761,7 @@
 
 <div id="settings-container" class="hidden">
 
-    <div id="board-configuration">
+    <div id="board-configuration-div">
         <div class="frame">
             <img class="logo" src="img/icon/512x512.png">
         </div>
@@ -1034,6 +1034,257 @@
         </table>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="inline-configuration-div">
+
+        <h2>Inline Board Configuration:</h2>
+
+
+        <button id="inline-config-read">Read</button>
+        <button id="inline-config-write">Write</button>
+
+        <table>
+            <tr class="no-height">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            <tr>
+                <td>NTC Type:</td>
+                <td>
+                    <select name="ntc-type" id="ntc-type-select">
+                        <option value="ntc10k">NTC 10K @ 25°C</option> <!-- B value = 3460; R @ 0°C = 29400 -->
+                        <option value="ptc1k" disabled>PTC 1K @ 100°C</option>
+                        <option value="kty83">KTY83/122</option>
+                        <option value="ntc100k">NTC 100K @ 25°C</option> <!-- B value = 4334 R @ 0°C = 350000 -->
+                        <option value="kty84">KTY84/130</option>
+                        <option value="ntc_custom">Custom NTC</option>
+                        <option value="ptc_custom" disabled>Custom PTC</option>
+                    </select>
+                </td>
+
+                <td class="seperator"></td>
+
+                <td class="customTempInput">NTC Resistance at 25°C [Ohm]</td>
+                <td class="customTempInput"><input id="r-value" type="number" min="1"></td>
+
+            </tr>
+            <tr>
+                <td>Voltage Divider Resistance [Ohm]</td>
+                <td><input id="r-value-divider" type="number" min="1"></td>
+
+                <td class="seperator"></td>
+
+                <td class="customTempInput">NTC B Value [1]</td>
+                <td class="customTempInput"><input id="b-value" type="number" min="1"></td>
+
+            </tr>
+            <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
+            <tr>
+                <td>Motor reversed?</td>
+                <td><input id="reversed" type="checkbox"></td>
+
+                <td class="seperator"></td>
+
+                <td>Backwards should be negative</td>
+                <td><input id="back-neg" type="checkbox"></td>
+            </tr>
+            <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
+            <tr>
+
+                <td>Distance/Pulse [0.1mm]
+                    </br>
+                    <input id="distperpulse" type="number">
+                </td>
+
+                <td>Distance[mm]:
+                    </br>
+                    <input id="distance" type="number"></td>
+
+                <td class="seperator"></td>
+
+                <td><button id="resetPulses">Reset</button>
+                    </br>
+                    Pulses: <p id="pulses"></p></td>
+                <td><button id="calculatedistperpulse">Calculate</button></td>>
+            </tr>
+            <tr>
+                <td>Motor Polepairs [1]</td>
+                <td><input id="motor-poles" type="number" min="1"></td>
+
+                <td class="seperator"></td>
+
+                <td></td>
+                <td></td>>
+            </tr>
+            <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
+            <tr>
+                <td>Trip Odometer<button id="configResetTripOdo">Reset</button></td>
+                <td></td>
+
+                <td class="seperator"></td>
+
+                <td>Vehicle Odometer<button id="resetVehicleOdo">Reset</button></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="board-calibration-div">
+
+        <div class="frame">
+            <img id="logo" src="img/icon/512x512.png">
+        </div>
+
+        <h2>Calibration values:</h2>
+
+        <table>
+            <tr class="no-height">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            <tr>
+                <td>
+                    Input Voltage Correction Factor Strand 1
+                    </br>
+                    <input id="in-volt1-correction" type="number">
+                </td>
+                <td>Target Value:
+                    </br>
+                    <input id="in-volt1-target" type="number"></td>
+                <td>Actual Value: <p id="in-volt1-actual">hi</p></td>
+                <td><button id="calculateInV1">Calculate</button></td>>
+            </tr>
+            <tr>
+                <td>
+                    Input Voltage Correction Factor Strand 2
+                    </br>
+                    <input id="in-volt2-correction" type="number">
+                </td>
+                <td>Target Value:
+                    </br>
+                    <input id="in-volt2-target" type="number"></td>
+                <td>Actual Value: <p id="in-volt2-actual">hi</p></td>
+                <td><button id="calculateInV2">Calculate</button></td>>
+            </tr>
+            <tr>
+                <td>
+                    Input Voltage Correction Factor Strand 3
+                    </br>
+                    <input id="in-volt3-correction" type="number">
+                </td>
+                <td>Target Value:
+                    </br>
+                    <input id="in-volt3-target" type="number"></td>
+                <td>Actual Value: <p id="in-volt3-actual">hi</p></td>
+                <td><button id="calculateInV3">Calculate</button></td>>
+            </tr>
+            <tr>
+                <td>
+                    Output Voltage Correction Factor
+                    </br>
+                    <input id="out-volt-correction" type="number">
+                </td>
+                <td>Target Value:
+                    </br>
+                    <input id="out-volt-target" type="number"></td>
+                <td>Actual Value: <p id="out-volt-actual">hi</p></td>
+                <td><button id="calculateOut">Calculate</button></td>>
+            </tr>
+
+            <!--
+            <tr><td></td><td></td><td></td><td></td></tr>
+            -->
+
+            <tr>
+                <td>
+                    Shunt Resistance Strand 1 [uR]
+                    </br>
+                    <input id="shunt-resistance-1" type="number">
+                </td>
+                <td>Target Value:
+                    </br>
+                    <input id="shunt-resistance-1-target" type="number"></td>
+                <td>Actual Value: <p id="shunt-resistance-1-actual">hi</p></td>
+                <td><button id="calculateShunt1">Calculate</button></td>>
+            </tr>
+            <tr>
+                <td>
+                    Shunt Resistance Strand 2 [uR]
+                    </br>
+                    <input id="shunt-resistance-2" type="number">
+                </td>
+                <td>Target Value:
+                    </br>
+                    <input id="shunt-resistance-2-target" type="number"></td>
+                <td>Actual Value: <p id="shunt-resistance-2-actual">hi</p></td>
+                <td><button id="calculateShunt2">Calculate</button></td>
+            </tr>
+            <tr>
+                <td>
+                    Shunt Resistance Strand 3 [uR]
+                    </br>
+                    <input id="shunt-resistance-3" type="number">
+                </td>
+                <td>Target Value:
+                    </br>
+                    <input id="shunt-resistance-3-target" type="number"></td>
+                <td>Actual Value: <p id="shunt-resistance-3-actual">hi</p></td>
+                <td><button id="calculateShunt3">Calculate</button></td>
+            </tr>
+        </table>
+    </div>
+
 </div>
 
 
@@ -1112,13 +1363,15 @@
 <script src="js/connection_gui.js"></script>
 <script src="js/gauges.js"></script>
 
+
+<script src="js/settings/board-config.js"></script>
+<script src="js/settings/inline-config.js"></script>
+
 <script src="js/dataProcessing/bms.js"></script>
 <script src="js/dataProcessing/inline.js"></script>
 
 <script src="js/ble/bms.js"></script>
 <script src="js/ble/inline.js"></script>
-
-<script src="js/settings/board-config.js"></script>
 
 
 

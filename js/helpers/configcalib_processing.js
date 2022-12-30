@@ -77,7 +77,7 @@ function getBMSBufferFromConfig(config){
     configValues[18] = to16bit(config.dataloggingUpdateInterval)[1];
 
     //Board
-    configValues[19] = (config.boardAutoStart);
+    configValues[19] = ((config.boardAutoStart) ? 1 : 0);
 
     configValues[20] = to16bit(config.boardPoweroffTime)[0];
     configValues[21] = to16bit(config.boardPoweroffTime)[1];

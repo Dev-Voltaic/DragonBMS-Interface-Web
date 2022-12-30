@@ -1,3 +1,7 @@
+/*
+User interaction
+ */
+
 document.getElementById("board-config-read").addEventListener("click", () => {
     readBMSConfig();
 });
@@ -5,22 +9,22 @@ document.getElementById("board-config-read").addEventListener("click", () => {
 function readBMSConfig(){
     bmsConfigCharacteristic.readValue().then(configValues => {
         console.log(configValues);
-        setConfigValues(getBMSConfigFromBuffer(configValues));
+        setBMSConfigValues(getBMSConfigFromBuffer(configValues));
         configBuffer = getBMSConfigFromBuffer(configValues);
         updateConfigRelatedGauges(configBuffer);
     }).catch(_ => {
-        indicateFailure();
+        indicateBMSConfigFailure();
     });
 }
 
 document.getElementById("board-config-write").addEventListener("click", () => {
     // writing config characteristic
-    console.log(getBMSBufferFromConfig(getConfigValues()));
-    bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getConfigValues())).buffer).then(_ => {
-        indicateSuccess();
+    console.log(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer);
+    bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer).then(_ => {
+        indicateBMSConfigSuccess();
         console.log("successfully wrote config");
     }).catch(error => {
-        indicateFailure();
+        indicateBMSConfigFailure();
     });
     setTimeout(() => {
         readBMSConfig();
@@ -28,7 +32,9 @@ document.getElementById("board-config-write").addEventListener("click", () => {
 });
 
 
-
+/*
+Background processing
+ */
 
 
 
@@ -47,7 +53,7 @@ function setEnabledChannelsByte(byte) {
 }
 
 
-function checkPlausibility() {
+function checkBMSConfigPlausability() {
     setValueBacktoBoundaries("battery-cells", 4, 30);
     setValueBacktoBoundaries("battery-capacity", 0, 10000000);
 
@@ -68,7 +74,7 @@ function checkPlausibility() {
 
 }
 
-function getConfigValues() {
+function getBMSConfigValues() {
     let config = {};
 
     config.battCellCount = getIdValue("battery-cells");
@@ -97,7 +103,7 @@ function getConfigValues() {
 }
 
 
-function setConfigValues(config) {
+function setBMSConfigValues(config) {
     document.getElementById("battery-cells").value = config.battCellCount;
     document.getElementById("battery-capacity").value = config.battNomCapacity;
 
@@ -122,14 +128,14 @@ function setConfigValues(config) {
 }
 
 
-function indicateSuccess() {
+function indicateBMSConfigSuccess() {
     boardConfigTable.style.color = "#64ff79";
     setTimeout(() => {
         boardConfigTable.style.color = "";
     }, 3000);
 }
 
-function indicateFailure() {
+function indicateBMSConfigFailure() {
     boardConfigTable.style.color = "#ff6464";
     setTimeout(() => {
         boardConfigTable.style.color = "";
@@ -138,29 +144,12 @@ function indicateFailure() {
 
 
 boardConfigTable.addEventListener("mousemove", () => {
-    checkPlausibility();
+    checkBMSConfigPlausability();
 });
 boardConfigTable.addEventListener("change", () => {
-    checkPlausibility();
+    checkBMSConfigPlausability();
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let boardConfigBatterySelector = document.getElementById("battery-type-select");
 
 function blurAppropriateVoltageFields(){
     var val = boardConfigBatterySelector.options[boardConfigBatterySelector.selectedIndex].value;
@@ -222,7 +211,7 @@ function blurAppropriateVoltageFields(){
     }
 }
 function setStandardBatteryValues(){
-    var val = boardConfigBatterySelector.options[boardConfigBatterySelector.selectedIndex].value;
+    let val = boardConfigBatterySelector.options[boardConfigBatterySelector.selectedIndex].value;
 
     if(val === "li-ion"){
         document.getElementById("max-cell-voltage").value = "4200";

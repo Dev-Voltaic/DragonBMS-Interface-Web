@@ -34,6 +34,9 @@ function processInlineData(data){
         calibPulseCount: handleSignedBullshit(((data.getUint8(18) << 8) | data.getUint8(17)))
     };
 
+
+    inlineConfigPulseData(values.calibPulseCount);
+
     let inlineLoggingDataInterval = Date.now() - lastInlineLoggingDataTimeStamp;
     lastInlineLoggingDataTimeStamp = Date.now();
     if(inlineLoggingDataInterval < 25){

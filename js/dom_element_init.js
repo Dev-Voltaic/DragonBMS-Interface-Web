@@ -1,6 +1,16 @@
 // MAIN TABLE
 let table = document.getElementById("main-table");
 
+// Board Config
+let boardConfigTable = document.getElementById("board-config-table");
+let boardConfigBatterySelector = document.getElementById("battery-type-select");
+
+// Inline Config
+let inlineConfigContainer = document.getElementById("inline-configuration-div");
+let tempSensorSelector = document.getElementById("ntc-type-select");
+
+
+let elementsDiv = document.getElementById("elementsDiv");
 
 
 
@@ -23,7 +33,6 @@ let clearAlertsFaultName = document.getElementById("clearAlerts-fault-name");
 let clearAlertsFaultExplanation = document.getElementById("clearAlerts-fault-explanation");
 
 
-let elementsDiv = document.getElementById("elementsDiv");
 
 
 // NO DEVICES CONNECTED OVERLAY
@@ -33,7 +42,6 @@ let connectLastInlineButton = document.getElementById('autoconnectInline');
 
 let connectLastInlineOverlay = document.getElementById("connectLastInlineButton");
 
-
 let autoconnectingBMSText = document.getElementById("autoconnectingBMSText");
 let autoconnectBMSText = document.getElementById("autoconnectBMSText");
 
@@ -41,6 +49,9 @@ let autoconnectingTachoText = document.getElementById("autoconnectingTachoText")
 let autoconnectTachoText = document.getElementById("autoconnectTachoText");
 
 let nothingConnectedOverlay = document.getElementById("nothingConnectedOverlay");
+
+
+
 
 
 let inlineGauge = document.getElementById("inline-gauge");
@@ -141,9 +152,3 @@ let gpo2Button = document.getElementById("GPO2");
 
 
 
-
-
-
-
-// Board Config
-let boardConfigTable = document.getElementById("board-config-table");
