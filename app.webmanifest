@@ -1,7 +1,7 @@
 {
   // Name of the app and short name in case there isn't enough space
   "name": "DragonBMS Interface",
-  "short_name": "DBMS_IF",
+  "short_name": "DaronBMS",
   // Description what your app is
   "description": "Progressive Web app for Voltaic DragonBMS Interface",
 
@@ -10,8 +10,8 @@
   "start_url": "/DragonBMS-Interface-Web/",
 
   // colours of the app as displayed in the installer
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#000000",
+  "theme_color": "#0ee0ff",
 
   // Display of the app.
   //This could be "standalone", "fullscreen", "minimal-ui" or "browser"
