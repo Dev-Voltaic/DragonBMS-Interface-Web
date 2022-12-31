@@ -93,6 +93,13 @@ a, a:hover, a:focus{
     text-decoration: none;
 }
 
+/*
+Putting the Actual values closer together
+ */
+#board-calibration-div a{
+    margin-block-start: 0;
+}
+
 
 
 
