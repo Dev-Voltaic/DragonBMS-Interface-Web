@@ -43,6 +43,11 @@ function processData(event) {
         return;
     }
 
+    if(typeof configBuffer === 'undefined'){
+        console.log("waiting for config to be read...");
+        return;
+    }
+
     let loggingDataInterval = Date.now() - lastLoggingDataTimeStamp;
     lastLoggingDataTimeStamp = Date.now();
 

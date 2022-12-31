@@ -84,6 +84,11 @@ function setValueBacktoBoundaries(id, min, max) {
 
 
 
+function mobileDevice(){
+    return /Android|iPhone/i.test(navigator.userAgent);
+}
+
+
 
 
 // function for capping a value between two numbers
