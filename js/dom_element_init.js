@@ -1,105 +1,131 @@
 // MAIN TABLE
-let table = document.getElementById("main-table");
+let table = getId("main-table");
 
 // Board Config
-let boardConfigTable = document.getElementById("board-config-table");
-let boardConfigBatterySelector = document.getElementById("battery-type-select");
+let boardConfigTable = getId("board-config-table");
+let boardConfigBatterySelector = getId("battery-type-select");
+
+// Board Calib
+let boardCalibTable = getId("board-calibration-table")
+let inVolt1Correction = getId("in-volt1-correction");
+let inVolt1Target = getId("in-volt1-target");
+let inVolt1Actual = getId("in-volt1-actual");
+let inVolt2Correction = getId("in-volt2-correction");
+let inVolt2Target = getId("in-volt2-target");
+let inVolt2Actual = getId("in-volt2-actual");
+let inVolt3Correction = getId("in-volt3-correction");
+let inVolt3Target = getId("in-volt3-target");
+let inVolt3Actual = getId("in-volt3-actual");
+
+let outVoltCorrection = getId("out-volt-correction");
+let outVoltTarget = getId("out-volt-target");
+let outVoltActual = getId("out-volt-actual");
+
+let shunt1 = getId("shunt-resistance-1");
+let shunt1Target = getId("shunt-resistance-1-target");
+let shunt1Actual = getId("shunt-resistance-1-actual");
+let shunt2 = getId("shunt-resistance-2");
+let shunt2Target = getId("shunt-resistance-2-target");
+let shunt2Actual = getId("shunt-resistance-2-actual");
+let shunt3 = getId("shunt-resistance-3");
+let shunt3Target = getId("shunt-resistance-3-target");
+let shunt3Actual = getId("shunt-resistance-3-actual");
 
 // Inline Config
-let inlineConfigContainer = document.getElementById("inline-configuration-div");
-let tempSensorSelector = document.getElementById("ntc-type-select");
+let inlineConfigContainer = getId("inline-configuration-div");
+let tempSensorSelector = getId("ntc-type-select");
 
 
-let elementsDiv = document.getElementById("elementsDiv");
+let elementsDiv = getId("elementsDiv");
 
 
 
 // BUTTONS AND SUCH
 
-let precharge_button_div = document.getElementById("precharge-checkbox-template");
-let precharge_button = document.getElementById("precharge-button");
+let precharge_button_div = getId("precharge-checkbox-template");
+let precharge_button = getId("precharge-button");
 
 
-let channel1_button = document.getElementById("ch1control-on");
-let channel2_button = document.getElementById("ch2control-on");
-let channel3_button = document.getElementById("ch3control-on");
+let channel1_button = getId("ch1control-on");
+let channel2_button = getId("ch2control-on");
+let channel3_button = getId("ch3control-on");
 
 
 // CLEAR ALERTS AND TURN ON/OFF
-let clearAlertsButton = document.getElementById("clearAlertsButton");
-let clearAlertsTd = document.getElementById("clearAlertsTd");
-let turnOnTd = document.getElementById("switchOnTd");
-let clearAlertsFaultName = document.getElementById("clearAlerts-fault-name");
-let clearAlertsFaultExplanation = document.getElementById("clearAlerts-fault-explanation");
+let clearAlertsButton = getId("clearAlertsButton");
+let clearAlertsTd = getId("clearAlertsTd");
+let turnOnTd = getId("switchOnTd");
+let clearAlertsFaultName = getId("clearAlerts-fault-name");
+let clearAlertsFaultExplanation = getId("clearAlerts-fault-explanation");
 
 
 
 
 // NO DEVICES CONNECTED OVERLAY
 
-let connectLastDeviceButton = document.getElementById('autoconnectBMS');
-let connectLastInlineButton = document.getElementById('autoconnectInline');
+let connectLastDeviceButton = getId('autoconnectBMS');
+let connectLastInlineButton = getId('autoconnectInline');
 
-let connectLastInlineOverlay = document.getElementById("connectLastInlineButton");
+let connectLastInlineOverlay = getId("connectLastInlineButton");
 
-let autoconnectingBMSText = document.getElementById("autoconnectingBMSText");
-let autoconnectBMSText = document.getElementById("autoconnectBMSText");
+let autoconnectingBMSText = getId("autoconnectingBMSText");
+let autoconnectBMSText = getId("autoconnectBMSText");
 
-let autoconnectingTachoText = document.getElementById("autoconnectingTachoText");
-let autoconnectTachoText = document.getElementById("autoconnectTachoText");
+let autoconnectingTachoText = getId("autoconnectingTachoText");
+let autoconnectTachoText = getId("autoconnectTachoText");
 
-let nothingConnectedOverlay = document.getElementById("nothingConnectedOverlay");
-
-
+let nothingConnectedOverlay = getId("nothingConnectedOverlay");
 
 
 
-let inlineGauge = document.getElementById("inline-gauge");
-let inlineGaugeTd = document.getElementById("inline-gauge-td");
+
+
+let inlineGauge = getId("inline-gauge");
+let inlineGaugeTd = getId("inline-gauge-td");
 
 // INFO ELEMENTS (TEXTS)
 
 
 // Combined / mobile
-let outputVoltageValue = document.getElementById("output-voltage");
-let shuntTempValue = document.getElementById("shunt-temperature");
-let prechargeTempValue = document.getElementById("precharge-temperature");
-let motorTempValue = document.getElementById("motor-temperature");
-let externTempValue = document.getElementById("extern-temperature");
-let combinedCurrentValue = document.getElementById("combined-current");
-let boardPowerlossValue = document.getElementById("board-powerloss");
-let combinedPowerValue = document.getElementById("combined-power");
-let combinedEnergyUsedValue = document.getElementById("combined-energy-used");
-let combinedEnergyUsedValue2 = document.getElementById("combined-energy-used2");
+let outputVoltageValue = getId("output-voltage");
+let shuntTempValue = getId("shunt-temperature");
+let prechargeTempValue = getId("precharge-temperature");
+let motorTempValue = getId("motor-temperature");
+let externTempValue = getId("extern-temperature");
+let combinedCurrentValue = getId("combined-current");
+let boardPowerlossValue = getId("board-powerloss");
+let combinedPowerValue = getId("combined-power");
+let combinedEnergyUsedValue = getId("combined-energy-used");
+let combinedEnergyUsedValue2 = getId("combined-energy-used2");
 
-let onTimeValue = document.getElementById("ontime");
+let onTimeValue = getId("ontime");
 
-let rangeValue = document.getElementById("sessionRangeValue");
-let sessionEconomyValue = document.getElementById("sessionEconomyValue");
-let resetEconomyButton = document.getElementById("resetEconomyButton");
+let rangeValue = getId("sessionRangeValue");
+let sessionEconomyValue = getId("sessionEconomyValue");
+let resetEconomyButton = getId("resetEconomyButton");
 
 
 // 3 Strands Info
-let ch1InfoVoltage = document.getElementById("ch1info-v");
-let ch1InfoSOC = document.getElementById("ch1info-soc");
-let ch1InfoBatteryType = document.getElementById("ch1info-t");
-let ch1infoet = document.getElementById("ch1info-et");
-let ch1InfoEnergyUsed = document.getElementById("ch1info-eu");
+let ch1InfoVoltage = getId("ch1info-v");
+let ch1InfoSOC = getId("ch1info-soc");
+let ch1InfoBatteryType = getId("ch1info-t");
+let ch1infoet = getId("ch1info-et");
+let ch1InfoEnergyUsed = getId("ch1info-eu");
 
-let ch2InfoVoltage = document.getElementById("ch2info-v");
-let ch2InfoSOC = document.getElementById("ch2info-soc");
-let ch2InfoBatteryType = document.getElementById("ch2info-t");
-let ch2infoet = document.getElementById("ch2info-et");
-let ch2InfoEnergyUsed = document.getElementById("ch2info-eu");
+let ch2InfoVoltage = getId("ch2info-v");
+let ch2InfoSOC = getId("ch2info-soc");
+let ch2InfoBatteryType = getId("ch2info-t");
+let ch2infoet = getId("ch2info-et");
+let ch2InfoEnergyUsed = getId("ch2info-eu");
 
-let ch3InfoVoltage = document.getElementById("ch3info-v");
-let ch3InfoSOC = document.getElementById("ch3info-soc");
-let ch3InfoBatteryType = document.getElementById("ch3info-t");
-let ch3infoet = document.getElementById("ch3info-et");
-let ch3InfoEnergyUsed = document.getElementById("ch3info-eu");
+let ch3InfoVoltage = getId("ch3info-v");
+let ch3InfoSOC = getId("ch3info-soc");
+let ch3InfoBatteryType = getId("ch3info-t");
+let ch3infoet = getId("ch3info-et");
+let ch3InfoEnergyUsed = getId("ch3info-eu");
 
 
-let minSOCValue = document.getElementById("min-soc");
+let minSOCValue = getId("min-soc");
 
 
 
@@ -108,46 +134,46 @@ let boardElements = document.getElementsByClassName("board-element");
 
 
 // bms & fault states
-let bmsStateValue = document.getElementById("state-machine-state");
-let faultStateValue = document.getElementById("fault-state");
+let bmsStateValue = getId("state-machine-state");
+let faultStateValue = getId("fault-state");
 
 
-let turnOnButton = document.getElementById("turnOnButton");
+let turnOnButton = getId("turnOnButton");
 
 
 
 // Max values
-let maxSpeedValue = document.getElementById("max-speed");
-let maxPowerValue = document.getElementById("max-power");
-let maxCurrentValue = document.getElementById("max-amp-big-val");
-let minVoltValue = document.getElementById("min-volt-big-val");
+let maxSpeedValue = getId("max-speed");
+let maxPowerValue = getId("max-power");
+let maxCurrentValue = getId("max-amp-big-val");
+let minVoltValue = getId("min-volt-big-val");
 
-let maxPrechargeTemp = document.getElementById("maxPrechargeTemp");
-let maxShuntTemp = document.getElementById("maxShuntTemp");
-let maxMotorTemp = document.getElementById("maxMotorTemp");
-let maxExternTemp = document.getElementById("maxExternTemp");
+let maxPrechargeTemp = getId("maxPrechargeTemp");
+let maxShuntTemp = getId("maxShuntTemp");
+let maxMotorTemp = getId("maxMotorTemp");
+let maxExternTemp = getId("maxExternTemp");
 
 
 // Channel Control Gauge
-let ch1ControlCurrent = document.getElementById("ch1control-a");
-let ch1ControlPower = document.getElementById("ch1control-p");
-let ch2ControlCurrent = document.getElementById("ch2control-a");
-let ch2ControlPower = document.getElementById("ch2control-p");
-let ch3ControlCurrent = document.getElementById("ch3control-a");
-let ch3ControlPower = document.getElementById("ch3control-p");
+let ch1ControlCurrent = getId("ch1control-a");
+let ch1ControlPower = getId("ch1control-p");
+let ch2ControlCurrent = getId("ch2control-a");
+let ch2ControlPower = getId("ch2control-p");
+let ch3ControlCurrent = getId("ch3control-a");
+let ch3ControlPower = getId("ch3control-p");
 
 // Config Info Gauge
-let configInfoStart = document.getElementById("config-info-startup");
-let configInfoShort = document.getElementById("config-info-short");
-let configInfoOcp = document.getElementById("config-info-ocp");
-let configInfoUvp = document.getElementById("config-info-uvp");
-let configInfoOvp = document.getElementById("config-info-ovp");
-let configInfoRevOcp = document.getElementById("config-info-revocp");
-let configInfoOtp = document.getElementById("config-info-otp");
+let configInfoStart = getId("config-info-startup");
+let configInfoShort = getId("config-info-short");
+let configInfoOcp = getId("config-info-ocp");
+let configInfoUvp = getId("config-info-uvp");
+let configInfoOvp = getId("config-info-ovp");
+let configInfoRevOcp = getId("config-info-revocp");
+let configInfoOtp = getId("config-info-otp");
 
 
-let gpo1Button = document.getElementById("GPO1");
-let gpo2Button = document.getElementById("GPO2");
+let gpo1Button = getId("GPO1");
+let gpo2Button = getId("GPO2");
 
 
 

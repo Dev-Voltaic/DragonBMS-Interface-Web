@@ -2,7 +2,7 @@
 User interaction
  */
 
-document.getElementById("board-config-read").addEventListener("click", () => {
+getId("board-config-read").addEventListener("click", () => {
     readBMSConfig();
 });
 
@@ -17,7 +17,7 @@ function readBMSConfig(){
     });
 }
 
-document.getElementById("board-config-write").addEventListener("click", () => {
+getId("board-config-write").addEventListener("click", () => {
     // writing config characteristic
     console.log(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer);
     bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer).then(_ => {
@@ -47,9 +47,9 @@ function getEnabledChannelsByte() {
 }
 
 function setEnabledChannelsByte(byte) {
-    document.getElementById("enabled-channels-1").checked = byte & 0b00000001;
-    document.getElementById("enabled-channels-2").checked = byte & 0b00000010;
-    document.getElementById("enabled-channels-3").checked = byte & 0b00000100;
+    getId("enabled-channels-1").checked = byte & 0b00000001;
+    getId("enabled-channels-2").checked = byte & 0b00000010;
+    getId("enabled-channels-3").checked = byte & 0b00000100;
 }
 
 
@@ -97,34 +97,34 @@ function getBMSConfigValues() {
     config.boardAutoStart = getIdChecked("autostart");
     config.boardPoweroffTime = getIdValue("auto-poweroff");
     config.boardEnabledChannels = getEnabledChannelsByte();
-    config.boardUpdateCount = document.getElementById("updatecount").innerHTML;
+    config.boardUpdateCount = getId("updatecount").innerHTML;
 
     return config;
 }
 
 
 function setBMSConfigValues(config) {
-    document.getElementById("battery-cells").value = config.battCellCount;
-    document.getElementById("battery-capacity").value = config.battNomCapacity;
+    getId("battery-cells").value = config.battCellCount;
+    getId("battery-capacity").value = config.battNomCapacity;
 
-    document.getElementById("max-cell-voltage").value = config.protMaxCellVoltage;
-    document.getElementById("min-cell-voltage").value = config.protMinCellVoltage;
-    document.getElementById("strand-max-current").value = config.protMaxCurrent / 100;
-    document.getElementById("strand-max-reverse-current").value = config.protMaxReverseCurrent / 100;
-    document.getElementById("strand-max-imbalance-current").value = config.protMaxImbalanceCurrent / 100;
+    getId("max-cell-voltage").value = config.protMaxCellVoltage;
+    getId("min-cell-voltage").value = config.protMinCellVoltage;
+    getId("strand-max-current").value = config.protMaxCurrent / 100;
+    getId("strand-max-reverse-current").value = config.protMaxReverseCurrent / 100;
+    getId("strand-max-imbalance-current").value = config.protMaxImbalanceCurrent / 100;
 
-    document.getElementById("datalogging-update-interval").value = config.dataloggingUpdateInterval;
+    getId("datalogging-update-interval").value = config.dataloggingUpdateInterval;
 
-    document.getElementById("logic-max-temp").value = config.protMaxLogicTemp;
-    document.getElementById("power-max-temp").value = config.protMaxPowerTemp;
+    getId("logic-max-temp").value = config.protMaxLogicTemp;
+    getId("power-max-temp").value = config.protMaxPowerTemp;
 
-    //document.getElementById("precharge-current-limit").value = config.prechargeCurrentLimit;
+    //getId("precharge-current-limit").value = config.prechargeCurrentLimit;
 
-    //document.getElementById("load-capacitance").value = config.prechargeNomCapacity;
-    document.getElementById("autostart").checked = config.boardAutoStart;
-    document.getElementById("auto-poweroff").value = config.boardPoweroffTime;
+    //getId("load-capacitance").value = config.prechargeNomCapacity;
+    getId("autostart").checked = config.boardAutoStart;
+    getId("auto-poweroff").value = config.boardPoweroffTime;
     setEnabledChannelsByte(config.boardEnabledChannels);
-    document.getElementById("updatecount").innerHTML = config.boardUpdateCount;
+    getId("updatecount").innerHTML = config.boardUpdateCount;
 }
 
 
@@ -214,22 +214,22 @@ function setStandardBatteryValues(){
     let val = boardConfigBatterySelector.options[boardConfigBatterySelector.selectedIndex].value;
 
     if(val === "li-ion"){
-        document.getElementById("max-cell-voltage").value = "4200";
-        document.getElementById("min-cell-voltage").value = "3000";
+        getId("max-cell-voltage").value = "4200";
+        getId("min-cell-voltage").value = "3000";
 
         calculatePackVoltages();
         return;
     }
     if(val === "li-po"){
-        document.getElementById("max-cell-voltage").value = "4200";
-        document.getElementById("min-cell-voltage").value = "2800";
+        getId("max-cell-voltage").value = "4200";
+        getId("min-cell-voltage").value = "2800";
 
         calculatePackVoltages();
         return;
     }
     if(val === "li-fe-po"){
-        document.getElementById("max-cell-voltage").value = "3500";
-        document.getElementById("min-cell-voltage").value = "2500";
+        getId("max-cell-voltage").value = "3500";
+        getId("min-cell-voltage").value = "2500";
 
         calculatePackVoltages();
         return;
@@ -237,10 +237,10 @@ function setStandardBatteryValues(){
 }
 
 function calculatePackVoltages(){
-    document.getElementById("pack-overvoltage").value = parseFloat(document.getElementById("battery-cells").value) *
-        parseFloat(document.getElementById("max-cell-voltage").value) / 1000;
-    document.getElementById("pack-undervoltage").value = parseFloat(document.getElementById("battery-cells").value) *
-        parseFloat(document.getElementById("min-cell-voltage").value) / 1000;
+    getId("pack-overvoltage").value = parseFloat(getId("battery-cells").value) *
+        parseFloat(getId("max-cell-voltage").value) / 1000;
+    getId("pack-undervoltage").value = parseFloat(getId("battery-cells").value) *
+        parseFloat(getId("min-cell-voltage").value) / 1000;
 }
 
 blurAppropriateVoltageFields();
@@ -255,6 +255,6 @@ boardConfigBatterySelector.addEventListener("change", ()=>{
         calculatePackVoltages();
     });
 });
-document.getElementById("battery-cells").addEventListener("input", ()=>{
+getId("battery-cells").addEventListener("input", ()=>{
     calculatePackVoltages();
 });

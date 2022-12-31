@@ -274,8 +274,7 @@ function sendChannelControlData(alert, ch1, ch2, ch3) {
 // mostly redundant but nice to have
 function handleWarningIndication(event) {
     let warningValue = event.target.value;
-    let byte = (((warningValue.getUint8(3) << 24) | (warningValue.getUint8(2) << 16)) | (warningValue.getUint8(1) << 8)) | (warningValue.getUint8(0));
-    setWarningStatus(byte);
+    warningBuffer = (((warningValue.getUint8(3) << 24) | (warningValue.getUint8(2) << 16)) | (warningValue.getUint8(1) << 8)) | (warningValue.getUint8(0));
 }
 
 // the error popup windows are too annoying
@@ -295,8 +294,7 @@ function pollFaults(){
         // try catch for "gatt operation already in progress"
         try {
             alertCharacteristic.readValue().then(alertValue => {
-                alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0))
-                console.log(alertBuffer);
+                alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0));
             });
         } catch (error) { //"gatt operation already in progress"
         }

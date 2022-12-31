@@ -2,7 +2,7 @@
 User interaction
  */
 
-document.getElementById("inline-config-read").addEventListener("click", () => {
+getId("inline-config-read").addEventListener("click", () => {
     readInlineConfig();
 });
 
@@ -15,7 +15,7 @@ function readInlineConfig(){
     });
 }
 
-document.getElementById("inline-config-write").addEventListener("click", () => {
+getId("inline-config-write").addEventListener("click", () => {
     // writing config characteristic
     console.log((getInlineConfigValues()));
     inlineConfigCharacteristic.writeValue(Uint8Array.from(getInlineBufferFromConfig(getInlineConfigValues())).buffer).then(_ => {
@@ -29,10 +29,29 @@ document.getElementById("inline-config-write").addEventListener("click", () => {
     }, 200);
 });
 
+function indicateInlineConfigSuccess() {
+    inlineConfigContainer.style.color = "#64ff79";
+    setTimeout(() => {
+        inlineConfigContainer.style.color = "";
+    }, 3000);
+}
 
+function indicateInlineConfigFailure() {
+    inlineConfigContainer.style.color = "#ff6464";
+    setTimeout(() => {
+        inlineConfigContainer.style.color = "";
+    }, 2000);
+}
+
+
+
+
+/*
+Actual Data processing
+ */
 
 function getTempSensorType(){
-    let val = document.getElementById("ntc-type-select").value;
+    let val = getId("ntc-type-select").value;
     if(val === "kty83"){
         return 1;
     }
@@ -47,13 +66,13 @@ function getTempSensorType(){
 
 function setTempSensorType(value){
     if(value === 1){
-        document.getElementById("ntc-type-select").value = "kty83";
+        getId("ntc-type-select").value = "kty83";
     }
     if(value === 2){
-        document.getElementById("ntc-type-select").value = "kty84";
+        getId("ntc-type-select").value = "kty84";
     }
     if(value === 0){
-        document.getElementById("ntc-type-select").value = "ntc_custom";
+        getId("ntc-type-select").value = "ntc_custom";
     }
 
     blurAppropriateTempFields();
@@ -83,18 +102,18 @@ function setStandardNTCValues(){
     var val = tempSensorSelector.options[tempSensorSelector.selectedIndex].value;
 
     if(val === "ntc10k"){
-        document.getElementById("r-value").value = "29400";
-        document.getElementById("b-value").value = "3460";
+        getId("r-value").value = "29400";
+        getId("b-value").value = "3460";
         return;
     }
     if(val === "ntc100k"){
-        document.getElementById("r-value").value = "350000";
-        document.getElementById("b-value").value = "4334";
+        getId("r-value").value = "350000";
+        getId("b-value").value = "4334";
         return;
     }
 
-    document.getElementById("r-value").value = "";
-    document.getElementById("b-value").value = "";
+    getId("r-value").value = "";
+    getId("b-value").value = "";
 }
 blurAppropriateTempFields();
 setStandardNTCValues();
@@ -135,38 +154,18 @@ function getInlineConfigValues() {
     return config;
 }
 
-function indicateInlineConfigSuccess() {
-    inlineConfigContainer.style.color = "#64ff79";
-    setTimeout(() => {
-        inlineConfigContainer.style.color = "";
-    }, 3000);
-}
-
-function indicateInlineConfigFailure() {
-    inlineConfigContainer.style.color = "#ff6464";
-    setTimeout(() => {
-        inlineConfigContainer.style.color = "";
-    }, 2000);
-}
-
-
 
 function setInlineConfigValues(config) {
     console.log("Got config: ");
     console.log(config);
     setTempSensorType(config.tempSensorType);
-    document.getElementById("r-value").value = config.ntc_r * 10;
-    document.getElementById("r-value-divider").value = config.divider_r * 10;
-    document.getElementById("b-value").value = config.ntc_b;
-    document.getElementById("reversed").checked = config.reversed;
-    document.getElementById("back-neg").checked = config.backwards_negative;
-    document.getElementById("distperpulse").value = config.impulses;
-    document.getElementById("motor-poles").value = config.motor_poles;
-
-    inlineConfigContainer.style.color = "#64ff79";
-    setTimeout(() => {
-        inlineConfigContainer.style.color = "";
-    }, 1000);
+    getId("r-value").value = config.ntc_r * 10;
+    getId("r-value-divider").value = config.divider_r * 10;
+    getId("b-value").value = config.ntc_b;
+    getId("reversed").checked = config.reversed;
+    getId("back-neg").checked = config.backwards_negative;
+    getId("distperpulse").value = config.impulses;
+    getId("motor-poles").value = config.motor_poles;
 }
 
 
@@ -183,21 +182,21 @@ let currentPulseValue = 0;
 
 function inlineConfigPulseData(data){
     currentPulseValue = data;
-    document.getElementById("pulses").innerHTML = String(parseFloat(data) - initialPulseValue);
+    getId("pulses").innerHTML = String(parseFloat(data) - initialPulseValue);
 }
 
-document.getElementById("resetPulses").addEventListener("click", (e) => {
+getId("resetPulses").addEventListener("click", (e) => {
     initialPulseValue = currentPulseValue;
 });
-document.getElementById("calculatedistperpulse").addEventListener("click", () => {
-    let pulses = parseFloat(document.getElementById("pulses").innerHTML);
-    let dist = parseFloat(document.getElementById("distance").value);
+getId("calculatedistperpulse").addEventListener("click", () => {
+    let pulses = parseFloat(getId("pulses").innerHTML);
+    let dist = parseFloat(getId("distance").value);
     if(pulses === 0){
-        document.getElementById("pulses").style.color = "red";
+        getId("pulses").style.color = "red";
         setTimeout(()=>{
-            document.getElementById("pulses").style.color = "";
+            getId("pulses").style.color = "";
         }, 500);
         return;
     }
-    document.getElementById("distperpulse").value = Math.abs(Math.round(10 * dist / pulses));
+    getId("distperpulse").value = Math.abs(Math.round(10 * dist / pulses));
 });

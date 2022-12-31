@@ -1185,7 +1185,10 @@
 
         <h2>Calibration values:</h2>
 
-        <table>
+        <button id="board-calib-read">Read</button>
+        <button id="board-calib-write">Write</button>
+
+        <table id="board-calibration-table">
             <tr class="no-height">
                 <th></th>
                 <th></th>
@@ -1349,9 +1352,9 @@
 
 <script src="js/serviceworker/sw_init.js"></script>
 
-<script src="js/helpers/darkmode.js"></script>
-<script src="js/dom_element_init.js"></script>
 <script src="js/helpers/small_functions.js"></script>
+<script src="js/dom_element_init.js"></script>
+<script src="js/helpers/darkmode.js"></script>
 <script src="js/helpers/configcalib_processing.js"></script>
 <script src="js/helpers/zoom.js"></script>
 
@@ -1366,6 +1369,7 @@
 
 <script src="js/settings/board-config.js"></script>
 <script src="js/settings/inline-config.js"></script>
+<script src="js/settings/board-calib.js"></script>
 
 <script src="js/dataProcessing/bms.js"></script>
 <script src="js/dataProcessing/inline.js"></script>

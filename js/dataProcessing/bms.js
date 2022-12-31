@@ -355,8 +355,7 @@ function processData(event) {
 
     setChannelInfo(averagedArray(averagingBufferV, 1).concat(averagedArray(averagingBufferA, 2)));
 
-    // to be implemented within the site
-    //contextBridge.send("calib-averaged-data", averagingBuffer);
+    setCalibActualValues(averagedArray(averagingBuffer, 3));
 
     if (dataLoggingEnabled) {
 

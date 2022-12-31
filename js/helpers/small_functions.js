@@ -54,6 +54,10 @@ function handleSignedBullshit64(input) {
     return -input;
 }
 
+
+function getId(id){
+    return document.getElementById(id);
+}
 function getIdValue(id) {
     return document.getElementById(id).value;
 }
