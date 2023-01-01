@@ -1,6 +1,5 @@
-if (navigator.serviceWorker) {
-    navigator.serviceWorker.register (
-        '/DragonBMS-Interface-Web/serviceworker.js',
-        {scope: '/DragonBMS-Interface-Web/'}
-    )
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/DragonBMS-Interface-Web/serviceworker.js');
+    });
 }
