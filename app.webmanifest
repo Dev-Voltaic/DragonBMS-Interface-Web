@@ -1,50 +1,42 @@
 {
-  // Name of the app and short name in case there isn't enough space
   "name": "DragonBMS Interface",
-  "short_name": "DaronBMS",
-  "description": "Progressive Web app for Voltaic DragonBMS Interface",
-
+  "short_name": "DragonBMS",
+  "theme_color": "#0ee0ff",
+  "background_color": "#000000",
+  "display": "fullscreen",
+  "orientation": "portrait",
   "scope": "/DragonBMS-Interface-Web/",
   "start_url": "/DragonBMS-Interface-Web/",
-
-  // colours of the app as displayed in the installer
-  "background_color": "#000000",
-  "theme_color": "#0ee0ff",
-
-  // Display of the app.
-  //This could be "standalone", "fullscreen", "minimal-ui" or "browser"
-  "display": "fullscreen",
-
   "icons": [
-      {
-        "src": "/DragonBMS-Interface-Web/img/icon/64x64.png",
-        "type": "image/png",
-        "sizes": "64x64"
-      },
-      {
-          "src": "/DragonBMS-Interface-Web/img/icon/192x192.png",
-          "type": "image/png",
-          "sizes": "192x192"
-      },
-      {
-        "src": "/DragonBMS-Interface-Web/img/icon/256x256.png",
-        "type": "image/png",
-        "sizes": "256x256"
-      },
-      {
-        "src": "/DragonBMS-Interface-Web/img/icon/512x512.png",
-        "type": "image/png",
-        "sizes": "512x512"
-      },
-      {
-        "src": "/DragonBMS-Interface-Web/img/icon/1024x1024.png",
-        "type": "image/png",
-        "sizes": "1024x1024"
-      },
-      {
-        "src": "/DragonBMS-Interface-Web/img/icon/1500x1500.png",
-        "type": "image/png",
-        "sizes": "1500x1500"
-      }
+    {
+      "src": "/DragonBMS-Interface-Web/img/icon/64x64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/DragonBMS-Interface-Web/img/icon/192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/DragonBMS-Interface-Web/img/icon/256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/DragonBMS-Interface-Web/img/icon/512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/DragonBMS-Interface-Web/img/icon/1024x1024.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    },
+    {
+      "src": "/DragonBMS-Interface-Web/img/icon/1500x1500.png",
+      "type": "image/png",
+      "sizes": "1500x1500"
+    }
   ]
 }
