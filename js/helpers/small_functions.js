@@ -88,7 +88,7 @@ function mobileDevice(){
     return /Android|iPhone/i.test(navigator.userAgent);
 }
 
-
+let isChrome = !!window.chrome;
 
 
 // function for capping a value between two numbers

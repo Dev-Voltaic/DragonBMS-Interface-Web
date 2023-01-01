@@ -1,16 +1,3 @@
-let settingsSwipeContainer = document.getElementById("swipe-for-settings-container");
-let settingsSwipeText = document.getElementsByClassName("swipe-for-settings-text")[0];
-let settingsSwipeAction = document.getElementsByClassName("swipe-for-settings-action")[0];
-
-
-let interfaceInfoContainer = document.getElementById("interface-info-container");
-let settingsContainer = document.getElementById("settings-container");
-
-
-
-let settingsHide = document.getElementById("settings-hide");
-
-
 let settingsEnabled = false;
 
 

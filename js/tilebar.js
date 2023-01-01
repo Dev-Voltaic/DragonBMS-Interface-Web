@@ -97,3 +97,19 @@ document.getElementById("tileBarAbout").addEventListener("click", ()=>{
 document.getElementById("tileBarDarkmode").addEventListener("click", ()=>{
     toggleDarkmode();
 });
+
+
+
+
+
+
+
+// Chrome detection and Warning the user as BLE probably isn't available
+
+if(!isChrome){
+    table.classList.add("hidden");
+    nothingConnectedOverlay.classList.add("hidden");
+    settingsSwipeContainer.classList.add("hidden");
+    getId("tilebar").classList.add("disabled");
+    alert("This site is tailored around Progressive Wep App services that are only supported in full by Chrome.\nPlease open this site in Chrome only as we can't ensure functionality otherwise ;)");
+}
