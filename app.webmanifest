@@ -2,10 +2,8 @@
   // Name of the app and short name in case there isn't enough space
   "name": "DragonBMS Interface",
   "short_name": "DaronBMS",
-  // Description what your app is
   "description": "Progressive Web app for Voltaic DragonBMS Interface",
 
-  // Scope and start URL - these need to change to yours
   "scope": "/DragonBMS-Interface-Web/",
   "start_url": "/DragonBMS-Interface-Web/",
 
@@ -17,9 +15,6 @@
   //This could be "standalone", "fullscreen", "minimal-ui" or "browser"
   "display": "fullscreen",
 
-  // The possible icons to display. Make sure to change the src URL,
-  // the type and the size to your needs. If the size isn't correct,
-  // you may not be able to install the app.
   "icons": [
       {
         "src": "/DragonBMS-Interface-Web/img/icon/64x64.png",
@@ -27,9 +22,9 @@
         "sizes": "64x64"
       },
       {
-              "src": "/DragonBMS-Interface-Web/img/icon/192x192.png",
-              "type": "image/png",
-              "sizes": "192x192"
+          "src": "/DragonBMS-Interface-Web/img/icon/192x192.png",
+          "type": "image/png",
+          "sizes": "192x192"
       },
       {
         "src": "/DragonBMS-Interface-Web/img/icon/256x256.png",
@@ -51,7 +46,5 @@
         "type": "image/png",
         "sizes": "1500x1500"
       }
-  ],
-
-  "prefer_related_applications": false
+  ]
 }
