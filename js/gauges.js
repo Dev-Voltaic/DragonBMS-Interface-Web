@@ -509,14 +509,14 @@ function updateWarningFields() {
         faultExplanationText = "ayo big man, where the voltage at??";
     }
 
-    if (alertBuffer & 0b00100000000000000000000000000000) {
+    if (alertBuffer & 0b00010000000000000000000000000000) {
         faultFieldText += "Invalid Input  ";
 
         faultNameText = "Invalid config/calib input";
         faultExplanationText = "Please reconsider your life choices and think the given config values through again ;)";
     }
 
-    if (alertBuffer & 0b01000000000000000000000000000000) {
+    if (alertBuffer & 0b00100000000000000000000000000000) {
         faultFieldText += "FW Hiccup  ";
 
         faultNameText = "Firmware Hiccup";
