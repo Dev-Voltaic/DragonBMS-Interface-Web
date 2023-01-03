@@ -1,16 +1,14 @@
 function getDeviceInfoSeq(server, cb){
     // Device information service
     server.getPrimaryService('device_information').then((service) => {
-        getHardwareRevisionString(service, _=>{
-            getFirmwareRevisionString(service, cb);
-        })
-    });
-}
-function getDeviceInfoPar(server, cb){
-    // Device information service
-    server.getPrimaryService('device_information').then((service) => {
-        getHardwareRevisionString(service, ()=>{});
-        getFirmwareRevisionString(service, cb);
+        getHardwareRevisionString(service, (hardwareRevStr)=>{
+            getFirmwareRevisionString(service, (firmwareRevStr)=>{
+                cb({
+                    hardwareRevisionString: hardwareRevStr,
+                    firmwareRevisionString: firmwareRevStr
+                });
+            });
+        });
     });
 }
 
@@ -19,7 +17,7 @@ function getHardwareRevisionString(service, cb){
     // hardware revision string
     service.getCharacteristic(BluetoothUUID.getCharacteristic('hardware_revision_string')).then((characteristic) => {
         characteristic.readValue().then(value => {
-            bleBMSDeviceHardwareRevision = decoder.decode(value);
+            cb(decoder.decode(value));
         });
     });
 }
@@ -28,9 +26,7 @@ function getFirmwareRevisionString(service, cb){
     // firmware revision string
     service.getCharacteristic(BluetoothUUID.getCharacteristic('firmware_revision_string')).then((characteristic) => {
         characteristic.readValue().then(value => {
-            bleBMSDeviceFirmwareRevision = decoder.decode(value);
-
-            cb();
+            cb(decoder.decode(value));
         });
     });
 }

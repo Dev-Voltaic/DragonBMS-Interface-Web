@@ -72,8 +72,8 @@ function processData(event) {
         }
     });
 
-    document.getElementById("bms-hz").innerHTML = "BMS-Hz: " +  hertzSampleBuffer.length + " /" + (1000/configBuffer.dataloggingUpdateInterval).toFixed(1);
-
+    document.getElementById("bms-hz").innerHTML = "BMS: " +  hertzSampleBuffer.length + "Hz";
+    //+ (1000/configBuffer.dataloggingUpdateInterval).toFixed(1)
 
     let V_Strang1 = (((value.getUint8(10) << 8) | value.getUint8(9)) / 100);
     let V_Strang2 = (((value.getUint8(12) << 8) | value.getUint8(11)) / 100);

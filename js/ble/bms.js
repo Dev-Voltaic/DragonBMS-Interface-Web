@@ -166,6 +166,14 @@ async function bmsDeviceConnected(server) {
 
                                     bleBMSConnected = true;
 
+                                    try{
+                                        getDeviceInfoSeq(server, (data)=>{
+                                            console.log(data);
+                                        });
+                                    }catch (e) {
+                                        console.log("couldn't get device info service");
+                                    }
+
 
                                     setTimeout(() => {
                                         enableBoardGauges();
@@ -186,7 +194,11 @@ async function bmsDeviceConnected(server) {
         }else{
             // non mobile device
 
-            getDeviceInfoPar(server, ()=>{});
+            getDeviceInfoSeq(server, (data)=>{
+                console.log(data);
+                getId("bms-hardware-version").innerHTML = data.hardwareRevisionString;
+                getId("bms-firmware-version").innerHTML = data.firmwareRevisionString;
+            });
             getDevelopmentServicePar(server, ()=>{});
             getRuntimeControlServicePar(server, ()=>{});
             getBMSConfigServicePar(server, ()=>{});

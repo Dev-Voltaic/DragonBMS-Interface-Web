@@ -57,7 +57,7 @@ function processInlineData(data){
         }
     });
 
-    document.getElementById("tacho-hz").innerHTML = "Tch-Hz: " +  inlineHertzSampleBuffer.length + " /20";
+    document.getElementById("tacho-hz").innerHTML = "T: " +  inlineHertzSampleBuffer.length + "Hz";
 
 
 
