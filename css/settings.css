@@ -109,7 +109,7 @@ Buttons for reading and writing
  */
 
 .readwrite-button-container button{
-    font-family: Pervitina, Serif;
+    font-family: Pervitina, serif;
     width: 25vw;
     height: 4vw;
     font-size: 3vw;
@@ -171,11 +171,6 @@ All tables inside the settings container
 
 
 
-input{
-    background-color: #313131;
-    color: white;
-}
-
 .logo{
     width: 30vw;
 }
@@ -206,35 +201,4 @@ input{
 #board-config-table tr {
     height: 6vw;
     width: 100%;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 40vw;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    padding: 6px 8px;
-    z-index: 20;
-
-    opacity: 0;
-
-    background-color: #444444;
-
-    margin-left: 0;
-
-    border-radius: 1vw;
-
-    transition: 0s;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-    opacity: 1;
-
-    transition-delay: 1s;
 }

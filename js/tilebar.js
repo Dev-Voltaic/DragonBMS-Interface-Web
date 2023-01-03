@@ -45,7 +45,6 @@ document.getElementById("tileBarTachoConfig").addEventListener("click", () => {
 
 
 let tileBarZoomin = document.getElementById("tileBarZoomIn");
-tileBarZoomin.style.visibility = "hidden";
 tileBarZoomin.addEventListener("click", () => {
     zoom.to({element: selected_cell, padding: 0, pan: false});
     // "click" onto the same selected cell again to disable the selection
@@ -54,6 +53,8 @@ tileBarZoomin.addEventListener("click", () => {
 
 
 // LOGGING
+
+/*
 document.getElementById("tileBarSelectDataloggingDirectory").addEventListener("click", () => {
     if (!bleBMSConnected && !bleInlineConnected) {
         //contextBridge.send("no-ble-connection-warning");
@@ -89,7 +90,7 @@ document.getElementById("tileBarStopDatalogging").addEventListener("click", ()=>
 document.getElementById("tileBarAbout").addEventListener("click", ()=>{
 });
 
-
+*/
 
 
 // DARKMODE

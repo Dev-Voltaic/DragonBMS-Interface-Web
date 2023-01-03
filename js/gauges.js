@@ -366,7 +366,6 @@ function inlineConnected() {
 
 
     if (!bleBMSConnected) {
-        tileBarZoomin.style.visibility = ""; // bodge to make the zoom out field visible
         zoom.to({element: inlineGaugeTd, padding: 0, pan: false});
     }
 }

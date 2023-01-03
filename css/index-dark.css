@@ -46,3 +46,13 @@ table.table-4fields td {
     text-shadow: 2px 2px #00c1dc;
 }
 
+
+
+
+/*
+For Settings Input fields
+ */
+input{
+    background-color: #313131;
+    color: white;
+}

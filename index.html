@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
@@ -39,24 +41,24 @@
             <span>Bluetooth</span>
             <div class="dropdown-content">
                 <p id="tileBarConnectBMS">Connect BMS</p>
-                </br>
+                <br>
                 <p id="tileBarConnectTacho">Connect Tacho</p>
-                </br>
+                <br>
                 <p id="tileBarDisconnect">Disconnect All Devices</p>
             </div>
         </div>
         <div class="dropdown">
             <span>Settings</span>
             <div class="dropdown-content">
-                <a id="tileBarBoardInfo" href="#swipe-for-settings-container">Board Info</a>
-                </br>
-                <a id="tileBarBoardConfig" href="#board-configuration">Board Configuration</a>
-                </br>
+                <a id="tileBarBoardInfo">Board Info</a>
+                <br>
+                <a id="tileBarBoardConfig">Board Configuration</a>
+                <br>
                 <a id="tileBarBoardCalib">Board Calibration</a>
-                </br>
+                <br>
                 <a id="tileBarTachoConfig">Tacho Configuration</a>
                 <a id="settings-hide" class="hidden">
-                    </br>
+                    <br>
                     Hide Settings
                 </a>
             </div>
@@ -65,11 +67,11 @@
             <span id="logging-span">Logging</span>
             <div class="dropdown-content">
                 <p id="tileBarSelectDataloggingDirectory">Select Directory</p>
-                </br>
+                <br>
                 <p id="tileBarStartDatalogging">Start Datalogging</p>
-                </br>
+                <br>
                 <p id="tileBarStopDatalogging">Stop Datalogging</p>
-                </br>
+                <br>
                 <p id="titleBarMergeFiles">ALPHA Merge VESC and BMS Logging Files</p>
             </div>
         </div>
@@ -79,7 +81,7 @@
         <div id="tileBarDarkmode">
             <span>Darkmode</span>
         </div>
-        <div id="tileBarZoomIn">
+        <div id="tileBarZoomIn" class="hidden">
             <span>Zoom</span>
         </div>
 
@@ -103,19 +105,20 @@
 
         <div id="autoconnectBMS">
             <h4 id="autoconnectingBMSText">Connecting..</h4>
-            <h2 id="autoconnectBMSText">Connect</br>
+            <h2 id="autoconnectBMSText">Connect<br>
                 BMS</h2>
 
         </div>
         <div id="autoconnectInline">
             <h4 id="autoconnectingTachoText">Connecting..</h4>
-            <h2 id="autoconnectTachoText">Connect</br>
+            <h2 id="autoconnectTachoText">Connect<br>
                 Tacho</h2>
         </div>
     </div>
 </div>
 
 <table id="main-table">
+    <tr>
     <td class="main-table-td-2row" id="inline-gauge-td">
         <div id="connectLastInlineButton"><h2>Connect Tacho</h2></div>
         <div class="gauge-div" id="inline-gauge">
@@ -199,7 +202,7 @@
                 <td>
                     <div>
                         <div>
-                            <h5>BMS-Precharge</br>Temperature:</h5>
+                            <h5>BMS-Precharge<br>Temperature:</h5>
                             <h3 id="precharge-temperature">°C</h3>
                         </div>
                     </div>
@@ -207,7 +210,7 @@
                 <td>
                     <div>
                         <div>
-                            <h5>BMS-Shunt</br>Temperature:</h5>
+                            <h5>BMS-Shunt<br>Temperature:</h5>
                             <h3 id="shunt-temperature">°C</h3>
                         </div>
                     </div>
@@ -215,7 +218,7 @@
                 <td>
                     <div>
                         <div>
-                            <h5>Motor</br>Temperature:</h5>
+                            <h5>Motor<br>Temperature:</h5>
                             <h3 id="motor-temperature">°C</h3>
                         </div>
                     </div>
@@ -223,7 +226,7 @@
                 <td>
                     <div>
                         <div>
-                            <h5>Extern</br>Temperature:</h5>
+                            <h5>Extern<br>Temperature:</h5>
                             <h3 id="extern-temperature">°C</h3>
                         </div>
                     </div>
@@ -433,7 +436,7 @@
                     <td>
                         <div>
                             <div>
-                                <h5>max</br>Precharge Temp:</h5>
+                                <h5>max<br>Precharge Temp:</h5>
                                 <h3 id="maxPrechargeTemp">°C</h3>
                             </div>
                         </div>
@@ -441,7 +444,7 @@
                     <td>
                         <div>
                             <div>
-                                <h5>max</br>Shunt Temp:</h5>
+                                <h5>max<br>Shunt Temp:</h5>
                                 <h3 id="maxShuntTemp">°C</h3>
                             </div>
                         </div>
@@ -449,7 +452,7 @@
                     <td>
                         <div>
                             <div>
-                                <h5>max</br>Motor Temp:</h5>
+                                <h5>max<br>Motor Temp:</h5>
                                 <h3 id="maxMotorTemp">°C</h3>
                             </div>
                         </div>
@@ -457,7 +460,7 @@
                     <td>
                         <div>
                             <div>
-                                <h5>max</br>Extern Temp:</h5>
+                                <h5>max<br>Extern Temp:</h5>
                                 <h3 id="maxExternTemp">°C</h3>
                             </div>
                         </div>
@@ -486,7 +489,7 @@
                     <td>
                         <div>
                             <div>
-                                <h5>60s max</br>Current:</h5>
+                                <h5>60s max<br>Current:</h5>
                                 <h3 id="max-amp-big-val">0V</h3>
                             </div>
                         </div>
@@ -494,7 +497,7 @@
                     <td>
                         <div>
                             <div>
-                                <h5>60s min</br>Voltage:</h5>
+                                <h5>60s min<br>Voltage:</h5>
                                 <h3 id="min-volt-big-val">0A</h3>
                             </div>
                         </div>
@@ -750,7 +753,7 @@
             It both acts as a Monitor for live data, a datalogger for later analysis and a configuraiton tool to
             make the BMS fit your needs.
         </p>
-        <p>Note: </br> Hi, my name is Peter and I am the developer of this software. I would kindly ask you to be a bit gentle as it's still a pre-release version that needs more development and testing. If you have severe problems or want to make a usability friendly suggestion, feel free to contact me!</p>
+        <p>Note: <br> Hi, my name is Peter and I am the developer of this software. I would kindly ask you to be a bit gentle as it's still a pre-release version that needs more development and testing. If you have severe problems or want to make a usability friendly suggestion, feel free to contact me!</p>
         <p>You can reach me via: hi@p3h3.de</p>
     </div>
 </div>
@@ -762,7 +765,7 @@
 <div id="board-info-container">
     <img class="logo" src="img/icon/512x512.png">
     <h3>DragonBMS Interface</h3>
-    </br>
+    <br>
     <p>Name:</p>
     <p id="bms-devicename"></p>
     <p>Hardware Version:</p>
@@ -811,13 +814,13 @@
                     </div>
                 </td>
                 <td>
-                    Channel1
+                    <label for="enabled-channels-1">Channel1</label>
                     <input id="enabled-channels-1" type="checkbox">
-                    </br>
-                    Channel2
+                    <br>
+                    <label for="enabled-channels-2">Channel2</label>
                     <input id="enabled-channels-2" type="checkbox">
-                    </br>
-                    Channel3
+                    <br>
+                    <label for="enabled-channels-3">Channel3</label>
                     <input id="enabled-channels-3" type="checkbox">
                 </td>
 
@@ -825,7 +828,7 @@
 
                 <td>
                     <div class="dropdown">
-                        <span>Battery Type:</span>
+                        <label for="battery-type-select">Battery Type:</label>
                         <div class="dropdown-content">
                             The Battery Type is the chemistry of your battery. It determines mostly nominal, over and under voltage of your battery.
                         </div>
@@ -842,19 +845,19 @@
             <tr>
                 <td class="battery-field">
                     <div class="dropdown">
-                        <span>Battery cells [1]:</span>
+                        <label for="battery-cells">Battery cells [1]:</label>
                         <div class="dropdown-content">
                             How many of the cells of your selected chemistry your battery pack has in series.
                         </div>
                     </div>
                 </td>
-                <td class="battery-field"><input id="battery-cells" type="number" min="3" max="40"></td>
+                <td class="battery-field"><label for="battery-cells"></label><input id="battery-cells" type="number" min="3" max="40"></td>
 
                 <td class="seperator"></td>
 
                 <td>
                     <div class="dropdown">
-                        <span>Battery capacity [mAh]:</span>
+                        <label for="battery-capacity">Battery capacity [mAh]:</label>
                         <div class="dropdown-content">
                             The Capacity of your Battery pack in Ah (total battery, not just a single cell)
                         </div>
@@ -865,7 +868,7 @@
             <tr>
                 <td class="battery-field cell-field">
                     <div class="dropdown">
-                        <span>Maximal cell voltage [mV]:</span>
+                        <label for="max-cell-voltage">Maximal cell voltage [mV]:</label>
                         <div class="dropdown-content">
                             The cell voltage at which an overvoltage protection event is fired.
                         </div>
@@ -877,7 +880,7 @@
 
                 <td class="battery-field cell-field">
                     <div class="dropdown">
-                        <span>Minimal cell voltage [mV]:</span>
+                        <label for="min-cell-voltage">Minimal cell voltage [mV]:</label>
                         <div class="dropdown-content">
                             The cell voltage at which an undervoltage proteciton event is fired.
                         </div>
@@ -889,7 +892,7 @@
             <tr>
                 <td class="pack-field">
                     <div class="dropdown">
-                        <span>Pack Undervoltage [V]:</span>
+                        <label for="pack-undervoltage">Pack Undervoltage [V]:</label>
                         <div class="dropdown-content">
                             Undervoltage Protection voltage for the whole battery pack.
                         </div>
@@ -901,7 +904,7 @@
 
                 <td class="pack-field">
                     <div class="dropdown">
-                        <span>Pack Overvoltage [V]:</span>
+                        <label for="pack-overvoltage">Pack Overvoltage [V]:</label>
                         <div class="dropdown-content">
                             Overvoltage Protection voltage for the whole battery pack.
                         </div>
@@ -914,7 +917,7 @@
 
                 <td>
                     <div class="dropdown">
-                        <span>Strand max discharge current [A]:</span>
+                        <label for="strand-max-current">Strand max discharge current [A]:</label>
                         <div class="dropdown-content">
                             Max output (discharge) current of a single connected channel -
                             if you want 300A combined output current and have all 3 channels enabled, this should be 100A
@@ -927,7 +930,7 @@
 
                 <td>
                     <div class="dropdown">
-                        <span>Strand max charge current [A]:</span>
+                        <label for="strand-max-reverse-current">Strand max charge current [A]:</label>
                         <div class="dropdown-content">
                             Max input (charge) current of a single connected channel -
                             if you want 99A combined charging current and have all 3 channels enabled, this should be 33A
@@ -940,7 +943,7 @@
             <tr>
                 <td>
                     <div class="dropdown">
-                        <span>Strand max imbalance current [A]:</span>
+                        <label for="strand-max-imbalance-current">Strand max imbalance current [A]:</label>
                         <div class="dropdown-content">
                             The difference in current that can flow between the batteries which will trigger a protection event.
                             With identical battery packs this current may be caused by different wire lengths or different stages of degradation inside the battery.
@@ -953,7 +956,7 @@
                 <td class="seperator"></td>
                 <td>
                     <div class="dropdown">
-                        <span>Current Spike sensitivity:</span>
+                        <label for="spike-sensitivity-select">Current Spike sensitivity:</label>
                         <div class="dropdown-content">
                             The current spike sensitivity changes the instant overcurrent (short) protection value. If this is set too high, a short may be detected too late or not at all.
                             If you encounter short Faults under high loads at low speeds, your drivetrain may have a current spike problem, which means that the motor controller is seeking
@@ -974,7 +977,7 @@
             <tr>
                 <td>
                     <div class="dropdown">
-                        <span>Precharge Transistor max temperature [°C]:</span>
+                        <label for="logic-max-temp">Precharge Transistor max temperature [°C]:</label>
                         <div class="dropdown-content">
                             The precharge transistor regulated the current needed to charge the output capacitance (motorcontrollers, etc.).
                             Per physics, this transistor dissipates the same energy that the capacitors are charged with, which
@@ -990,7 +993,7 @@
 
                 <td>
                     <div class="dropdown">
-                        <span>Power electronics (Shunt) max temperature [°C]:</span>
+                        <label for="power-max-temp">Board max temperature [°C]:</label>
                         <div class="dropdown-content">
                             The shunt temperature is a good representation of how warm the powerstage of the DragonBMS is.
                             You may set the temperature as you like if you need this BMS to be below a certain temperature
@@ -1004,7 +1007,7 @@
 
 
             <tr>
-                <td>Datalogging update Frequency [Hz]</td>
+                <td><label for="datalogging-update-frequency">Datalogging update Frequency [Hz]:</label></td>
                 <td><input id="datalogging-update-frequency" type="number" min="1" max="120"></td>
 
                 <td class="seperator"></td>
@@ -1032,7 +1035,7 @@
             <tr>
                 <td>
                     <div class="dropdown">
-                        <span>Autostart:</span>
+                        <label for="autostart">Autostart:</label>
                         <div class="dropdown-content">
                             With this setting, you decide if the BMS should automatically try to turn on the channels on powerup.
                         </div>
@@ -1044,7 +1047,7 @@
 
                 <td>
                     <div class="dropdown">
-                        <span>Auto poweroff time [minutes]:</span>
+                        <label for="auto-poweroff">Auto poweroff time [minutes]:</label>
                         <div class="dropdown-content">
                             Not yet implemented
                         </div>
@@ -1154,20 +1157,20 @@
             <tr>
 
                 <td>Distance/Pulse [0.1mm]
-                    </br>
+                    <br>
                     <input id="distperpulse" type="number">
                 </td>
 
                 <td>Distance[mm]:
-                    </br>
+                    <br>
                     <input id="distance" type="number"></td>
 
                 <td class="seperator"></td>
 
                 <td><button id="resetPulses">Reset</button>
-                    </br>
+                    <br>
                     Pulses: <p id="pulses"></p></td>
-                <td><button id="calculatedistperpulse">Calculate</button></td>>
+                <td><button id="calculatedistperpulse">Calculate</button></td>
             </tr>
             <tr>
                 <td>Motor Polepairs [1]</td>
@@ -1176,7 +1179,7 @@
                 <td class="seperator"></td>
 
                 <td></td>
-                <td></td>>
+                <td></td>
             </tr>
             <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
             <tr>
@@ -1240,50 +1243,50 @@
             <tr>
                 <td>
                     Input Voltage Correction Factor Strand 1
-                    </br>
+                    <br>
                     <input id="in-volt1-correction" type="number">
                 </td>
                 <td>Target Value:
-                    </br>
+                    <br>
                     <input id="in-volt1-target" type="number"></td>
-                <td>Actual Value: </br> <a id="in-volt1-actual">hi</a></td>
-                <td><button id="calculateInV1">Calculate</button></td>>
+                <td>Actual Value: <br> <a id="in-volt1-actual">hi</a></td>
+                <td><button id="calculateInV1">Calculate</button></td>
             </tr>
             <tr>
                 <td>
                     Input Voltage Correction Factor Strand 2
-                    </br>
+                    <br>
                     <input id="in-volt2-correction" type="number">
                 </td>
                 <td>Target Value:
-                    </br>
+                    <br>
                     <input id="in-volt2-target" type="number"></td>
-                <td>Actual Value: </br> <a id="in-volt2-actual">hi</a></td>
-                <td><button id="calculateInV2">Calculate</button></td>>
+                <td>Actual Value: <br> <a id="in-volt2-actual">hi</a></td>
+                <td><button id="calculateInV2">Calculate</button></td>
             </tr>
             <tr>
                 <td>
                     Input Voltage Correction Factor Strand 3
-                    </br>
+                    <br>
                     <input id="in-volt3-correction" type="number">
                 </td>
                 <td>Target Value:
-                    </br>
+                    <br>
                     <input id="in-volt3-target" type="number"></td>
-                <td>Actual Value: </br> <a id="in-volt3-actual">hi</a></td>
-                <td><button id="calculateInV3">Calculate</button></td>>
+                <td>Actual Value: <br> <a id="in-volt3-actual">hi</a></td>
+                <td><button id="calculateInV3">Calculate</button></td>
             </tr>
             <tr>
                 <td>
                     Output Voltage Correction Factor
-                    </br>
+                    <br>
                     <input id="out-volt-correction" type="number">
                 </td>
                 <td>Target Value:
-                    </br>
+                    <br>
                     <input id="out-volt-target" type="number"></td>
-                <td>Actual Value: </br> <a id="out-volt-actual">hi</a></td>
-                <td><button id="calculateOut">Calculate</button></td>>
+                <td>Actual Value: <br> <a id="out-volt-actual">hi</a></td>
+                <td><button id="calculateOut">Calculate</button></td>
             </tr>
 
             <!--
@@ -1293,37 +1296,37 @@
             <tr>
                 <td>
                     Shunt Resistance Strand 1 [uR]
-                    </br>
+                    <br>
                     <input id="shunt-resistance-1" type="number">
                 </td>
                 <td>Target Value:
-                    </br>
+                    <br>
                     <input id="shunt-resistance-1-target" type="number"></td>
-                <td>Actual Value: </br> <a id="shunt-resistance-1-actual">hi</a></td>
-                <td><button id="calculateShunt1">Calculate</button></td>>
+                <td>Actual Value: <br> <a id="shunt-resistance-1-actual">hi</a></td>
+                <td><button id="calculateShunt1">Calculate</button></td>
             </tr>
             <tr>
                 <td>
                     Shunt Resistance Strand 2 [uR]
-                    </br>
+                    <br>
                     <input id="shunt-resistance-2" type="number">
                 </td>
                 <td>Target Value:
-                    </br>
+                    <br>
                     <input id="shunt-resistance-2-target" type="number"></td>
-                <td>Actual Value: </br> <a id="shunt-resistance-2-actual">hi</a></td>
+                <td>Actual Value: <br> <a id="shunt-resistance-2-actual">hi</a></td>
                 <td><button id="calculateShunt2">Calculate</button></td>
             </tr>
             <tr>
                 <td>
                     Shunt Resistance Strand 3 [uR]
-                    </br>
+                    <br>
                     <input id="shunt-resistance-3" type="number">
                 </td>
                 <td>Target Value:
-                    </br>
+                    <br>
                     <input id="shunt-resistance-3-target" type="number"></td>
-                <td>Actual Value: </br> <a id="shunt-resistance-3-actual">hi</a></td>
+                <td>Actual Value: <br> <a id="shunt-resistance-3-actual">hi</a></td>
                 <td><button id="calculateShunt3">Calculate</button></td>
             </tr>
         </table>
@@ -1352,6 +1355,7 @@
 
         <div>
             <table class="width100 height30">
+                <tr>
                 <td>
                     <div>
                         <h4>Channel 1</h4>
@@ -1382,6 +1386,7 @@
                         </div>
                     </div>
                 </td>
+                </tr>
             </table>
         </div>
 
