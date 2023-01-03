@@ -1,19 +1,11 @@
 
 
 
-
-
-
-
-
-
-
-
 /* BMS Config functions */
 
 
 function getBMSConfigFromBuffer(buffer){
-    return {
+    configObject = {
         // Battery stuff
         battCellCount: buffer.getUint8(0),
         battNomCapacity: (buffer.getUint8(2) << 8) | buffer.getUint8(1),
@@ -37,6 +29,17 @@ function getBMSConfigFromBuffer(buffer){
         boardUpdateCount: (buffer.getUint8(24) << 8) | buffer.getUint8(23),
         protMaxReverseCurrent: (buffer.getUint8(26) << 8) | buffer.getUint8(25),
     };
+    // necessary for using old firmware
+    try {
+        configObject.protSpikeSensitivity = buffer.getUint8(27);
+    } catch (err) {
+        if (err.constructor === RangeError) {
+            configObject.protSpikeSensitivity = 1;
+        }
+    }
+
+    return configObject;
+
 }
 
 function getBMSBufferFromConfig(config){
@@ -89,6 +92,9 @@ function getBMSBufferFromConfig(config){
 
     configValues[25] = to16bit(config.protMaxReverseCurrent)[0];
     configValues[26] = to16bit(config.protMaxReverseCurrent)[1];
+
+    configValues[27] = parseInt(config.protSpikeSensitivity);
+
 
     return configValues;
 }

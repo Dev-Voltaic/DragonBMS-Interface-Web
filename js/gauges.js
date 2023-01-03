@@ -1,4 +1,3 @@
-
 clearAlertsButton.addEventListener("click", () => {
     clearAlerts(0, "")
 });
@@ -609,6 +608,7 @@ channel2_button.addEventListener("click", function (){
         channel2_button.src = "img/off.jpg";
     }
 });
+
 channel3_button.addEventListener("click", function (){
     channel3enabled = !channel3enabled;
     sendChannelControlData(0, channel1enabled, channel2enabled, channel3enabled);

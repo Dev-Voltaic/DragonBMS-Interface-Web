@@ -930,8 +930,24 @@
                 <td><input id="strand-max-imbalance-current" type="number" min="1"></td>
 
                 <td class="seperator"></td>
-
-                <td></td><td></td>
+                <td>
+                    <div class="dropdown">
+                        <span>Current Spike sensitivity:</span>
+                        <div class="dropdown-content">
+                            The current spike sensitivity changes the instant overcurrent (short) protection value. If this is set too high, a short may be detected too late or not at all.
+                            If you encounter short Faults under high loads at low speeds, your drivetrain may have a current spike problem, which means that the motor controller is seeking
+                            really high currents for short durations and is thereby potentially harming the battery. You can just turn down the sensitivity to avoid the faults, we would
+                            however advise you to look at other options of avoiding spikes (additional filter capacitors near the motor controller).
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <select name="spike-sensitivity" id="spike-sensitivity-select">
+                        <option value="0">Low</option>
+                        <option value="1">Normal</option>
+                        <option value="2">High</option>
+                    </select>
+                </td>
             </tr>
 
             <tr>

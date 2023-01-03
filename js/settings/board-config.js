@@ -12,9 +12,12 @@ function readBMSConfig(){
         setBMSConfigValues(getBMSConfigFromBuffer(configValues));
         configBuffer = getBMSConfigFromBuffer(configValues);
         updateConfigRelatedGauges(configBuffer);
-    }).catch(_ => {
+    })
+        /*.catch(error => {
+        console.log("read config error: ");
+        console.log(error);
         indicateBMSConfigFailure();
-    });
+    });*/
 }
 
 getId("board-config-write").addEventListener("click", () => {
@@ -53,6 +56,34 @@ function setEnabledChannelsByte(byte) {
 }
 
 
+function setCurrentSpikeSensitivity(value){
+    if(value === 0){
+        getId("spike-sensitivity-select").value = "0";
+    }
+    if(value === 1){
+        getId("spike-sensitivity-select").value = "1";
+    }
+    if(value === 2){
+        getId("spike-sensitivity-select").value = "2";
+    }
+}
+
+function getCurrentSpikeSensitivity(){
+    let val = getId("spike-sensitivity-select").value;
+    if(val === "0"){ // low
+        return 0;
+    }
+    if(val === "1"){ // normal
+        return 1;
+    }
+    if(val === "2"){ // high
+        return 2;
+    }
+    // default is normal
+    return 1;
+}
+
+
 function checkBMSConfigPlausability() {
     setValueBacktoBoundaries("battery-cells", 4, 30);
     setValueBacktoBoundaries("battery-capacity", 0, 10000000);
@@ -71,7 +102,6 @@ function checkBMSConfigPlausability() {
 
     setValueBacktoBoundaries("datalogging-update-interval", 15, 10000);
     setValueBacktoBoundaries("auto-poweroff", 1, 900);
-
 }
 
 function getBMSConfigValues() {
@@ -85,6 +115,8 @@ function getBMSConfigValues() {
     config.protMaxImbalanceCurrent = getIdValue("strand-max-imbalance-current") * 100;
     config.protMaxCurrent = getIdValue("strand-max-current") * 100;
     config.protMaxReverseCurrent = getIdValue("strand-max-reverse-current") * 100;
+
+    config.protSpikeSensitivity = getCurrentSpikeSensitivity();
 
     config.protMaxPowerTemp = getIdValue("power-max-temp");
     config.protMaxLogicTemp = getIdValue("logic-max-temp");
@@ -112,6 +144,8 @@ function setBMSConfigValues(config) {
     getId("strand-max-current").value = config.protMaxCurrent / 100;
     getId("strand-max-reverse-current").value = config.protMaxReverseCurrent / 100;
     getId("strand-max-imbalance-current").value = config.protMaxImbalanceCurrent / 100;
+
+    setCurrentSpikeSensitivity(config.protSpikeSensitivity);
 
     getId("datalogging-update-interval").value = config.dataloggingUpdateInterval;
 

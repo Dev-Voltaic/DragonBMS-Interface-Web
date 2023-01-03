@@ -98,16 +98,15 @@ function setCalibValues(data){
         (data.getUint8(9) << 8) | data.getUint8(8),
         (data.getUint8(11) << 8) | data.getUint8(10),
         (data.getUint8(13) << 8) | data.getUint8(12),
-        (data.getUint8(15) << 8) | data.getUint8(14),
 
         // precharge - for further use
-        (data.getUint8(17) << 8) | data.getUint8(16),
+        //(data.getUint8(17) << 8) | data.getUint8(16),
 
         // thermistor b value
-        (data.getUint8(17) << 8) | data.getUint8(16),
+        //(data.getUint8(17) << 8) | data.getUint8(16),
 
         // update count
-        (data.getUint8(17) << 8) | data.getUint8(16),
+        //(data.getUint8(17) << 8) | data.getUint8(16),
     ];
     readCalibration = calib;
 
