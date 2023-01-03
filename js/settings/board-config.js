@@ -100,7 +100,7 @@ function checkBMSConfigPlausability() {
     //setValueBacktoBoundaries("precharge-current-limit", 1, 50);
     //setValueBacktoBoundaries("load-capacitance", 1, 100000);
 
-    setValueBacktoBoundaries("datalogging-update-interval", 15, 10000);
+    setValueBacktoBoundaries("datalogging-update-frequency", 1, 120);
     setValueBacktoBoundaries("auto-poweroff", 1, 900);
 }
 
@@ -124,7 +124,7 @@ function getBMSConfigValues() {
     config.prechargeCurrentLimit = 0;//getIdValue("precharge-current-limit");
     config.prechargeNomCapacity = 0;//getIdValue("load-capacitance");
 
-    config.dataloggingUpdateInterval = getIdValue("datalogging-update-interval");
+    config.dataloggingUpdateInterval = 1000/getIdValue("datalogging-update-frequency");
 
     config.boardAutoStart = getIdChecked("autostart");
     config.boardPoweroffTime = getIdValue("auto-poweroff");
@@ -147,7 +147,7 @@ function setBMSConfigValues(config) {
 
     setCurrentSpikeSensitivity(config.protSpikeSensitivity);
 
-    getId("datalogging-update-interval").value = config.dataloggingUpdateInterval;
+    getId("datalogging-update-frequency").value = 1000/config.dataloggingUpdateInterval;
 
     getId("logic-max-temp").value = config.protMaxLogicTemp;
     getId("power-max-temp").value = config.protMaxPowerTemp;

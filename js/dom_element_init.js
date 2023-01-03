@@ -5,8 +5,15 @@ let table = getId("main-table");
 let boardConfigTable = getId("board-config-table");
 let boardConfigBatterySelector = getId("battery-type-select");
 
+let boardConfigTurnOnButton = getId("board-turnonoff-config");
+let configWriteWarning = getId("config-write-warning");
+
 // Board Calib
-let boardCalibTable = getId("board-calibration-table")
+let boardCalibTable = getId("board-calibration-table");
+let boardCalibTurnOnButton = getId("board-turnonoff-calib");
+
+let calibWriteWarning = getId("calib-write-warning");
+
 let inVolt1Correction = getId("in-volt1-correction");
 let inVolt1Target = getId("in-volt1-target");
 let inVolt1Actual = getId("in-volt1-actual");

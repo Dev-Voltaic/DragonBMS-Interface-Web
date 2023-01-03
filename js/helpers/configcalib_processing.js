@@ -34,7 +34,7 @@ function getBMSConfigFromBuffer(buffer){
         configObject.protSpikeSensitivity = buffer.getUint8(27);
     } catch (err) {
         if (err.constructor === RangeError) {
-            configObject.protSpikeSensitivity = 1;
+            configObject.protSpikeSensitivity = "disabled";
         }
     }
 

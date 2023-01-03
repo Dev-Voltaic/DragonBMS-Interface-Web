@@ -100,6 +100,7 @@ function processData(event) {
     else stateMachineState = "UNDEFINED STATE!"
 
     handleTurnOnTd(stateMachineStateBuffer);
+    handleConfigWarningButtons(stateMachineStateBuffer);
 
 
     let energyUsed1 = handleSignedBullshit32((((value.getUint8(25) << 24) | (value.getUint8(24) << 16)) | (value.getUint8(23) << 8)) | (value.getUint8(22)));

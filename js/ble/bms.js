@@ -139,9 +139,13 @@ async function startBMSNotifications(device) {
 
 }
 
+
+let bleServer;
 async function bmsDeviceConnected(server) {
     server.connect().then(() => {
         console.log("server connected");
+
+        bleServer = server;
 
         //setConnectionStatus('Getting Services...');
         setAutoconnectBMSText("Getting Services");
@@ -185,6 +189,7 @@ async function bmsDeviceConnected(server) {
                                     }, 1000);
 
 
+                                    readBMSCalib();
                                     readBMSConfig();
                                 });
                             });
@@ -205,6 +210,7 @@ async function bmsDeviceConnected(server) {
             getBMSAlertServicePar(server, ()=>{});
             getBMSDataloggingServiceSeq(server, ()=>{
                 // initial readout
+                readBMSCalib();
                 readBMSConfig();
 
                 automaticReconnectBMS = true;

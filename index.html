@@ -729,7 +729,7 @@
 <div id="swipe-for-settings-container" class="touch">
     <div class="swipe-for-settings-text snap-align">
         <h4 class="touchUI">Swipe up for settings!</h4>
-        <h4 class="non-touchUI"> Double click for settings!</h4>
+        <h4 class="non-touchUI">Double click for settings!</h4>
     </div>
     <div class="swipe-for-settings-action touchUI">
         <h4>Settings enabled.</h4>
@@ -761,13 +761,13 @@
 
 <div id="board-info-container">
     <img class="logo" src="img/icon/512x512.png">
-    <h2>DragonBMS Interface</h2>
+    <h3>DragonBMS Interface</h3>
     </br>
-    <h3>Name:</h3>
+    <p>Name:</p>
     <p id="bms-devicename"></p>
-    <h3>Hardware Version:</h3>
+    <p>Hardware Version:</p>
     <p id="bms-hardware-version"></p>
-    <h3>Firmware Version:</h3>
+    <p>Firmware Version:</p>
     <p id="bms-firmware-version"></p>
 </div>
 
@@ -784,8 +784,13 @@
 
         <h2>Board Configuration:</h2>
 
-        <button id="board-config-read">Read</button>
-        <button id="board-config-write">Write</button>
+        <h4 id="config-write-warning" class="orange">Warning - might not be editable. Turn off first!</h4>
+
+        <div class="readwrite-button-container">
+            <button id="board-config-read">Read</button>
+            <button id="board-config-write">Write</button>
+            <button id="board-turnonoff-config">Turn OFF</button>
+        </div>
 
 
         <table id="board-config-table">
@@ -909,7 +914,7 @@
 
                 <td>
                     <div class="dropdown">
-                        <span>Strand max current [A]:</span>
+                        <span>Strand max discharge current [A]:</span>
                         <div class="dropdown-content">
                             Max output (discharge) current of a single connected channel -
                             if you want 300A combined output current and have all 3 channels enabled, this should be 100A
@@ -922,7 +927,7 @@
 
                 <td>
                     <div class="dropdown">
-                        <span>Strand max reverse current [A]:</span>
+                        <span>Strand max charge current [A]:</span>
                         <div class="dropdown-content">
                             Max input (charge) current of a single connected channel -
                             if you want 99A combined charging current and have all 3 channels enabled, this should be 33A
@@ -999,8 +1004,8 @@
 
 
             <tr>
-                <td>Datalogging update interval [ms]</td>
-                <td><input id="datalogging-update-interval" type="number" min="30"></td>
+                <td>Datalogging update Frequency [Hz]</td>
+                <td><input id="datalogging-update-frequency" type="number" min="1" max="120"></td>
 
                 <td class="seperator"></td>
 
@@ -1092,10 +1097,10 @@
 
         <h2>Inline Board Configuration:</h2>
 
-
-        <button id="inline-config-read">Read</button>
-        <button id="inline-config-write">Write</button>
-
+        <div class="readwrite-button-container">
+            <button id="inline-config-read">Read</button>
+            <button id="inline-config-write">Write</button>
+        </div>
         <table>
             <tr class="no-height">
                 <th></th>
@@ -1216,9 +1221,13 @@
         </div>
 
         <h2>Calibration values:</h2>
+        <h4 id="calib-write-warning" class="orange">Warning - might not be editable. Turn off first!</h4>
 
-        <button id="board-calib-read">Read</button>
-        <button id="board-calib-write">Write</button>
+        <div class="readwrite-button-container">
+            <button id="board-calib-read">Read</button>
+            <button id="board-calib-write">Write</button>
+            <button id="board-turnonoff-calib">Turn OFF</button>
+        </div>
 
         <table id="board-calibration-table">
             <tr class="no-height">

@@ -33,7 +33,9 @@
 .green{
     color: green;
 }
-
+.orange{
+    color:darkorange;
+}
 
 
 
@@ -75,13 +77,6 @@
     margin-bottom: auto;
 }
 
-/*
-All tables inside the settings container
- */
-#settings-container table{
-    width: 100%;
-}
-
 
 #interface-info-container{
     text-align: center;
@@ -90,6 +85,45 @@ All tables inside the settings container
     margin-left: auto;
     margin-right: auto;
     margin-bottom: auto;
+}
+
+
+#board-info-container{
+    text-align: center;
+    width: 90vw;
+    margin-top: 20vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+}
+#board-info-container .logo{
+    height: 10vw;
+    width: 10vw;
+}
+
+
+
+
+/*
+Buttons for reading and writing
+ */
+
+.readwrite-button-container button{
+    font-family: Pervitina, Serif;
+    width: 25vw;
+    height: 4vw;
+    font-size: 3vw;
+}
+
+
+
+
+
+/*
+All tables inside the settings container
+ */
+#settings-container table{
+    width: 100%;
 }
 
 
@@ -157,12 +191,11 @@ input{
 
 #board-config-table td {
     text-align: left;
-    width: 24vw;
+    width: 24%;
     border: dotted 1px #313131;
 }
-
-.seperator{
-    width: 4vw;
+#board-config-table td .seperator{
+    width: 4%;
     border: none;
 }
 
@@ -171,7 +204,7 @@ input{
 }
 
 #board-config-table tr {
-    height: 10vh;
+    height: 6vw;
     width: 100%;
 }
 
@@ -183,7 +216,7 @@ input{
 .dropdown-content {
     display: none;
     position: absolute;
-    min-width: 150px;
+    min-width: 40vw;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     padding: 6px 8px;
     z-index: 20;

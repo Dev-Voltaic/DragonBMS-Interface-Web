@@ -134,6 +134,54 @@ function handleTurnOnTd(stateMachineState) {
     }
 }
 
+
+function handleConfigWarningButtons(stateMachineState){
+    if (stateMachineState === 3) { // operation
+        // change the turn on/off buttons
+        if (!boardConfigTurnOnButton.innerHTML.includes("OFF")) {
+            boardConfigTurnOnButton.innerHTML = "Turn OFF";
+        }
+        if (!boardCalibTurnOnButton.innerHTML.includes("OFF")) {
+            boardCalibTurnOnButton.innerHTML = "Turn OFF";
+        }
+
+        // update the warning
+        configWriteWarning.classList.remove("hidden");
+        calibWriteWarning.classList.remove("hidden");
+    }else{
+        // change the turn on/off buttons
+        if (!boardConfigTurnOnButton.innerHTML.includes("ON")) {
+            boardConfigTurnOnButton.innerHTML = "Turn ON";
+        }
+        if (!boardCalibTurnOnButton.innerHTML.includes("ON")) {
+            boardCalibTurnOnButton.innerHTML = "Turn ON";
+        }
+
+        // update the warning
+        configWriteWarning.classList.add("hidden");
+        calibWriteWarning.classList.add("hidden");
+
+    }
+}
+
+boardConfigTurnOnButton.addEventListener("click", () => {
+    if (boardConfigTurnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
+        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([1]).buffer);
+    }
+    if (boardConfigTurnOnButton.innerHTML.includes("OFF")) {
+        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
+    }
+});
+
+boardCalibTurnOnButton.addEventListener("click", () => {
+    if (boardCalibTurnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
+        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([1]).buffer);
+    }
+    if (boardCalibTurnOnButton.innerHTML.includes("OFF")) {
+        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
+    }
+});
+
 turnOnTd.addEventListener("click", () => {
     if (turnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
         turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([1]).buffer);
@@ -438,37 +486,37 @@ function updateWarningFields() {
     if (alertBuffer & 0b00000000000000000000000001000000) {
         faultFieldText += "Ch1 OC  ";
 
-        faultNameText = "Ch1 Overcurrent";
+        faultNameText = "Ch1 Overcurrent Discharge";
         faultExplanationText = "why so fast?";
     }
     if (alertBuffer & 0b00000000000000000000000010000000) {
         faultFieldText += "Ch1 UC  ";
 
-        faultNameText = "Ch1 Undercurrent";
+        faultNameText = "Ch1 Overcurrent Charge";
         faultExplanationText = "why so fast breaking?";
     }
     if (alertBuffer & 0b00000000000000000000000100000000) {
         faultFieldText += "Ch2 OC  ";
 
-        faultNameText = "Ch2 Overcurrent";
+        faultNameText = "Ch2 Overcurrent Discharge";
         faultExplanationText = "why so fast?";
     }
     if (alertBuffer & 0b00000000000000000000001000000000) {
         faultFieldText += "Ch2 UC  ";
 
-        faultNameText = "Ch2 Undercurrent";
+        faultNameText = "Ch2 Overcurrent Charge";
         faultExplanationText = "why so fast breaking?";
     }
     if (alertBuffer & 0b00000000000000000000010000000000) {
         faultFieldText += "Ch3 OC  ";
 
-        faultNameText = "Ch3 Overcurrent";
+        faultNameText = "Ch3 Overcurrent Discharge";
         faultExplanationText = "why so fast?";
     }
     if (alertBuffer & 0b00000000000000000000100000000000) {
         faultFieldText += "Ch3 UC  ";
 
-        faultNameText = "Ch3 Undercurrent";
+        faultNameText = "Ch3 Overcurrent Charge";
         faultExplanationText = "why so fast breaking?";
     }
     if (alertBuffer & 0b00000000000000000001000000000000) {
