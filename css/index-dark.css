@@ -17,10 +17,7 @@ body{
     border: 4px solid lightgray;
 }
 
-.gauge-div-border{
-    border-radius: 1em;
-    border: 4px solid lightgray;
-}
+
 
 .channel-control-button{
     border: 2px solid lightgray;

@@ -193,7 +193,6 @@ function processInlineData(data){
 
 
                 console.log(dataLoggingBufferInline.join("\r\n"));
-                contextBridge.send("save-logging-data", [dataLoggingFileName, dataLoggingBufferInline.join("\r\n")]);
                 dataLoggingBufferInline = [""];
             }
         }

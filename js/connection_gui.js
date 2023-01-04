@@ -4,7 +4,7 @@ let searchingForBMS = false;
 let searchingForTacho = false;
 
 
-// handler for the Nothing Connected overlay - autoconnect bms
+// handler for the Nothing Connected overlay - Autoconnect bms
 connectLastDeviceButton.addEventListener('click', async () => {
     if (!searchingForTacho) {
         searchingForBMS = true;
@@ -27,7 +27,7 @@ connectLastDeviceButton.addEventListener('click', async () => {
     }, 5000);
 });
 
-// handler for the nothing connected overlay - autoconnect tacho
+// handler for the nothing connected overlay - Autoconnect tacho
 connectLastInlineButton.addEventListener('click', async () => {
 
     if (!searchingForBMS) {
@@ -187,8 +187,8 @@ let dotsCounter = 0;
 function dotterBodge() {
     dotsCounter += 1;
     dotsCounter %= 5;
-    autoconnectingBMSText.innerHTML = "Autoconnecting";
-    autoconnectingTachoText.innerHTML = "Autoconnecting";
+    autoconnectingBMSText.innerHTML = "Auto-connecting";
+    autoconnectingTachoText.innerHTML = "Auto-connecting";
     for (let i = 0; i < dotsCounter; i++) {
         autoconnectingBMSText.innerHTML += '.';
         autoconnectingTachoText.innerHTML += '.';
@@ -202,7 +202,7 @@ function disableNothingConnectedOverlay() {
     nothingConnectedOverlay.style.pointerEvents = "none";
     nothingConnectedOverlay.style.visibility = "hidden";
 
-    // always hiding "autoconnecting..." text when disabling the overlay
+    // always hiding "Auto-connecting..." text when disabling the overlay
     autoconnectingTachoText.style.visibility = "";
     autoconnectingBMSText.style.visibility = "";
 }

@@ -21,7 +21,7 @@ getId("inline-config-write").addEventListener("click", () => {
     inlineConfigCharacteristic.writeValue(Uint8Array.from(getInlineBufferFromConfig(getInlineConfigValues())).buffer).then(_ => {
         indicateInlineConfigSuccess();
         console.log("successfully wrote config");
-    }).catch(error => {
+    }).catch(_ => {
         indicateInlineConfigFailure();
     });
     setTimeout(() => {
@@ -82,7 +82,7 @@ function setTempSensorType(value){
 
 
 function blurAppropriateTempFields(){
-    var val = tempSensorSelector.options[tempSensorSelector.selectedIndex].value;
+    const val = tempSensorSelector.options[tempSensorSelector.selectedIndex].value;
 
     if(val !== "ntc_custom" && val !== "ptc_custom"){
         let customTempInputFields = document.getElementsByClassName("customTempInput");
@@ -99,7 +99,7 @@ function blurAppropriateTempFields(){
     }
 }
 function setStandardNTCValues(){
-    var val = tempSensorSelector.options[tempSensorSelector.selectedIndex].value;
+    const val = tempSensorSelector.options[tempSensorSelector.selectedIndex].value;
 
     if(val === "ntc10k"){
         getId("r-value").value = "29400";
@@ -121,7 +121,7 @@ tempSensorSelector.addEventListener("change", ()=>{
     blurAppropriateTempFields();
     setStandardNTCValues();
 });
-function checkInlineConfigPlausability() {
+function checkInlineConfigPlausibility() {
     setValueBacktoBoundaries("battery-cells", 4, 30);
     setValueBacktoBoundaries("battery-capacity", 0, 10000000);
 
@@ -185,7 +185,7 @@ function inlineConfigPulseData(data){
     getId("pulses").innerHTML = String(parseFloat(data) - initialPulseValue);
 }
 
-getId("resetPulses").addEventListener("click", (e) => {
+getId("resetPulses").addEventListener("click", (_) => {
     initialPulseValue = currentPulseValue;
 });
 getId("calculatedistperpulse").addEventListener("click", () => {

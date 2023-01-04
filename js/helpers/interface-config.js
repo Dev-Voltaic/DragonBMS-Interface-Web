@@ -2,15 +2,15 @@
 
 // adjust the interface according to config values
 function updateConfig(){
-    let lastDarkmode = localStorage.getItem("lastDarkmode") || "";
+    const lastDarkMode = localStorage.getItem("lastDarkmode") || "";
 
-    if(lastDarkmode === "light"){
+    if(lastDarkMode === "light"){
         adjustDarkmode(false); // for light mode
         darkMode = false;
     }
 
     // actually unnecessary since it's dark by default
-    if(lastDarkmode === "dark"){
+    if(lastDarkMode === "dark"){
         adjustDarkmode(true); // for light mode
         darkMode = true;
     }

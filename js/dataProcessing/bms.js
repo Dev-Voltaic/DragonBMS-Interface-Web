@@ -5,7 +5,6 @@ let averagingBufferV = [];
 let averagingBufferA = [];
 let averagingBufferT = [];
 let dataLoggingBufferBMS = [];
-let dataLoggingFileName = "";
 
 let maxValueBuffer = [];
 
@@ -39,7 +38,7 @@ function processData(event) {
     let value = event.target.value;
 
     if(value.byteLength === 0){
-        console.console.log("Something wrong with incoming BLE Data!");
+        console.log("Something wrong with incoming BLE Data!");
         return;
     }
 
@@ -138,8 +137,9 @@ function processData(event) {
     // _______________________________________
 
 
+    let soc;
     if (remainingEnergy1 === 0 && (CellCount * 2.5 <= V_Strang1 <= CellCount * 4.2)) {
-        let cell_voltage = V_Strang1/CellCount;
+        let cell_voltage = V_Strang1 / CellCount;
         /*
         let soc;
         if(cell_voltage > 3.5){
@@ -394,7 +394,7 @@ function processData(event) {
             if (dataLoggingBufferBMS.push(datastringBoard) > 20) {
                 dataLoggingBufferBMS.push("");
 
-                contextBridge.send("save-logging-data", [dataLoggingFileName, dataLoggingBufferBMS.join("\r\n")]);
+
                 dataLoggingBufferBMS = [""];
             }
         }
@@ -428,7 +428,6 @@ function processData(event) {
 
                 dataLoggingBufferBMS.push("");
 
-                contextBridge.send("save-logging-data", [dataLoggingFileName, dataLoggingBufferInline.join("\r\n")]);
                 dataLoggingBufferInline = [""];
             }
         }

@@ -26,7 +26,7 @@ getId("board-config-write").addEventListener("click", () => {
     bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer).then(_ => {
         indicateBMSConfigSuccess();
         console.log("successfully wrote config");
-    }).catch(error => {
+    }).catch(_ => {
         indicateBMSConfigFailure();
     });
     setTimeout(() => {
@@ -84,7 +84,7 @@ function getCurrentSpikeSensitivity(){
 }
 
 
-function checkBMSConfigPlausability() {
+function checkBMSConfigPlausibility() {
     setValueBacktoBoundaries("battery-cells", 4, 30);
     setValueBacktoBoundaries("battery-capacity", 0, 10000000);
 
@@ -186,7 +186,7 @@ boardConfigTable.addEventListener("change", () => {
 
 
 function blurAppropriateVoltageFields(){
-    var val = boardConfigBatterySelector.options[boardConfigBatterySelector.selectedIndex].value;
+    const val = boardConfigBatterySelector.options[boardConfigBatterySelector.selectedIndex].value;
 
     if(val === "li-ion" || val === "li-po" || val === "li-fe-po"){
         let toBeBlurred = document.getElementsByClassName("pack-field");
@@ -235,7 +235,6 @@ function blurAppropriateVoltageFields(){
             toBeBlurred[i].style.opacity = "0.5";
             toBeBlurred[i].style.pointerEvents = "none";
         }
-        return;
     }else{
         let toBeBlurred = document.getElementsByClassName("battery-field");
         for (let i = 0; i < toBeBlurred.length; i++) {
@@ -266,7 +265,6 @@ function setStandardBatteryValues(){
         getId("min-cell-voltage").value = "2500";
 
         calculatePackVoltages();
-        return;
     }
 }
 

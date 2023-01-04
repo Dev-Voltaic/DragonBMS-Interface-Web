@@ -28,7 +28,7 @@ getId("board-calib-write").addEventListener("click", () => {
     calibCharacteristic.writeValue(Uint8Array.from(getCalibValues()).buffer).then(_ => {
         indicateBMSCalibSuccess();
         console.log("successfully wrote config");
-    }).catch(error => {
+    }).catch(_ => {
         indicateBMSCalibFailure();
     });
     setTimeout(() => {

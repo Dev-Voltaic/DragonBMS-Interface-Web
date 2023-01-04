@@ -1,3 +1,5 @@
+// noinspection ShiftOutOfRangeJS
+
 const bmsDataLoggingServiceUuid = "e9ea0200-e19b-482d-9293-c7907585fc48";
 const bmsDataLoggingCharacteristicUuid = "e9ea0201-e19b-482d-9293-c7907585fc48";
 let bmsDataLoggingCharacteristic;
@@ -35,8 +37,6 @@ let dataLoggingEnabled = false;
 let bleBMSDevice;
 let bleBMSDeviceName;
 let bleBMSDeviceId;
-let bleBMSDeviceHardwareRevision;
-let bleBMSDeviceFirmwareRevision;
 
 
 let automaticReconnectBMS = false;

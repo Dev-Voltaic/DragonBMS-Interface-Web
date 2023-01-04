@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedVariable
+
 function getDeviceInfoSeq(server, cb){
     // Device information service
     server.getPrimaryService('device_information').then((service) => {

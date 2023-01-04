@@ -1,13 +1,12 @@
+// noinspection JSBitwiseOperatorUsage
+
 clearAlertsButton.addEventListener("click", () => {
     clearAlerts(0, "")
 });
 
 function clearAlerts(counter, error){
     if (counter === 10){
-        contextBridge.send('alert-bluetooth-error', [
-            "Failed to clear alerts",
-            error
-        ]);
+        alert("Failed to clear alerts: " + error);
         return;
     }
 
@@ -97,7 +96,7 @@ function handleTurnOnTd(stateMachineState) {
     // turn on field is now tied to the state machine state - smart choice!
     if (stateMachineState === 2) { // ready
 
-        // if turnonTd is in the elements div (clear alerts must be on the screen then), swap
+        // if turnOnTd is in the elements div (clear alerts must be on the screen then), swap
         elementsDiv.childNodes.forEach((child) => {
             if (child === turnOnTd) {
                 swap(clearAlertsTd, turnOnTd);
@@ -117,7 +116,7 @@ function handleTurnOnTd(stateMachineState) {
             turnOnButton.innerHTML = "<h2>Switch OFF</h2>";
         }
     }
-    if (stateMachineState === 1) { // precharging
+    if (stateMachineState === 1) { // Precharging
         elementsDiv.childNodes.forEach((child) => {
             if (child === turnOnTd) {
                 swap(clearAlertsTd, turnOnTd);
@@ -166,28 +165,52 @@ function handleConfigWarningButtons(stateMachineState){
 
 boardConfigTurnOnButton.addEventListener("click", () => {
     if (boardConfigTurnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
-        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([1]).buffer);
+        turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
+            //console.log("turned on");
+        }).catch(_ => {
+            console.log("failed to turn on");
+        });
     }
     if (boardConfigTurnOnButton.innerHTML.includes("OFF")) {
-        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
+        turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
+            //console.log("turned off");
+        }).catch(_ => {
+            console.log("failed to turn off");
+        });
     }
 });
 
 boardCalibTurnOnButton.addEventListener("click", () => {
     if (boardCalibTurnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
-        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([1]).buffer);
+        turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
+            //console.log("turned on");
+        }).catch(_ => {
+            console.log("failed to turn on");
+        });
     }
     if (boardCalibTurnOnButton.innerHTML.includes("OFF")) {
-        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
+        turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
+            //console.log("turned on");
+        }).catch(_ => {
+            console.log("failed to turn off");
+        });
     }
 });
 
 turnOnTd.addEventListener("click", () => {
     if (turnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
-        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([1]).buffer);
+        turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
+            //console.log("turned on");
+        }).catch(_ => {
+            console.log("failed to turn on");
+        });
     }
     if (turnOnButton.innerHTML.includes("OFF")) {
-        turnOnCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
+        turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
+            //console.log("turned off");
+        }).catch(_ => {
+            console.log("failed to turn off");
+        });
     }
 });
 
@@ -354,7 +377,9 @@ resetEconomyButton.addEventListener("click", () => {
 
 
 resetTripButton.addEventListener("click", () => {
-    inlineOdometerCharacteristic.writeValueWithoutResponse(Uint8Array.from([0x01]).buffer);
+    inlineOdometerCharacteristic.writeValueWithoutResponse(Uint8Array.from([0x01]).buffer).catch(_ =>{
+        console.log("failed to reset trip odometer");
+    });
 });
 
 
@@ -467,7 +492,7 @@ function updateWarningFields() {
     if (alertBuffer & 0b00000000000000000000000000001000) {
         faultFieldText += "Power Temp  ";
 
-        faultNameText = "Powerstage Temperature";
+        faultNameText = "Power stage Temperature";
         faultExplanationText = "slow down buddy";
     }
     if (alertBuffer & 0b00000000000000000000000000010000) {
@@ -485,73 +510,73 @@ function updateWarningFields() {
     if (alertBuffer & 0b00000000000000000000000001000000) {
         faultFieldText += "Ch1 OC  ";
 
-        faultNameText = "Ch1 Overcurrent Discharge";
+        faultNameText = "Ch1 Over-current Discharge";
         faultExplanationText = "why so fast?";
     }
     if (alertBuffer & 0b00000000000000000000000010000000) {
         faultFieldText += "Ch1 UC  ";
 
-        faultNameText = "Ch1 Overcurrent Charge";
+        faultNameText = "Ch1 Over-current Charge";
         faultExplanationText = "why so fast breaking?";
     }
     if (alertBuffer & 0b00000000000000000000000100000000) {
         faultFieldText += "Ch2 OC  ";
 
-        faultNameText = "Ch2 Overcurrent Discharge";
+        faultNameText = "Ch2 Over-current Discharge";
         faultExplanationText = "why so fast?";
     }
     if (alertBuffer & 0b00000000000000000000001000000000) {
         faultFieldText += "Ch2 UC  ";
 
-        faultNameText = "Ch2 Overcurrent Charge";
+        faultNameText = "Ch2 Over-current Charge";
         faultExplanationText = "why so fast breaking?";
     }
     if (alertBuffer & 0b00000000000000000000010000000000) {
         faultFieldText += "Ch3 OC  ";
 
-        faultNameText = "Ch3 Overcurrent Discharge";
+        faultNameText = "Ch3 Over-current Discharge";
         faultExplanationText = "why so fast?";
     }
     if (alertBuffer & 0b00000000000000000000100000000000) {
         faultFieldText += "Ch3 UC  ";
 
-        faultNameText = "Ch3 Overcurrent Charge";
+        faultNameText = "Ch3 Over-current Charge";
         faultExplanationText = "why so fast breaking?";
     }
     if (alertBuffer & 0b00000000000000000001000000000000) {
         faultFieldText += "Ch1 OV  ";
 
-        faultNameText = "Ch1 Overvoltage";
+        faultNameText = "Ch1 Over-voltage";
         faultExplanationText = "oh no senpai, my mosfets huuuurt >:((";
     }
     if (alertBuffer & 0b00000000000000000010000000000000) {
         faultFieldText += "Ch1 UV  ";
 
-        faultNameText = "Ch1 Undervoltage";
+        faultNameText = "Ch1 Under-voltage";
         faultExplanationText = "ayo big man, where the voltage at??";
     }
     if (alertBuffer & 0b00000000000000000100000000000000) {
         faultFieldText += "Ch2 OV  ";
 
-        faultNameText = "Ch2 Overvoltage";
+        faultNameText = "Ch2 Over-voltage";
         faultExplanationText = "oh no senpai, my mosfets huuuurt >:((";
     }
     if (alertBuffer & 0b00000000000000001000000000000000) {
         faultFieldText += "Ch2 UV  ";
 
-        faultNameText = "Ch2 Undervoltage";
+        faultNameText = "Ch2 Under-voltage";
         faultExplanationText = "ayo big man, where the voltage at??";
     }
     if (alertBuffer & 0b00000000000000010000000000000000) {
         faultFieldText += "Ch3 OV  ";
 
-        faultNameText = "Ch3 Overvoltage";
+        faultNameText = "Ch3 Over-voltage";
         faultExplanationText = "oh no senpai, my mosfets huuuurt >:((";
     }
     if (alertBuffer & 0b00000000000000100000000000000000) {
         faultFieldText += "Ch3 UV  ";
 
-        faultNameText = "Ch3 Undervoltage";
+        faultNameText = "Ch3 Under-voltage";
         faultExplanationText = "ayo big man, where the voltage at??";
     }
 
@@ -618,16 +643,20 @@ precharge_button_div.addEventListener("click", function (){
     prechargeEnabled = !prechargeEnabled;
     if(prechargeEnabled){
         console.log(parseInt(document.getElementById("prechargePWMInput").value));
-        prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([
+        prechargeControlCharacteristic.writeValue(Uint8Array.from([
             parseInt(document.getElementById("prechargePWMInput").value)
-        ]).buffer);
+        ]).buffer).catch(_ => {
+            console.log("failed to enable precharge");
+        });
         currentPrechargeValue = parseInt(document.getElementById("prechargePWMInput").value);
         precharge_button_div.style.background = "green";
         precharge_button.style.color = "white";
         precharge_button.innerHTML = "stop Precharge";
     }else {
         currentPrechargeValue = 0;
-        prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
+        prechargeControlCharacteristic.writeValue(Uint8Array.from([0]).buffer).catch(_ => {
+            console.log("failed to turn off precharge");
+        });
         precharge_button_div.style.background = "";
         precharge_button.style.color = "green";
         precharge_button.innerHTML = "start Precharge";

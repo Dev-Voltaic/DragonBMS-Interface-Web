@@ -5,7 +5,7 @@
 
 
 function getBMSConfigFromBuffer(buffer){
-    configObject = {
+    let configObject = {
         // Battery stuff
         battCellCount: buffer.getUint8(0),
         battNomCapacity: (buffer.getUint8(2) << 8) | buffer.getUint8(1),
@@ -24,7 +24,7 @@ function getBMSConfigFromBuffer(buffer){
         dataloggingUpdateInterval: (buffer.getUint8(18) << 8) | buffer.getUint8(17),
         // Board stuff
         boardAutoStart: buffer.getUint8(19),
-        boardPoweroffTime: (buffer.getUint8(21) << 8) | buffer.getUint8(20),
+        boardPowerOffTime: (buffer.getUint8(21) << 8) | buffer.getUint8(20),
         boardEnabledChannels: buffer.getUint8(22),
         boardUpdateCount: (buffer.getUint8(24) << 8) | buffer.getUint8(23),
         protMaxReverseCurrent: (buffer.getUint8(26) << 8) | buffer.getUint8(25),

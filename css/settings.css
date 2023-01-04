@@ -71,30 +71,21 @@
     text-align: center;
     width: 95vw;
 
-    margin-top: 20vh;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin: 20vh auto auto;
 }
 
 
 #interface-info-container{
     text-align: center;
     width: 90vw;
-    margin-top: 20vh;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin: 20vh auto auto;
 }
 
 
 #board-info-container{
     text-align: center;
     width: 90vw;
-    margin-top: 20vh;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin: 20vh auto auto;
 }
 #board-info-container .logo{
     height: 10vw;
@@ -129,25 +120,16 @@ All tables inside the settings container
 
 #board-configuration-div{
     width: 100%;
-    margin-top: 20vh;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin: 20vh auto auto;
 }
 
 #inline-configuration-div{
     width: 100%;
-    margin-top: 20vh;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin: 20vh auto auto;
 }
 #board-calibration-div{
     width: 100%;
-    margin-top: 20vh;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin: 20vh auto auto;
 }
 
 

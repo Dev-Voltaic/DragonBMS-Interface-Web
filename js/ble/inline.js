@@ -117,7 +117,7 @@ async function inlineDeviceConnected(server){
                 .then(characteristics => {
                     inlineDataLoggingCharacteristic = characteristics;
 
-                    setAutoconnectTachoText("Enabling Dataloggging");
+                    setAutoconnectTachoText("Enabling Datalogging");
                     inlineDataLoggingCharacteristic.startNotifications()
                         .then(_ => {
 
@@ -166,6 +166,6 @@ function handleInlineLoggingNotifications(event) {
     if(value.byteLength > 1) {
         processInlineData(value);
     }else{
-        console.console.log("Something wrong with incoming BLE Data!");
+        console.log("Something wrong with incoming BLE Data!");
     }
 }

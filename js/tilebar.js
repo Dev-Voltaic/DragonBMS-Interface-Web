@@ -29,7 +29,7 @@ document.getElementById("tileBarBoardConfig").addEventListener("click", () => {
     //contextBridge.send('board-config');
 
     // show alert that config can only be updated in "ready" or "operation" states
-    // (open it second so it appears above the config window)
+    // (open it second, so it appears above the config window)
     if(stateMachineStateBuffer !== 2 && stateMachineStateBuffer !== 4 && bleBMSConnected){
         setTimeout(()=>{
             //contextBridge.send("alert-config-not-editable");
