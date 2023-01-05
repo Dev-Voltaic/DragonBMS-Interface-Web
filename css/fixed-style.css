@@ -1,9 +1,12 @@
 /*
     Disable PWA pull down to refresh behaviour
 */
+
+/*
 body {
     overscroll-behavior-y: contain;
 }
+*/
 
 
 /*
@@ -43,8 +46,6 @@ html::-webkit-scrollbar {
         font-size: 1.2em;
     }
 }
-
-/* WIDTH IS WONKY, MAY NEED TO DO BETTER */
 
 #tilebar-left{
     display: flex;
