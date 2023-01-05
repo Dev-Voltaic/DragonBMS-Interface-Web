@@ -1,11 +1,11 @@
-let darkMode = true;
+let dark_mode = true;
 
 function toggleDarkmode(){
-    darkMode = !darkMode;
+    dark_mode = !dark_mode;
 
-    localStorage.setItem('lastDarkmode', darkMode ? "dark" : "light"); // for the next session
+    localStorage.setItem('lastDarkmode', dark_mode ? "dark" : "light"); // for the next session
 
-    adjustDarkmode(darkMode);
+    adjustDarkmode(dark_mode);
 }
 
 function adjustDarkmode(mode){

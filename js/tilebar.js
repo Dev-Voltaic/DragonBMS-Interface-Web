@@ -44,8 +44,8 @@ document.getElementById("tileBarTachoConfig").addEventListener("click", () => {
 });
 
 
-let tileBarZoomin = document.getElementById("tileBarZoomIn");
-tileBarZoomin.addEventListener("click", () => {
+let tileBarZoomIn = document.getElementById("tileBarZoomIn");
+tileBarZoomIn.addEventListener("click", () => {
     zoom.to({element: selected_cell, padding: 0, pan: false});
     // "click" onto the same selected cell again to disable the selection
     tableEventListener(selected_cell);

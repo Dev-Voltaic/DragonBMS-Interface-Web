@@ -6,13 +6,13 @@ function updateConfig(){
 
     if(lastDarkMode === "light"){
         adjustDarkmode(false); // for light mode
-        darkMode = false;
+        dark_mode = false;
     }
 
     // actually unnecessary since it's dark by default
     if(lastDarkMode === "dark"){
         adjustDarkmode(true); // for light mode
-        darkMode = true;
+        dark_mode = true;
     }
 }
 updateConfig();
