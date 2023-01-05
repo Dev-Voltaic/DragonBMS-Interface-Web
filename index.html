@@ -1121,7 +1121,7 @@
         <table>
             <tr>
                 <td>
-                    <label for="ntc-type-select">NTC Type:</label>
+                    <label for="ntc-type-select">Sensor Type:</label>
                 </td>
                 <td>
 
@@ -1140,7 +1140,7 @@
             <tr>
 
                 <td class="customTempInput">
-                    <label for="r-value">NTC Resistance at 25°C [Ohm]</label>
+                    <label for="r-value">Thermistor R at 25°C [Ohm]</label>
                 </td>
 
 
@@ -1151,7 +1151,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="r-value-divider">Voltage Divider Resistance [Ohm]</label>
+                    <label for="r-value-divider">Voltage Divider R [Ohm] </label>
                 </td>
                 <td>
                     <input id="r-value-divider" type="number" min="1">
@@ -1161,14 +1161,13 @@
             <tr>
 
                 <td class="customTempInput">
-                    <label for="b-value">NTC B Value [1]</label>
+                    <label for="b-value">NTC Beta [1]</label>
                 </td>
                 <td class="customTempInput">
                     <input id="b-value" type="number" min="1">
                 </td>
 
             </tr>
-            <tr><td></td><td></td></tr>
             <tr>
                 <td>
                     <label for="reversed">Motor reversed?</label>
@@ -1180,7 +1179,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="back-neg">Backwards should be negative</label>
+                    <label for="back-neg">Reverse in -km/h</label>
                 </td>
                 <td>
                     <input id="back-neg" type="checkbox">
@@ -1188,7 +1187,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="inline-dl-frequency">Data logging Frequency</label>
+                    <label for="inline-dl-frequency">Data Frequency [Hz]</label>
                 </td>
                 <td>
                     <input id="inline-dl-frequency">
@@ -1197,16 +1196,10 @@
             </tr>
             <tr>
 
-                <td></td>
-
-                <td></td>
-            </tr>
-            <tr><td></td><td></td></tr>
-            <tr>
-
                 <td>
                     <label for="distperpulse">Distance/Pulse [0.1mm]</label>
-                    <br>
+                </td>
+                <td>
                     <input id="distperpulse" type="number">
                 </td>
 
@@ -1224,7 +1217,7 @@
             <tr>
 
                 <td>
-                    <button id="resetPulses">Reset</button>
+                    <button id="resetPulses">Set to 0</button>
                     <br>
                     Pulses: <span id="pulses"></span>
                 </td>
@@ -1235,23 +1228,22 @@
             </tr>
             <tr>
                 <td>
-                    <label for="motor-poles">Motor Polepairs [1]</label>
+                    <label for="motor-poles">Motor Pole Pairs</label>
                 </td>
                 <td>
                     <input id="motor-poles" type="number" min="1">
                 </td>
 
             </tr>
-            <tr><td></td><td></td></tr>
 
             <tr>
                 <td>Trip Odometer</td>
-                <td><button id="configResetTripOdo">Reset</button></td>
+                <td><button id="configResetTripOdo">Set to 0.0km</button></td>
 
             </tr>
             <tr>
                 <td>Vehicle Odometer</td>
-                <td><button id="resetVehicleOdo">Reset</button></td>
+                <td><button id="resetVehicleOdo">Set to 0.0km</button></td>
             </tr>
         </table>
     </div>

@@ -113,9 +113,57 @@ Buttons for reading and writing
 /*
 All tables inside the settings container
  */
-#settings-container table{
+#settings-container table {
     width: 100%;
+
+    margin-top: 5vh;
 }
+
+#inline-configuration-div  td:first-child {
+    text-align: left;
+}
+#inline-configuration-div td {
+    border-bottom: 4px dotted grey;
+}
+
+#inline-configuration-div td:last-child {
+    text-align: right;
+}
+
+#inline-configuration-div td:first-child {
+    text-align: left;
+}
+#inline-configuration-div td {
+    border-bottom: 4px dotted grey;
+}
+
+#inline-configuration-div select {
+    font-family: 'Pervitina';
+    font-size: inherit;
+}
+
+#inline-configuration-div button {
+    font-family: 'Pervitina';
+    font-size: inherit;
+}
+
+#inline-configuration-div {
+    font-size: 3vw;
+}
+
+#inline-configuration-div input::-webkit-outer-spin-button, #inline-configuration-div input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    /* padding: 1em; */
+}
+
+#inline-configuration-div input {
+    font-family: 'Pervitina';
+    font-size: inherit;
+    text-align: inherit;
+}
+
+
+
 
 
 #board-configuration-div{
