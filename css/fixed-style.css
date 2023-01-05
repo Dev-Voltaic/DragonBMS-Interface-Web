@@ -20,8 +20,8 @@ html::-webkit-scrollbar {
 
 
 #tilebar{
-    height: 25px;
-    font-size: 15px;
+    height: 50px;
+    font-size: 30px;
     width: 98vw;
 
     position: fixed;
