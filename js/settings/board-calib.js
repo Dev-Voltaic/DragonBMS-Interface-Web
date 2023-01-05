@@ -7,19 +7,15 @@ User interaction
  */
 
 getId("board-calib-read").addEventListener("click", () => {
-    readBMSCalib();
+    readBMSCalib(()=>{});
 });
 
-function readBMSCalib(){
+function readBMSCalib(cb){
     calibCharacteristic.readValue().then(calibValues => {
         console.log(calibValues);
         setCalibValues(calibValues);
+        cb();
     });
-    /*.catch(_ => {
-        indicateBMSCalibFailure();
-    });
-
-     */
 }
 
 getId("board-calib-write").addEventListener("click", () => {
@@ -32,7 +28,7 @@ getId("board-calib-write").addEventListener("click", () => {
         indicateBMSCalibFailure();
     });
     setTimeout(() => {
-        readBMSCalib();
+        readBMSCalib(()=>{});
     }, 200);
 });
 

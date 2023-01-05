@@ -3,15 +3,16 @@ User interaction
  */
 
 getId("board-config-read").addEventListener("click", () => {
-    readBMSConfig();
+    readBMSConfig(()=>{});
 });
 
-function readBMSConfig(){
+function readBMSConfig(cb){
     bmsConfigCharacteristic.readValue().then(configValues => {
         console.log(configValues);
         setBMSConfigValues(getBMSConfigFromBuffer(configValues));
         configBuffer = getBMSConfigFromBuffer(configValues);
         updateConfigRelatedGauges(configBuffer);
+        cb();
     })
         /*.catch(error => {
         console.log("read config error: ");
@@ -30,7 +31,7 @@ getId("board-config-write").addEventListener("click", () => {
         indicateBMSConfigFailure();
     });
     setTimeout(() => {
-        readBMSConfig();
+        readBMSConfig(()=>{});
     }, 200);
 });
 

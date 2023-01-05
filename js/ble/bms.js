@@ -151,8 +151,8 @@ async function bmsDeviceConnected(server) {
         setAutoconnectBMSText("Getting Services");
 
 
-
-        if(mobileDevice()){
+        // firstly only thought to be needed on mobile devices, is now used on every device
+        if(true){
             console.log("mobile device! sequentially getting characteristics");
                 getDevelopmentServiceSeq(server, ()=>{
                     console.log("got development");
@@ -162,35 +162,38 @@ async function bmsDeviceConnected(server) {
                             console.log("got config/calib");
                             getBMSAlertServiceSeq(server, ()=>{
                                 console.log("got alert");
-                                getBMSDataloggingServiceSeq(server, ()=>{
-                                    console.log("got datalogging");
-                                    // initial readout
+                                readBMSCalib(()=>{
+                                    readBMSConfig(()=>{
+                                        getBMSDataloggingServiceSeq(server, ()=>{
+                                            console.log("got datalogging");
+                                            // initial readout
 
-                                    automaticReconnectBMS = true;
+                                            automaticReconnectBMS = true;
 
-                                    bleBMSConnected = true;
+                                            bleBMSConnected = true;
 
-                                    try{
-                                        getDeviceInfoSeq(server, (data)=>{
-                                            console.log(data);
+                                            try{
+                                                getDeviceInfoSeq(server, (data)=>{
+                                                    console.log(data);
+                                                });
+                                            }catch (e) {
+                                                console.log("couldn't get device info service");
+                                            }
+
+
+                                            setTimeout(() => {
+                                                enableBoardGauges();
+                                                disableNothingConnectedOverlay();
+
+                                                if (bleInlineConnected) {
+                                                    zoom.to({element: table, padding: 0, pan: false});
+                                                }
+                                            }, 1000);
+
+
+
                                         });
-                                    }catch (e) {
-                                        console.log("couldn't get device info service");
-                                    }
-
-
-                                    setTimeout(() => {
-                                        enableBoardGauges();
-                                        disableNothingConnectedOverlay();
-
-                                        if (bleInlineConnected) {
-                                            zoom.to({element: table, padding: 0, pan: false});
-                                        }
-                                    }, 1000);
-
-
-                                    readBMSCalib();
-                                    readBMSConfig();
+                                    });
                                 });
                             });
                         });
@@ -208,24 +211,28 @@ async function bmsDeviceConnected(server) {
             getRuntimeControlServicePar(server, ()=>{});
             getBMSConfigServicePar(server, ()=>{});
             getBMSAlertServicePar(server, ()=>{});
-            getBMSDataloggingServiceSeq(server, ()=>{
-                // initial readout
-                readBMSCalib();
-                readBMSConfig();
+            readBMSCalib(()=>{
+                readBMSConfig(()=> {
+                    getBMSDataloggingServiceSeq(server, ()=>{
+                        // initial readout
+                        readBMSCalib();
+                        readBMSConfig();
 
-                automaticReconnectBMS = true;
+                        automaticReconnectBMS = true;
 
-                bleBMSConnected = true;
+                        bleBMSConnected = true;
 
 
-                setTimeout(() => {
-                    enableBoardGauges();
-                    disableNothingConnectedOverlay();
+                        setTimeout(() => {
+                            enableBoardGauges();
+                            disableNothingConnectedOverlay();
 
-                    if (bleInlineConnected) {
-                        zoom.to({element: table, padding: 0, pan: false});
-                    }
-                }, 1000);
+                            if (bleInlineConnected) {
+                                zoom.to({element: table, padding: 0, pan: false});
+                            }
+                        }, 1000);
+                    });
+                });
             });
         }
     });

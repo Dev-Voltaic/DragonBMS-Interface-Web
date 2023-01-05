@@ -389,10 +389,11 @@ function inlineConnected() {
     inlineGaugeDiv.classList.remove("inline-gauge-disabled");
     connectLastInlineOverlay.classList.add("hidden");
 
-
+/*
     if (!bleBMSConnected) {
         zoom.to({element: inlineGaugeTd, padding: 0, pan: false});
     }
+    */
 }
 
 function inlineDisconnected(){
