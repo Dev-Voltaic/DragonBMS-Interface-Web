@@ -151,6 +151,12 @@ function getInlineConfigValues() {
     config.backwards_negative = getIdChecked("back-neg");
     config.impulses = getIdValue("distperpulse");
     config.motor_poles = getIdValue("motor-poles");
+
+    // fields that might not be there dependent on the firmware version
+
+    if(!inlineConfigDataLoggingFrequency.disabled){
+        config.dataLoggingUpdateInterval =  1000 / inlineConfigDataLoggingFrequency.value;
+    }
     return config;
 }
 
@@ -166,6 +172,14 @@ function setInlineConfigValues(config) {
     getId("back-neg").checked = config.backwards_negative;
     getId("distperpulse").value = config.impulses;
     getId("motor-poles").value = config.motor_poles;
+
+    if(typeof config.dataLoggingUpdateInterval !== 'undefined') {
+        inlineConfigDataLoggingFrequency.disabled = false;
+
+        setCurrentSpikeSensitivity(config.dataLoggingUpdateInterval);
+    }else{
+        inlineConfigDataLoggingFrequency.disabled = true;
+    }
 }
 
 

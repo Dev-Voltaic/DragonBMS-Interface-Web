@@ -1,3 +1,21 @@
+/*
+    Disable PWA pull down to refresh behaviour
+*/
+body {
+    overscroll-behavior-y: contain;
+}
+
+
+/*
+no scrollbar
+*/
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+
+
 #tilebar{
     height: 25px;
     font-size: 15px;
@@ -75,16 +93,6 @@
 }
 
 
-
-
-
-/*
-no scrollbar
-*/
-
-html::-webkit-scrollbar {
-    display: none;
-}
 
 
 /*

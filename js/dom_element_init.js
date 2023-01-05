@@ -4,6 +4,7 @@ let table = getId("main-table");
 // Board Config
 let boardConfigTable = getId("board-config-table");
 let boardConfigBatterySelector = getId("battery-type-select");
+let boardConfigSpikeSensitivitySelector = getId("spike-sensitivity-select");
 
 let boardConfigTurnOnButton = getId("board-turnonoff-config");
 let configWriteWarning = getId("config-write-warning");
@@ -41,6 +42,7 @@ let shunt3Actual = getId("shunt-resistance-3-actual");
 // Inline Config
 let inlineConfigContainer = getId("inline-configuration-div");
 let tempSensorSelector = getId("ntc-type-select");
+let inlineConfigDataLoggingFrequency = getId("inline-dl-frequency");
 
 
 let elementsDiv = getId("elementsDiv");

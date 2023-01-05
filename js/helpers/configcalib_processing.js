@@ -34,7 +34,7 @@ function getBMSConfigFromBuffer(buffer){
         configObject.protSpikeSensitivity = buffer.getUint8(27);
     } catch (err) {
         if (err.constructor === RangeError) {
-            configObject.protSpikeSensitivity = "disabled";
+            console.log("older firmware");
         }
     }
 
@@ -93,7 +93,11 @@ function getBMSBufferFromConfig(config){
     configValues[25] = to16bit(config.protMaxReverseCurrent)[0];
     configValues[26] = to16bit(config.protMaxReverseCurrent)[1];
 
-    configValues[27] = parseInt(config.protSpikeSensitivity);
+    try {
+        configValues[27] = parseInt(config.protSpikeSensitivity);
+    }catch (e) {
+        console.log("older firmware");
+    }
 
 
     return configValues;
@@ -132,13 +136,14 @@ function getBMSBufferFromConfig(config){
 
 
 
-/* Inline Board Config funcitons */
+/* Inline Board Config functions */
 
 
 
 
 function getInlineConfigFromBuffer(buffer){
-    return {
+
+    let configObject = {
         // Temperature sensor stuff
         tempSensorType: buffer.getUint8(0),
         divider_r: (buffer.getUint8(2) << 8) | buffer.getUint8(1),
@@ -149,6 +154,18 @@ function getInlineConfigFromBuffer(buffer){
         backwards_negative: buffer.getUint8(10),
         motor_poles: buffer.getUint8(11)
     };
+
+    // necessary for using old firmware
+    // -> only makes option available to edit and write if it's available to read
+    try {
+        configObject.dataLoggingUpdateInterval = (buffer.getUint8(15) << 8) | buffer.getUint8(14);
+    } catch (err) {
+        if (err.constructor === RangeError) {
+            console.log("older firmware");
+        }
+    }
+
+    return configObject;
 }
 
 function getInlineBufferFromConfig(config){
@@ -172,6 +189,20 @@ function getInlineBufferFromConfig(config){
 
     configValues[10] = config.backwards_negative;
     configValues[11] = config.motor_poles;
+
+
+    //Datalogging
+    try {
+        configValues[15] = to16bit(config.dataLoggingUpdateInterval)[0];
+        configValues[14] = to16bit(config.dataLoggingUpdateInterval)[1];
+
+
+        // wtf are they for?!
+        configValues[12] = 0;
+        configValues[13] = 0;
+    }catch (e) {
+        console.log("older tacho firmware");
+    }
 
     return configValues;
 }

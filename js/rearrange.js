@@ -76,12 +76,12 @@ function tableEventListener(target){
                     target.classList.add("disabled");
 
                     // enable navigation bar option to zoom in on device
-                    tileBarZoomin.classList.remove("hidden");
+                    tileBarZoomIn.classList.remove("hidden");
 
                 } else {
 
                     // disable navigation bar option to zoom in on device
-                    tileBarZoomin.classList.add("hidden");
+                    tileBarZoomIn.classList.add("hidden");
 
                     if (bleBMSConnected) {
                         selected_cell.classList.remove("disabled");

@@ -107,6 +107,7 @@ function checkBMSConfigPlausibility() {
 function getBMSConfigValues() {
     let config = {};
 
+    // guaranteed fields
     config.battCellCount = getIdValue("battery-cells");
     config.battNomCapacity = getIdValue("battery-capacity");
 
@@ -115,8 +116,6 @@ function getBMSConfigValues() {
     config.protMaxImbalanceCurrent = getIdValue("strand-max-imbalance-current") * 100;
     config.protMaxCurrent = getIdValue("strand-max-current") * 100;
     config.protMaxReverseCurrent = getIdValue("strand-max-reverse-current") * 100;
-
-    config.protSpikeSensitivity = getCurrentSpikeSensitivity();
 
     config.protMaxPowerTemp = getIdValue("power-max-temp");
     config.protMaxLogicTemp = getIdValue("logic-max-temp");
@@ -130,6 +129,12 @@ function getBMSConfigValues() {
     config.boardPoweroffTime = getIdValue("auto-poweroff");
     config.boardEnabledChannels = getEnabledChannelsByte();
     config.boardUpdateCount = getId("updatecount").innerHTML;
+
+    // fields that might not be there dependent on the firmware version
+
+    if(!boardConfigSpikeSensitivitySelector.disabled){
+        config.protSpikeSensitivity = getCurrentSpikeSensitivity();
+    }
 
     return config;
 }
@@ -145,7 +150,13 @@ function setBMSConfigValues(config) {
     getId("strand-max-reverse-current").value = config.protMaxReverseCurrent / 100;
     getId("strand-max-imbalance-current").value = config.protMaxImbalanceCurrent / 100;
 
-    setCurrentSpikeSensitivity(config.protSpikeSensitivity);
+    if(typeof config.protSpikeSensitivity !== 'undefined') {
+        boardConfigSpikeSensitivitySelector.disabled = false;
+
+        setCurrentSpikeSensitivity(config.protSpikeSensitivity);
+    }else{
+        boardConfigSpikeSensitivitySelector.disabled = true;
+    }
 
     getId("datalogging-update-frequency").value = 1000/config.dataloggingUpdateInterval;
 
@@ -178,10 +189,10 @@ function indicateBMSConfigFailure() {
 
 
 boardConfigTable.addEventListener("mousemove", () => {
-    checkBMSConfigPlausability();
+    checkBMSConfigPlausibility();
 });
 boardConfigTable.addEventListener("change", () => {
-    checkBMSConfigPlausability();
+    checkBMSConfigPlausibility();
 });
 
 

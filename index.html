@@ -1119,17 +1119,11 @@
             <button id="inline-config-write">Write</button>
         </div>
         <table>
-            <tr class="no-height">
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-
             <tr>
                 <td>
                     <label for="ntc-type-select">NTC Type:</label>
+                </td>
+                <td>
 
                     <select name="ntc-type" id="ntc-type-select">
                         <option value="ntc10k">NTC 10K @ 25°C</option> <!-- B value = 3460; R @ 0°C = 29400 -->
@@ -1142,11 +1136,14 @@
                     </select>
                 </td>
 
-                <td class="seperator"></td>
+            </tr>
+            <tr>
 
                 <td class="customTempInput">
                     <label for="r-value">NTC Resistance at 25°C [Ohm]</label>
                 </td>
+
+
                 <td class="customTempInput">
                     <input id="r-value" type="number" min="1">
                 </td>
@@ -1157,9 +1154,11 @@
                     <label for="r-value-divider">Voltage Divider Resistance [Ohm]</label>
                 </td>
                 <td>
-                    <input id="r-value-divider" type="number" min="1"></td>
+                    <input id="r-value-divider" type="number" min="1">
+                </td>
 
-                <td class="seperator"></td>
+            </tr>
+            <tr>
 
                 <td class="customTempInput">
                     <label for="b-value">NTC B Value [1]</label>
@@ -1169,7 +1168,7 @@
                 </td>
 
             </tr>
-            <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
+            <tr><td></td><td></td></tr>
             <tr>
                 <td>
                     <label for="reversed">Motor reversed?</label>
@@ -1178,8 +1177,8 @@
                     <input id="reversed" type="checkbox">
                 </td>
 
-                <td class="seperator"></td>
-
+            </tr>
+            <tr>
                 <td>
                     <label for="back-neg">Backwards should be negative</label>
                 </td>
@@ -1187,7 +1186,22 @@
                     <input id="back-neg" type="checkbox">
                 </td>
             </tr>
-            <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
+            <tr>
+                <td>
+                    <label for="inline-dl-frequency">Data logging Frequency</label>
+                </td>
+                <td>
+                    <input id="inline-dl-frequency">
+                </td>
+
+            </tr>
+            <tr>
+
+                <td></td>
+
+                <td></td>
+            </tr>
+            <tr><td></td><td></td></tr>
             <tr>
 
                 <td>
@@ -1196,18 +1210,28 @@
                     <input id="distperpulse" type="number">
                 </td>
 
+            </tr>
+            <tr>
+
                 <td>
                     <label for="distance">Distance[mm]:</label>
-                    <br>
+                </td>
+                <td>
                     <input id="distance" type="number">
                 </td>
 
-                <td class="seperator"></td>
+            </tr>
+            <tr>
 
-                <td><button id="resetPulses">Reset</button>
+                <td>
+                    <button id="resetPulses">Reset</button>
                     <br>
-                    Pulses: <p id="pulses"></p></td>
-                <td><button id="calculatedistperpulse">Calculate</button></td>
+                    Pulses: <span id="pulses"></span>
+                </td>
+
+                <td>
+                    <button id="calculatedistperpulse">Calculate</button>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -1217,20 +1241,17 @@
                     <input id="motor-poles" type="number" min="1">
                 </td>
 
-                <td class="seperator"></td>
-
-                <td></td>
-                <td></td>
             </tr>
-            <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
+            <tr><td></td><td></td></tr>
+
             <tr>
-                <td>Trip Odometer<button id="configResetTripOdo">Reset</button></td>
-                <td></td>
+                <td>Trip Odometer</td>
+                <td><button id="configResetTripOdo">Reset</button></td>
 
-                <td class="seperator"></td>
-
-                <td>Vehicle Odometer<button id="resetVehicleOdo">Reset</button></td>
-                <td></td>
+            </tr>
+            <tr>
+                <td>Vehicle Odometer</td>
+                <td><button id="resetVehicleOdo">Reset</button></td>
             </tr>
         </table>
     </div>
