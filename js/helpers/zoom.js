@@ -24,11 +24,11 @@ let zoom = (function () {
     let callbackTimeout = -1;
 
     // Check for transform support so that we can fall back otherwise
-    let supportsTransforms = 'transform' in table.style;
+    let supportsTransforms = 'transform' in zoomContent.style;
 
     if (supportsTransforms) {
         // The easing that will be applied when we zoom in/out
-        table.style.transition = 'transform ' + TRANSITION_DURATION + 'ms ease';
+        zoomContent.style.transition = 'transform ' + TRANSITION_DURATION + 'ms ease';
     }
 
     // Zoom out if the user hits escape
@@ -68,7 +68,7 @@ let zoom = (function () {
         if (supportsTransforms) {
             // Reset
             if (scale === 1) {
-                table.style.transform = '';
+                zoomContent.style.transform = '';
             }
             // Scale
             else {
@@ -77,28 +77,28 @@ let zoom = (function () {
                 // tilebar height to make the zoom accommodate the non moving tilebar
                 let transform = 'translate(' + -rect.x + 'px,' + -(rect.y - document.getElementById("tilebar").clientHeight * 1.5) + 'px) scale(' + scale + ')';
 
-                table.style.transformOrigin = origin;
+                zoomContent.style.transformOrigin = origin;
 
-                table.style.transform = transform;
+                zoomContent.style.transform = transform;
             }
         } else {
             // Reset
             if (scale === 1) {
-                table.style.position = '';
-                table.style.left = '';
-                table.style.top = '';
-                table.style.width = '';
-                table.style.height = '';
-                table.style.zoom = '';
+                zoomContent.style.position = '';
+                zoomContent.style.left = '';
+                zoomContent.style.top = '';
+                zoomContent.style.width = '';
+                zoomContent.style.height = '';
+                zoomContent.style.zoom = '';
             }
             // Scale
             else {
-                table.style.position = 'relative';
-                table.style.left = (-(scrollOffset.x + rect.x) / scale) + 'px';
-                table.style.top = (-(scrollOffset.y + rect.y) / scale) + 'px';
-                table.style.width = (scale * 100) + '%';
-                table.style.height = (scale * 100) + '%';
-                table.style.zoom = scale;
+                zoomContent.style.position = 'relative';
+                zoomContent.style.left = (-(scrollOffset.x + rect.x) / scale) + 'px';
+                zoomContent.style.top = (-(scrollOffset.y + rect.y) / scale) + 'px';
+                zoomContent.style.width = (scale * 100) + '%';
+                zoomContent.style.height = (scale * 100) + '%';
+                zoomContent.style.zoom = scale;
             }
         }
 

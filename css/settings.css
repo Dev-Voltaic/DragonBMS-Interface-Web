@@ -36,6 +36,13 @@
 .orange{
     color:darkorange;
 }
+
+.button-orange{
+    color: black;
+    background-color: darkorange;
+    border: none;
+}
+
 #version-number {
     color: #0ee0ff;
 }
@@ -141,12 +148,12 @@ All tables inside the settings container
 }
 
 #inline-configuration-div select {
-    font-family: 'Pervitina';
+    font-family: 'Pervitina', monospace;
     font-size: inherit;
 }
 
 #inline-configuration-div button {
-    font-family: 'Pervitina';
+    font-family: 'Pervitina', monospace;
     font-size: inherit;
 }
 
@@ -160,7 +167,7 @@ All tables inside the settings container
 }
 
 #inline-configuration-div input {
-    font-family: 'Pervitina';
+    font-family: 'Pervitina', monospace;
     font-size: inherit;
     text-align: inherit;
 }

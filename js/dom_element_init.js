@@ -1,6 +1,9 @@
 // MAIN TABLE
 let table = getId("main-table");
 
+// Zoom content
+let zoomContent = document.getElementById("zoom-content");
+
 // INTERFACE INFO
 let interfaceInfoContainer = getId("interface-info-container");
 

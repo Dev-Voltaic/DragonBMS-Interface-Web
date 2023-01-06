@@ -165,14 +165,18 @@ function handleConfigWarningButtons(stateMachineState){
 
 boardConfigTurnOnButton.addEventListener("click", () => {
     if (boardConfigTurnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
+        boardConfigTurnOnButton.classList.add("button-orange");
         turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
+            boardConfigTurnOnButton.classList.remove("button-orange");
             //console.log("turned on");
         }).catch(_ => {
             console.log("failed to turn on");
         });
     }
     if (boardConfigTurnOnButton.innerHTML.includes("OFF")) {
+        boardConfigTurnOnButton.classList.add("button-orange");
         turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
+            boardConfigTurnOnButton.classList.remove("button-orange");
             //console.log("turned off");
         }).catch(_ => {
             console.log("failed to turn off");
@@ -182,14 +186,18 @@ boardConfigTurnOnButton.addEventListener("click", () => {
 
 boardCalibTurnOnButton.addEventListener("click", () => {
     if (boardCalibTurnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
+        boardCalibTurnOnButton.classList.add("button-orange");
         turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
+            boardCalibTurnOnButton.classList.remove("button-orange");
             //console.log("turned on");
         }).catch(_ => {
             console.log("failed to turn on");
         });
     }
     if (boardCalibTurnOnButton.innerHTML.includes("OFF")) {
+        boardCalibTurnOnButton.classList.add("button-orange");
         turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
+            boardCalibTurnOnButton.classList.remove("button-orange");
             //console.log("turned on");
         }).catch(_ => {
             console.log("failed to turn off");
@@ -199,14 +207,18 @@ boardCalibTurnOnButton.addEventListener("click", () => {
 
 turnOnTd.addEventListener("click", () => {
     if (turnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
+        turnOnButton.classList.add("orange");
         turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
+            turnOnButton.classList.remove("orange");
             //console.log("turned on");
         }).catch(_ => {
             console.log("failed to turn on");
         });
     }
     if (turnOnButton.innerHTML.includes("OFF")) {
+        turnOnButton.classList.add("orange");
         turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
+            turnOnButton.classList.remove("orange");
             //console.log("turned off");
         }).catch(_ => {
             console.log("failed to turn off");
