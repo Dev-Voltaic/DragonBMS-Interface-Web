@@ -1,6 +1,3 @@
-let settingsEnabled = false;
-
-
 if(isTouchDevice()){
 
     settingsSwipeContainer.classList.remove("non-touch");
@@ -8,7 +5,7 @@ if(isTouchDevice()){
 
     settingsSwipeContainer.addEventListener("touchmove", () => {
 
-        if(settingsEnabled === true){
+        if(!settingsContainer.classList.contains("hidden")){
             visualiseSettingsAvailable();
             return;
         }
@@ -20,7 +17,7 @@ if(isTouchDevice()){
 
         console.log(swipeDistance);
         if (swipeDistance >= (minDistance * 0.9)) {
-            settingsEnabled = true;
+            settingsContainer.classList.remove("hidden");
         }
     });
 }else{
@@ -28,7 +25,7 @@ if(isTouchDevice()){
     settingsSwipeContainer.classList.add("non-touch");
 
     settingsSwipeText.addEventListener("dblclick", () => {
-        settingsEnabled = true;
+        settingsContainer.classList.remove("hidden");
         visualiseSettingsAvailable();
     });
 }
@@ -57,7 +54,7 @@ function visualiseSettingsAvailable(){
 
 // reset everything connected to the settings
 settingsHide.addEventListener("click", () => {
-    settingsEnabled = false;
+    settingsContainer.classList.add("hidden");
 
     // hide settings-hide again
     settingsHide.classList.add("hidden");

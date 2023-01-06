@@ -1,7 +1,17 @@
 // MAIN TABLE
 let table = getId("main-table");
 
+// INTERFACE INFO
+let interfaceInfoContainer = getId("interface-info-container");
+
+
+// INTERFACE INFO
+let boardInfoContainer = getId("board-info-container");
+
+
+
 // Board Config
+let boardConfigContainer = getId("board-configuration-div");
 let boardConfigTable = getId("board-config-table");
 let boardConfigBatterySelector = getId("battery-type-select");
 let boardConfigSpikeSensitivitySelector = getId("spike-sensitivity-select");
@@ -10,6 +20,7 @@ let boardConfigTurnOnButton = getId("board-turnonoff-config");
 let configWriteWarning = getId("config-write-warning");
 
 // Board Calib
+let boardCalibContainer = document.getElementById("board-configuration-div");
 let boardCalibTable = getId("board-calibration-table");
 let boardCalibTurnOnButton = getId("board-turnonoff-calib");
 
@@ -54,7 +65,6 @@ let settingsSwipeText = document.getElementsByClassName("swipe-for-settings-text
 let settingsSwipeAction = document.getElementsByClassName("swipe-for-settings-action")[0];
 
 
-let interfaceInfoContainer = document.getElementById("interface-info-container");
 let settingsContainer = document.getElementById("settings-container");
 
 

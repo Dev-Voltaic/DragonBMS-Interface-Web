@@ -22,25 +22,38 @@ document.getElementById("tileBarDisconnect").addEventListener("click", ()=>{
 // BOARD
 
 document.getElementById("tileBarBoardInfo").addEventListener("click", ()=>{
-    //contextBridge.send('read-board-info');
-});
-document.getElementById("tileBarBoardConfig").addEventListener("click", () => {
-    // firstly open the config
-    //contextBridge.send('board-config');
-
-    // show alert that config can only be updated in "ready" or "operation" states
-    // (open it second, so it appears above the config window)
-    if(stateMachineStateBuffer !== 2 && stateMachineStateBuffer !== 4 && bleBMSConnected){
-        setTimeout(()=>{
-            //contextBridge.send("alert-config-not-editable");
-        }, 300);
+    if(boardInfoContainer.classList.contains("hidden")){
+        boardInfoContainer.classList.remove("hidden");
+        boardInfoContainer.scrollIntoView();
+    }else{
+        boardInfoContainer.classList.add("hidden");
+        table.scrollIntoView();
     }
 });
+document.getElementById("tileBarBoardConfig").addEventListener("click", () => {
+    if(settingsContainer.classList.contains("hidden")){
+        settingsContainer.classList.remove("hidden");
+        visualiseSettingsAvailable();
+    }
+    boardConfigContainer.scrollIntoView();
+    // normally there would be an else add hidden to the class list
+    // here, there is not, because there is a separate "hide settings" option
+});
 document.getElementById("tileBarBoardCalib").addEventListener("click", () => {
-    //contextBridge.send('board-calib');
+    if(settingsContainer.classList.contains("hidden")){
+        settingsContainer.classList.remove("hidden");
+        visualiseSettingsAvailable();
+    }
+    boardCalibContainer.scrollIntoView();
 });
 document.getElementById("tileBarTachoConfig").addEventListener("click", () => {
-    //contextBridge.send('board-inline-config');
+    if(settingsContainer.classList.contains("hidden")){
+        settingsContainer.classList.remove("hidden");
+        visualiseSettingsAvailable();
+    }
+    inlineConfigContainer.scrollIntoView();
+    // normally there would be an else add hidden to the class list
+    // here, there is not, because there is a separate "hide settings" option
 });
 
 
@@ -83,14 +96,25 @@ document.getElementById("tileBarStopDatalogging").addEventListener("click", ()=>
     document.getElementById("logging-span").classList.remove("recording");
 });
 
+*/
 
+// ABOUT (INTERFACE INFO)
 
-// ABOUT
-
+// toggle about window
 document.getElementById("tileBarAbout").addEventListener("click", ()=>{
+    // copy version number from tilebar into about interface
+    getId("version-number-2").innerHTML = getId("version-number").innerHTML;
+
+    if(interfaceInfoContainer.classList.contains("hidden")){
+        interfaceInfoContainer.classList.remove("hidden");
+        interfaceInfoContainer.scrollIntoView();
+    }else{
+        interfaceInfoContainer.classList.add("hidden");
+        table.scrollIntoView();
+    }
 });
 
-*/
+
 
 
 // DARKMODE
