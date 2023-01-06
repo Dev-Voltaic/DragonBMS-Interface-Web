@@ -7,6 +7,7 @@ let interfaceInfoContainer = getId("interface-info-container");
 
 // INTERFACE INFO
 let boardInfoContainer = getId("board-info-container");
+let enableSwipeDownUpdate = getId("enable-swipe-down-update");
 
 
 

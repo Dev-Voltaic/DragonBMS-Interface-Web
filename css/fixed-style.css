@@ -2,6 +2,9 @@
     Disable PWA pull down to refresh behaviour
 */
 
+.disableSwipeDown {
+    overscroll-behavior-y: contain;
+}
 
 
 /*

@@ -1,3 +1,12 @@
+// No other good place to put it
+
+enableSwipeDownUpdate.addEventListener("click", ()=>{
+    if(document.getElementsByTagName("body")[0].classList.contains("disableSwipeDown")){
+        document.getElementsByTagName("body")[0].classList.remove("disableSwipeDown");
+    }
+});
+
+
 if(isTouchDevice()){
 
     settingsSwipeContainer.classList.remove("non-touch");
