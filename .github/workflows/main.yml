@@ -25,7 +25,8 @@ jobs:
           echo $(ls)
           
           #moving everything from the existing repo into the deployment repo
-          ls | grep -v DaronBMS-Interface-Web | xargs mv -t DaronBMS-Interface-Web
+          
+          ls | grep -v DaronBMS-Interface-Web | xargs cp -r ./DaronBMS-Interface-Web/
           
           
           echo $(ls)
