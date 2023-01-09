@@ -36,6 +36,10 @@ jobs:
           #committing and pushing into other repo
           cd DaronBMS-Interface-Web
           echo $(ls)
+          
+          git config user.email "hi@p3h3.de"
+          git config user.name "Peter's Github Actions"
+          
           git add .
           git commit -m "automatic update from main branch of DragonBMS-Interface-Web"
           git push
