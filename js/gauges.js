@@ -84,11 +84,24 @@ function updateConfigRelatedGauges(config) {
 
     configInfoRevOcp.innerHTML = String(config.protMaxReverseCurrent * 0.01 * numChannels) + "A";
     configInfoOcp.innerHTML = String(config.protMaxCurrent * 0.01 * numChannels) + "A";
+
+
+
+    ch1InfoBatteryType.innerHTML = config.battCellCount + "S";
+    ch2InfoBatteryType.innerHTML = config.battCellCount + "S";
+    ch3InfoBatteryType.innerHTML = config.battCellCount + "S";
 }
 
 
-function setBMSState(val) {
-    bmsStateValue.innerHTML = val;
+function setBMSState(stateMachineState) {
+    let stateMachineStateString;
+    if (stateMachineState === 0) stateMachineStateString = "Startup"
+    else if (stateMachineState === 1) stateMachineStateString = "Precharging..."
+    else if (stateMachineState === 2) stateMachineStateString = "Ready"
+    else if (stateMachineState === 3) stateMachineStateString = "Operation"
+    else if (stateMachineState === 4) stateMachineStateString = "Fault"
+    else stateMachineStateString = "UNDEFINED STATE!"
+    bmsStateValue.innerHTML = stateMachineStateString;
 }
 
 
@@ -273,14 +286,6 @@ function setSOCVals(vals){
     ch3InfoSOC.innerHTML = (vals.ch3).toFixed(1) + "%";
     minSOCValue.innerHTML = (vals.min).toFixed(1) + "%";
 }
-
-
-function setBatteryType(val) {
-    ch1InfoBatteryType.innerHTML = val + "S Li-Ion";
-    ch2InfoBatteryType.innerHTML = val + "S Li-Ion";
-    ch3InfoBatteryType.innerHTML = val + "S Li-Ion";
-}
-
 
 function setOnTime(values) {
     let seconds = (values % 60).toString();

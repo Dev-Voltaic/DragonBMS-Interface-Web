@@ -1,5 +1,7 @@
 let configBuffer;
 
+let bmsAveragingBuffer = [];
+
 let averagingBuffer = [];
 let averagingBufferV = [];
 let averagingBufferA = [];
@@ -37,8 +39,10 @@ let hertzSampleBuffer = [];
 function processData(event) {
     let value = event.target.value;
 
+    // FILTERING ALL INVALID DATA
+
     if(value.byteLength === 0){
-        console.log("Something wrong with incoming BLE Data!");
+        console.log("Something wrong with incoming BLE data!");
         return;
     }
 
@@ -58,6 +62,9 @@ function processData(event) {
     }
 
 
+
+    // CALCULATING DATA PACKET RATE
+
     hertzSampleBuffer.push([
         packetSequenceNumber,
         lastLoggingDataTimeStamp
@@ -72,47 +79,72 @@ function processData(event) {
     });
 
     document.getElementById("bms-hz").innerHTML = "BMS: " +  hertzSampleBuffer.length + "Hz";
-    //+ (1000/configBuffer.dataloggingUpdateInterval).toFixed(1)
 
-    let V_Strang1 = (((value.getUint8(10) << 8) | value.getUint8(9)) / 100);
-    let V_Strang2 = (((value.getUint8(12) << 8) | value.getUint8(11)) / 100);
-    let V_Strang3 = (((value.getUint8(14) << 8) | value.getUint8(13)) / 100);
-    let V_Out = (((value.getUint8(16) << 8) | value.getUint8(15)) / 100);
 
-    let A_Strang1 = (handleSignedBullshit((value.getUint8(4) << 8) | value.getUint8(3)) / 100);
-    let A_Strang2 = (handleSignedBullshit((value.getUint8(6) << 8) | value.getUint8(5)) / 100);
-    let A_Strang3 = (handleSignedBullshit((value.getUint8(8) << 8) | value.getUint8(7)) / 100);
 
-    let shuntTemp = ((value.getUint8(18) << 8) | value.getUint8(17)) / 10;
-    let prechargeTemp = ((value.getUint8(20) << 8) | value.getUint8(19)) / 10;
+    // CONVERTING THE RAW DATA TO USABLE VALUES
 
-    shuntTemp = cap(shuntTemp, -50, 200);
-    prechargeTemp = cap(prechargeTemp, -50, 200);
+    let U_Strand1_raw = (((value.getUint8(10) << 8) | value.getUint8(9)) / 100);
+    let U_Strand2_raw = (((value.getUint8(12) << 8) | value.getUint8(11)) / 100);
+    let U_Strand3_raw = (((value.getUint8(14) << 8) | value.getUint8(13)) / 100);
+    let U_Out_raw = (((value.getUint8(16) << 8) | value.getUint8(15)) / 100);
+
+    let I_Strand1_raw = (handleSignedBullshit((value.getUint8(4) << 8) | value.getUint8(3)) / 100);
+    let I_Strand2_raw = (handleSignedBullshit((value.getUint8(6) << 8) | value.getUint8(5)) / 100);
+    let I_Strand3_raw = (handleSignedBullshit((value.getUint8(8) << 8) | value.getUint8(7)) / 100);
+
+    let shuntTemp_raw = ((value.getUint8(18) << 8) | value.getUint8(17)) / 10;
+    let prechargeTemp_raw = ((value.getUint8(20) << 8) | value.getUint8(19)) / 10;
 
     let stateMachineState = value.getUint8(21);
-    stateMachineStateBuffer = stateMachineState;
-    if (stateMachineState === 0) stateMachineState = "Startup"
-    else if (stateMachineState === 1) stateMachineState = "Precharging..."
-    else if (stateMachineState === 2) stateMachineState = "Ready"
-    else if (stateMachineState === 3) stateMachineState = "Operation"
-    else if (stateMachineState === 4) stateMachineState = "Fault"
-    else stateMachineState = "UNDEFINED STATE!"
 
-    handleTurnOnTd(stateMachineStateBuffer);
-    handleConfigWarningButtons(stateMachineStateBuffer);
+    let energyUsed1_raw = handleSignedBullshit32((((value.getUint8(25) << 24) | (value.getUint8(24) << 16)) | (value.getUint8(23) << 8)) | (value.getUint8(22)));
+    let energyUsed2_raw = handleSignedBullshit32((((value.getUint8(29) << 24) | (value.getUint8(28) << 16)) | (value.getUint8(27) << 8)) | (value.getUint8(26)));
+    let energyUsed3_raw = handleSignedBullshit32((((value.getUint8(33) << 24) | (value.getUint8(32) << 16)) | (value.getUint8(31) << 8)) | (value.getUint8(30)));
 
 
-    let energyUsed1 = handleSignedBullshit32((((value.getUint8(25) << 24) | (value.getUint8(24) << 16)) | (value.getUint8(23) << 8)) | (value.getUint8(22)));
-    let energyUsed2 = handleSignedBullshit32((((value.getUint8(29) << 24) | (value.getUint8(28) << 16)) | (value.getUint8(27) << 8)) | (value.getUint8(26)));
-    let energyUsed3 = handleSignedBullshit32((((value.getUint8(33) << 24) | (value.getUint8(32) << 16)) | (value.getUint8(31) << 8)) | (value.getUint8(30)));
+    let bmsLoggingPacket = {
+        time: lastLoggingDataTimeStamp,
+        packageSequenceNumber: packetSequenceNumber,
+        u1: U_Strand1_raw,
+        u2: U_Strand2_raw,
+        u3: U_Strand3_raw,
+        uOut: U_Out_raw,
+        i1: I_Strand1_raw,
+        i2: I_Strand2_raw,
+        i3: I_Strand3_raw,
+        tShunt: shuntTemp_raw,
+        tPch: prechargeTemp_raw,
+        eU1: energyUsed1_raw,
+        eU2: energyUsed2_raw,
+        eU3: energyUsed3_raw
+    };
+
+
+    // processing the data
+    shuntTemp_raw = cap(shuntTemp_raw, -50, 200);
+    prechargeTemp_raw = cap(prechargeTemp_raw, -50, 200);
+
+
+    // calculating further values
+
+    let P_Strand1 = (U_Strand1_raw * I_Strand1_raw);
+    let P_Strand2 = (U_Strand2_raw * I_Strand2_raw);
+    let P_Strand3 = (U_Strand3_raw * I_Strand3_raw);
+
+    let P_total = (U_Out_raw / 1000 * (I_Strand1_raw + I_Strand2_raw + I_Strand3_raw));
+
+    let P_loss = (
+        P_Strand1 + P_Strand2 + P_Strand3 - (U_Out_raw * (I_Strand1_raw + I_Strand2_raw + I_Strand3_raw))
+    ).toFixed(1);
 
 
 
-    let W_Strang1 = (V_Strang1 * A_Strang1);
-    let W_Strang2 = (V_Strang2 * A_Strang2);
-    let W_Strang3 = (V_Strang3 * A_Strang3);
 
-    let totalPower = (V_Out / 1000 * (A_Strang1 + A_Strang2 + A_Strang3));
+    setBMSState(stateMachineState);
+    handleTurnOnTd(stateMachineState);
+    handleConfigWarningButtons(stateMachineState);
+
 
     let totalAmps = (parseFloat(averagedArray(averagingBufferA, 2)[0]) +
         parseFloat(averagedArray(averagingBufferA, 2)[1]) +
@@ -121,25 +153,20 @@ function processData(event) {
         totalAmps = 0;
     }
 
-    let P_loss = (
-        ((V_Strang1 * A_Strang1) +
-            (V_Strang2 * A_Strang2) +
-            (V_Strang3 * A_Strang3)) -
-        (V_Out * (A_Strang1 + A_Strang2 + A_Strang3))
-    ).toFixed(1);
 
+
+
+
+
+    // BATTERY SOC CALCULATION
+    // _______________________________________
 
     let CellCount = configBuffer.battCellCount;
     let Capacity = configBuffer.battNomCapacity;
 
-
-
-    // _______________________________________
-
-
     let soc;
-    if (remainingEnergy1 === 0 && (CellCount * 2.5 <= V_Strang1 <= CellCount * 4.2)) {
-        let cell_voltage = V_Strang1 / CellCount;
+    if (remainingEnergy1 === 0 && (CellCount * 2.5 <= U_Strand1_raw <= CellCount * 4.2)) {
+        let cell_voltage = U_Strand1_raw / CellCount;
         /*
         let soc;
         if(cell_voltage > 3.5){
@@ -156,8 +183,8 @@ function processData(event) {
     }
 
 
-    if (remainingEnergy2 === 0 && (CellCount * 2.5 <= V_Strang2 <= CellCount * 4.2)) {
-        let cell_voltage = V_Strang2/CellCount;
+    if (remainingEnergy2 === 0 && (CellCount * 2.5 <= U_Strand2_raw <= CellCount * 4.2)) {
+        let cell_voltage = U_Strand2_raw/CellCount;
         /*
         let soc;
         if(cell_voltage > 3.5){
@@ -172,8 +199,8 @@ function processData(event) {
     }
 
 
-    if (remainingEnergy3 === 0 && (CellCount * 2.5 <= V_Strang3 <= CellCount * 4.2)) {
-        let cell_voltage = V_Strang3/CellCount;
+    if (remainingEnergy3 === 0 && (CellCount * 2.5 <= U_Strand3_raw <= CellCount * 4.2)) {
+        let cell_voltage = U_Strand3_raw/CellCount;
         /*
         let soc;
         if(cell_voltage > 3.5){
@@ -191,13 +218,13 @@ function processData(event) {
     let SOC_2 = 100 * ((remainingEnergy2 - (usedEnergy2 / 3600)) / ((Capacity / 1000) * CellCount * 3.7));
     let SOC_3 = 100 * ((remainingEnergy3 - (usedEnergy3 / 3600)) / ((Capacity / 1000) * CellCount * 3.7));
 
-    if (V_Strang1 < CellCount * 2.5) {
+    if (U_Strand1_raw < CellCount * 2.5) {
         SOC_1 = 0
     }
-    if (V_Strang2 < CellCount * 2.5) {
+    if (U_Strand2_raw < CellCount * 2.5) {
         SOC_2 = 0
     }
-    if (V_Strang3 < CellCount * 2.5) {
+    if (U_Strand3_raw < CellCount * 2.5) {
         SOC_3 = 0
     }
 
@@ -207,9 +234,9 @@ function processData(event) {
     if(((configBuffer.boardEnabledChannels & 4) === 4) && SOC_3 < minSOC){minSOC = SOC_3}
 
 
-    usedEnergy1 += W_Strang1 * (loggingDataInterval / 1000);
-    usedEnergy2 += W_Strang2 * (loggingDataInterval / 1000);
-    usedEnergy3 += W_Strang3 * (loggingDataInterval / 1000);
+    usedEnergy1 += P_Strand1 * (loggingDataInterval / 1000);
+    usedEnergy2 += P_Strand2 * (loggingDataInterval / 1000);
+    usedEnergy3 += P_Strand3 * (loggingDataInterval / 1000);
 
 
     let usedEnergyTotal = usedEnergy1 + usedEnergy2 + usedEnergy3;
@@ -217,11 +244,6 @@ function processData(event) {
 
     //_________________________________________________
 
-
-    setBMSState(stateMachineState);
-
-
-    setBatteryType(CellCount);
 
     setBMSTempValues({
         shunt: averagedArray(averagingBufferT, 1)[0],
@@ -248,37 +270,37 @@ function processData(event) {
 
 
     let channelInfo = [
-        V_Strang1.toFixed(1),
-        V_Strang2.toFixed(1),
-        V_Strang3.toFixed(1),
-        A_Strang1.toFixed(2),
-        A_Strang2.toFixed(2),
-        A_Strang3.toFixed(2),
-        V_Out.toFixed(1)
+        U_Strand1_raw.toFixed(1),
+        U_Strand2_raw.toFixed(1),
+        U_Strand3_raw.toFixed(1),
+        I_Strand1_raw.toFixed(2),
+        I_Strand2_raw.toFixed(2),
+        I_Strand3_raw.toFixed(2),
+        U_Out_raw.toFixed(1)
     ];
     let channelInfoV = [
-        V_Strang1,
-        V_Strang2,
-        V_Strang3,
-        V_Out
+        U_Strand1_raw,
+        U_Strand2_raw,
+        U_Strand3_raw,
+        U_Out_raw
     ];
     let channelInfoA = [
-        A_Strang1,
-        A_Strang2,
-        A_Strang3,
-        totalPower
+        I_Strand1_raw,
+        I_Strand2_raw,
+        I_Strand3_raw,
+        P_total
     ];
     let channelInfoT = [
-        shuntTemp.toFixed(1),
-        prechargeTemp.toFixed(1),
+        shuntTemp_raw.toFixed(1),
+        prechargeTemp_raw.toFixed(1),
         P_loss
     ];
     let maxValueInfo = [
         totalAmps,
-        V_Out,
-        totalPower,
-        shuntTemp,
-        prechargeTemp
+        U_Out_raw,
+        P_total,
+        shuntTemp_raw,
+        prechargeTemp_raw
     ];
 
 
@@ -286,11 +308,11 @@ function processData(event) {
     if (document.getElementById("autoprecharge") !== null) {
         // pfusch for franz
         if (prechargeEnabled) {
-            if (prechargeTemp > 75 && currentPrechargeValue !== 0) {
+            if (prechargeTemp_raw > 75 && currentPrechargeValue !== 0) {
                 prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
                 currentPrechargeValue = 0;
             }
-            if (prechargeTemp <= 75 && currentPrechargeValue !== parseInt(document.getElementById("prechargePWMInput").value)) {
+            if (prechargeTemp_raw <= 75 && currentPrechargeValue !== parseInt(document.getElementById("prechargePWMInput").value)) {
                 prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([
                     parseInt(document.getElementById("prechargePWMInput").value)
                 ]).buffer);
@@ -377,15 +399,15 @@ function processData(event) {
                 packetSequenceNumber,
                 ms_today,
                 stamp,
-                V_Strang1,
-                V_Strang2,
-                V_Strang3,
-                V_Out,
-                A_Strang1,
-                A_Strang2,
-                A_Strang3,
-                shuntTemp,
-                prechargeTemp
+                U_Strand1_raw,
+                U_Strand2_raw,
+                U_Strand3_raw,
+                U_Out_raw,
+                I_Strand1_raw,
+                I_Strand2_raw,
+                I_Strand3_raw,
+                shuntTemp_raw,
+                prechargeTemp_raw
             ];
 
             datastringBoard = boardData.join(";") + ";;;;;";
