@@ -22,13 +22,14 @@ jobs:
           echo $(ls)
           
           # cloning deployment repo
-          git clone https://${{ secrets.gh_token }}@github.com/p3h3/DaronBMS-Interface-Web.git/
+          git clone https://${{ secrets.gh_token }}@github.com/p3h3/DaronBMS-Interface-Web.git
           
           
           echo $(ls)
           
           #moving everything from the existing repo into the deployment repo
-          mv -i !(DaronBMS-Interface-Web) DaronBMS-Interface-Web
+          mv * DaronBMS-Interface-Web
+            # don't worry about the warning
           
           
           echo $(ls)
