@@ -31,7 +31,7 @@ jobs:
           #delete everything but dot files in the deployment repo
           cd DaronBMS-Interface-Web
           shopt -s dotglob extglob
-          rm !(.*)
+          rm -r !(.*)
           cd ../
           
           mv tmp/* DaronBMS-Interface-Web
