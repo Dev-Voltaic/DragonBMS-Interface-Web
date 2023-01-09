@@ -38,7 +38,7 @@ jobs:
           echo $(ls)
           
           git config user.email "hi@p3h3.de"
-          git config user.name "Peter's Github Actions"
+          git config user.name "p3h3"
           
           git add .
           git commit -m "automatic update from main branch of DragonBMS-Interface-Web"
