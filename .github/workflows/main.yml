@@ -28,8 +28,7 @@ jobs:
           echo $(ls)
           
           #moving everything from the existing repo into the deployment repo
-          mv * DaronBMS-Interface-Web
-            # don't worry about the warning
+          ls | grep -v DaronBMS-Interface-Web | xargs mv -t DaronBMS-Interface-Web
           
           
           echo $(ls)
