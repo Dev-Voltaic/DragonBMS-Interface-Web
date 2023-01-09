@@ -14,11 +14,29 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Downloading releases
+      - name: Pushing into other repo
         run: |
           echo "${{ github.token  }}" | gh auth login --with-token
-          git clone https://${{ secrets.gh_token }}@github.com/p3h3/DaronBMS-Interface-Web.git
           
           
           echo $(ls)
-          cd https://github.com/p3h3/DaronBMS-Interface-Web
+          
+          # cloning deployment repo
+          git clone https://${{ secrets.gh_token }}@github.com/p3h3/DaronBMS-Interface-Web.git/
+          
+          
+          echo $(ls)
+          
+          #moving everything from the existing repo into the deployment repo
+          mv -i !(DaronBMS-Interface-Web) DaronBMS-Interface-Web
+          
+          
+          echo $(ls)
+          
+          #committing and pushing into other repo
+          cd DaronBMS-Interface-Web
+          echo $(ls)
+          git add .
+          git commit -m "automatic update from main branch of DragonBMS-Interface-Web"
+          git push
+          
