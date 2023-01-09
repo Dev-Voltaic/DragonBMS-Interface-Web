@@ -16,7 +16,7 @@ jobs:
 
       - name: Downloading releases
         run: |
-          echo "${{ secrets.gh_token }}" | gh auth login --with-token
+          echo "${{ github.token  }}" | gh auth login --with-token
           git clone https://${{ secrets.gh_token }}@github.com/p3h3/https://github.com/p3h3/DaronBMS-Interface-Web.git
           
           
