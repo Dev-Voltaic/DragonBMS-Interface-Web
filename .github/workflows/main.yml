@@ -25,8 +25,16 @@ jobs:
           echo $(ls)
           
           #moving everything from the existing repo into the deployment repo
+          # copy everything to new dir tmp
+          mkdir tmp
+          ls | grep -v DaronBMS-Interface-Web | grep -v tmp | xargs mv -t tmp
+          #delete everything but dot files in the deployment repo
+          cd DaronBMS-Interface-Web
+          shopt -s dotglob extglob
+          rm !(.*)
+          cd ../
           
-          ls | grep -v DaronBMS-Interface-Web | xargs cp -r ./DaronBMS-Interface-Web/
+          mv tmp/* DaronBMS-Interface-Web
           
           
           echo $(ls)
