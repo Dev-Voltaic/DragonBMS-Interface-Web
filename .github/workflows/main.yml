@@ -16,9 +16,6 @@ jobs:
 
       - name: Pushing into other repo
         run: |
-          echo "${{ github.token  }}" | gh auth login --with-token
-          
-          
           echo $(ls)
           
           # cloning deployment repo
@@ -39,6 +36,8 @@ jobs:
           
           git config user.email "hi@p3h3.de"
           git config user.name "p3h3"
+          
+          echo "${{ secrets.gh_token  }}" | gh auth login --with-token
           
           git add .
           git commit -m "automatic update from main branch of DragonBMS-Interface-Web"
