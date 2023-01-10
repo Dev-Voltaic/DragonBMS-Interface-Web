@@ -120,6 +120,12 @@ function processData(event) {
         eU3: energyUsed3_raw
     };
 
+    // always have the newest packet at the first index of the buffer
+    // age ascending up until 500 samples ago
+    if (bmsAveragingBuffer.unshift(bmsLoggingPacket) > 500) {
+        bmsAveragingBuffer.pop();
+    }
+
 
     // processing the data
     shuntTemp_raw = cap(shuntTemp_raw, -50, 200);
@@ -267,6 +273,15 @@ function processData(event) {
         ch3: SOC_3,
         min: minSOC
     });
+
+
+
+
+
+
+
+
+
 
 
     let channelInfo = [

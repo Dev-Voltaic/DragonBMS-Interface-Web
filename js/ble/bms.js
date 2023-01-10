@@ -41,23 +41,6 @@ let bleBMSDeviceId;
 
 let automaticReconnectBMS = false;
 
-let averagedArray = (array, averaging) => {
-    let summedArray = [];
-    let averageArray = [];
-    array.forEach(sub => {
-        sub.map(Number).forEach((num, index) => {
-            if(summedArray[index]){
-                summedArray[index] += num;
-            }else{
-                summedArray[index] = num;
-            }
-        });
-    });
-    summedArray.forEach(sum => {
-        averageArray.push((sum / array.length).toFixed(averaging));
-    });
-    return averageArray;
-}
 
 function connectBMS(){
     setAutoconnectBMSText("Searching");
