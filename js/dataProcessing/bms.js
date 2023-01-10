@@ -319,35 +319,6 @@ function processData(event) {
     ];
 
 
-    // is null when moving the dev tile
-    if (document.getElementById("autoprecharge") !== null) {
-        // pfusch for franz
-        if (prechargeEnabled) {
-            if (prechargeTemp_raw > 75 && currentPrechargeValue !== 0) {
-                prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([0]).buffer);
-                currentPrechargeValue = 0;
-            }
-            if (prechargeTemp_raw <= 75 && currentPrechargeValue !== parseInt(document.getElementById("prechargePWMInput").value)) {
-                prechargeControlCharacteristic.writeValueWithoutResponse(Uint8Array.from([
-                    parseInt(document.getElementById("prechargePWMInput").value)
-                ]).buffer);
-                currentPrechargeValue = parseInt(document.getElementById("prechargePWMInput").value);
-            }
-            if (currentPrechargeValue === 0) {
-                document.getElementById("autoprecharge").style.color = "red";
-            } else {
-                document.getElementById("autoprecharge").style.color = "green";
-            }
-        } else {
-            document.getElementById("autoprecharge").style.color = "yellow";
-        }
-
-        document.getElementById("autoprecharge").innerHTML = "current precharge value: " + currentPrechargeValue;
-
-
-    }
-
-
     if (averagingBuffer.unshift(channelInfo) > 4) {
         averagingBuffer.pop();
     }
