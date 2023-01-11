@@ -65,7 +65,7 @@ function gatherBMSData(event){
     let energyUsed3_raw = handleSignedBullshit32((((value.getUint8(33) << 24) | (value.getUint8(32) << 16)) | (value.getUint8(31) << 8)) | (value.getUint8(30)));
 
 
-    let bmsLoggingPacket = {
+    return {
         time: lastLoggingDataTimeStamp,
         packageSequenceNumber: packetSequenceNumber,
         u1: U_Strand1_raw,
@@ -82,6 +82,4 @@ function gatherBMSData(event){
         eU3: energyUsed3_raw,
         stateMachineState: stateMachineState
     };
-
-    return bmsLoggingPacket;
 }
