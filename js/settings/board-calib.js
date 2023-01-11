@@ -91,7 +91,7 @@ function setCalibValues(data){
         (data.getUint8(7) << 8) | data.getUint8(6),
 
         // Shunts
-        (data.getUint8(9) << 8) | daxta.getUint8(8),
+        (data.getUint8(9) << 8) | data.getUint8(8),
         (data.getUint8(11) << 8) | data.getUint8(10),
         (data.getUint8(13) << 8) | data.getUint8(12),
 
@@ -118,12 +118,12 @@ function setCalibValues(data){
 
 function setCalibActualValues(data){
     inVolt1Actual.innerHTML = data.u1;
-    inVolt2Actual.innerHTML = data[1];
-    inVolt3Actual.innerHTML = data[2];
-    shunt1Actual.innerHTML = data[3];
-    shunt2Actual.innerHTML = data[4];
-    shunt3Actual.innerHTML = data[5];
-    outVoltActual.innerHTML = data[6];
+    inVolt2Actual.innerHTML = data.u2;
+    inVolt3Actual.innerHTML = data.u3;
+    shunt1Actual.innerHTML = data.i1;
+    shunt2Actual.innerHTML = data.i2;
+    shunt3Actual.innerHTML = data.i3;
+    outVoltActual.innerHTML = data.uOut;
 }
 
 
