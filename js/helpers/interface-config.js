@@ -21,12 +21,20 @@ function updateConfig(){
     const bmsDataAveragingIntervalT = parseFloat(localStorage.getItem("averagingIntervalU") || "0.6");
     const bmsDataAveragingIntervalCalib = parseFloat(localStorage.getItem("averagingIntervalU") || "0.5");
 
+    const maxAveragingInterval = Math.max(
+        bmsDataAveragingIntervalU,
+        bmsDataAveragingIntervalI,
+        bmsDataAveragingIntervalT,
+        bmsDataAveragingIntervalCalib
+        );
+
     interfaceConfig = {
         darkMode: lastDarkMode,
         averagingIntervalU: bmsDataAveragingIntervalU,
         averagingIntervalI: bmsDataAveragingIntervalI,
         averagingIntervalT: bmsDataAveragingIntervalT,
-        averagingIntervalCalib: bmsDataAveragingIntervalCalib
+        averagingIntervalCalib: bmsDataAveragingIntervalCalib,
+        maxAveragingInterval: maxAveragingInterval
     };
 }
 

@@ -117,7 +117,7 @@ function setCalibValues(data){
 }
 
 function setCalibActualValues(data){
-    inVolt1Actual.innerHTML = data[0];
+    inVolt1Actual.innerHTML = data.u1;
     inVolt2Actual.innerHTML = data[1];
     inVolt3Actual.innerHTML = data[2];
     shunt1Actual.innerHTML = data[3];

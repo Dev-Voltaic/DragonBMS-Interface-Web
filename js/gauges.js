@@ -239,14 +239,6 @@ turnOnTd.addEventListener("click", () => {
     }
 });
 
-
-function setWTextVal(val){
-    if(val === "-0.00"){val = "0.00"}
-    combinedPowerValue.innerHTML = val + "kW";
-}
-function setVTextVal(val){
-    outputVoltageValue.innerHTML = val + "V";
-}
 function setWattPlossTextVal(val) {
     if(val === "-0.0"){val = "0.0"}
     boardPowerlossValue.innerHTML = val + "W";
@@ -315,28 +307,32 @@ function setInlineMaxValues(vals){
 }
 
 
-function setChannelInfo(data){
-    ch1InfoVoltage.innerHTML = data[0] + "V";
-    ch2InfoVoltage.innerHTML = data[1] + "V";
-    ch3InfoVoltage.innerHTML = data[2] + "V";
+function setChannelVoltageInfo(data){
+    ch1InfoVoltage.innerHTML = data.u1 + "V";
+    ch2InfoVoltage.innerHTML = data.u2 + "V";
+    ch3InfoVoltage.innerHTML = data.u3 + "V";
 
-    setVTextVal(data[3]);
+    outputVoltageValue.innerHTML = data.uOut + "V";
+}
+function setChannelCurrentInfo(data){
+    if(data.i1 === "-0.00"){data.i1 = "0.00"}
+    if(data.i2 === "-0.00"){data.i2 = "0.00"}
+    if(data.i3 === "-0.00"){data.i3 = "0.00"}
 
-    if(data[4] === "-0.00"){data[4] = "0.00"}
-    if(data[5] === "-0.00"){data[5] = "0.00"}
-    if(data[6] === "-0.00"){data[6] = "0.00"}
 
+    ch1ControlCurrent.innerHTML = data.i1 + "A";
+    ch1ControlPower.innerHTML = (parseFloat(data.u1) * parseFloat(data.i1)).toFixed(1) + "W";
 
-    ch1ControlCurrent.innerHTML = data[4] + "A";
-    ch1ControlPower.innerHTML = (parseFloat(data[0]) * parseFloat(data[4])).toFixed(1) + "W";
+    ch2ControlCurrent.innerHTML = data.i2 + "A";
+    ch2ControlPower.innerHTML = (parseFloat(data.u2) * parseFloat(data.i2)).toFixed(1) + "W";
 
-    ch2ControlCurrent.innerHTML = data[5] + "A";
-    ch2ControlPower.innerHTML = (parseFloat(data[1]) * parseFloat(data[5])).toFixed(1) + "W";
+    ch3ControlCurrent.innerHTML = data.i3 + "A";
+    ch3ControlPower.innerHTML = (parseFloat(data.u3) * parseFloat(data.i3)).toFixed(1) + "W";
+}
 
-    ch3ControlCurrent.innerHTML = data[6] + "A";
-    ch3ControlPower.innerHTML = (parseFloat(data[2]) * parseFloat(data[6])).toFixed(1) + "W";
-
-    setWTextVal(data[7]);
+function setPTotalValue(value){
+    if(value === "-0.0"){value = "0.0"}
+    combinedPowerValue.innerHTML = value + "kW";
 }
 
 

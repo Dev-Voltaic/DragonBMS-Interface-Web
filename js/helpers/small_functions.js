@@ -167,7 +167,40 @@ function averagedData(array, rounding) {
     for (const [key, _] of Object.entries(averagedArray)) {
         averagedArray[key] = ((summedDataPacket[key] / array.length).toFixed(rounding));
     }
-    return averagedArray;
+    return averagedArray[0];
+}
+
+function averagedDataNumbers(array) {
+    // safety, kids!
+    if(array.length === 0){
+        return;
+    }
+
+    // copy array keys and values
+    // {... original} = copy (copy by value - not by reference)
+    let summedDataPacket = {... array[0]};
+    // set all values to 0
+    for (const [key, _] of Object.entries(summedDataPacket)) {
+        summedDataPacket[key] = 0;
+    }
+
+    // loop through all data packets and add their values up in the summed data packet
+    array.forEach(dataPacket => {
+        console.log(dataPacket);
+        for (const [key, value] of Object.entries(dataPacket)) {
+            summedDataPacket[key] = summedDataPacket[key] + value;
+        }
+    });
+
+    console.log(summedDataPacket);
+
+    // copy array keys and values
+    let averagedArray = {... array[0]};
+    // set values for keys to averaged values rounded via.toFixed
+    for (const [key, _] of Object.entries(averagedArray)) {
+        averagedArray[key] = (summedDataPacket[key] / array.length);
+    }
+    return averagedArray[0];
 }
 
 
@@ -177,4 +210,13 @@ function getLastXSeconds(array, seconds){
     return array.filter((element) => {
         return element.time > (now - 1000 * seconds);
     });
+}
+
+
+
+function deleteOlderDataPackets(buffer, time){
+    if(buffer[-1].time < (time * 1000)){
+        buffer.pop();
+        deleteOlderDataPackets(buffer, time);
+    }
 }
