@@ -91,7 +91,7 @@ function setCalibValues(data){
         (data.getUint8(7) << 8) | data.getUint8(6),
 
         // Shunts
-        (data.getUint8(9) << 8) | daxta.getUint8(8),
+        (data.getUint8(9) << 8) | data.getUint8(8),
         (data.getUint8(11) << 8) | data.getUint8(10),
         (data.getUint8(13) << 8) | data.getUint8(12),
 
