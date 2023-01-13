@@ -18,8 +18,6 @@ let usedEnergyOffset1 = -1; // Watt hours
 let usedEnergyOffset2 = -1; // Watt hours
 let usedEnergyOffset3 = -1; // Watt hours
 
-let usedEnergyBuffer = [];
-
 let remainingEnergy1 = 0; // Watt hours
 let remainingEnergy2 = 0; // Watt hours
 let remainingEnergy3 = 0; // Watt hours
@@ -49,7 +47,7 @@ function processData(event) {
     const averagedDataT = averagedData(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalT), 1);
     const averagedDataCalib = averagedData(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalT), 4);
 
-    const averagedDataPloss = averagedDataNumbers(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalT));
+    const averagedDataPLoss = averagedDataNumbers(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalT));
 
 
     // calculating further values
@@ -57,10 +55,10 @@ function processData(event) {
     let P_total = (bmsLoggingPacket.uOut / 1000 * (bmsLoggingPacket.i1 + bmsLoggingPacket.i2 + bmsLoggingPacket.i3)); // Power in kW
 
     let P_loss = (
-        (averagedDataPloss.u1 * averagedDataPloss.i1) +
-        (averagedDataPloss.u1 * averagedDataPloss.i1) +
-        (averagedDataPloss.u1 * averagedDataPloss.i1) -
-        (averagedDataPloss.uOut * (averagedDataPloss.i1 + averagedDataPloss.i2 + averagedDataPloss.i3))
+        (averagedDataPLoss.u1 * averagedDataPLoss.i1) +
+        (averagedDataPLoss.u1 * averagedDataPLoss.i1) +
+        (averagedDataPLoss.u1 * averagedDataPLoss.i1) -
+        (averagedDataPLoss.uOut * (averagedDataPLoss.i1 + averagedDataPLoss.i2 + averagedDataPLoss.i3))
     );
 
 
@@ -258,8 +256,8 @@ function processData(event) {
 
     if (dataLoggingEnabled) {
 
-        let datastringBoard = "";
-        let datastringInline = "";
+        let dataStringBoard = "";
+        let dataStringInline = "";
 
         if(bleBMSConnected){
             let d = new Date();
@@ -281,10 +279,10 @@ function processData(event) {
                 bmsLoggingPacket.tPch
             ];
 
-            datastringBoard = boardData.join(";") + ";;;;;";
+            dataStringBoard = boardData.join(";") + ";;;;;";
 
 
-            if (dataLoggingBufferBMS.push(datastringBoard) > 20) {
+            if (dataLoggingBufferBMS.push(dataStringBoard) > 20) {
                 dataLoggingBufferBMS.push("");
 
 
@@ -294,7 +292,7 @@ function processData(event) {
 
 
         if(bleInlineConnected && bleInlineDataPacket !== []){
-            datastringInline = [
+            dataStringInline = [
                 "", // to be packet sequence number
                 bleInlineDataPacket[0], // ms_today
                 bleInlineDataPacket[1], // stamp
@@ -317,7 +315,7 @@ function processData(event) {
             ].join(";");
 
 
-            if (dataLoggingBufferInline.push(datastringInline) > 20) {
+            if (dataLoggingBufferInline.push(dataStringInline) > 20) {
 
                 dataLoggingBufferBMS.push("");
 

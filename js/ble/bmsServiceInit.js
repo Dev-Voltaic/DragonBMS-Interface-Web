@@ -65,15 +65,6 @@ function getDevelopmentServiceSeq(server, cb){
         });
     });
 }
-function getDevelopmentServicePar(server, cb){
-    server.getPrimaryService(developmentServiceUuid).then((service) => {
-        getPrechargeControlCharacteristic(service, ()=>{});
-        getChannelControlCharacteristic(service, ()=>{});
-        getBMSUptimeCharacteristic(service, ()=>{});
-
-        cb();
-    });
-}
 
 function getPrechargeControlCharacteristic(service, cb){
     service.getCharacteristic(prechargeControlCharacteristicUuid).then((characteristic) => {
@@ -131,15 +122,6 @@ function getRuntimeControlServiceSeq(server, cb){
 
     });
 }
-function getRuntimeControlServicePar(server, cb){
-    server.getPrimaryService(runtimeControlServiceUuid).then((service) => {
-        getShutdownCharacteristic(service, ()=>{});
-        getTurnOnCharacteristic(service, ()=>{});
-        getUserGPOCharacteristic(service, ()=>{});
-
-        cb();
-    });
-}
 
 function getShutdownCharacteristic(service, cb){
     service.getCharacteristic(shutdownControlCharacteristicUuid).then((characteristic) => {
@@ -190,14 +172,6 @@ function getBMSConfigServiceSeq(server, cb){
         });
     });
 }
-function getBMSConfigServicePar(server, cb){
-    server.getPrimaryService(bmsConfigServiceUuid).then((service) => {
-        getBMSConfigCharacteristic(service, ()=>{});
-        getBMSCalibCharacteristic(service, ()=>{});
-
-        cb();
-    });
-}
 
 function getBMSConfigCharacteristic(service, cb){
     service.getCharacteristic(bmsConfigCharacteristicUuid).then((characteristic) => {
@@ -228,20 +202,12 @@ function getBMSCalibCharacteristic(service, cb){
 
 
 function getBMSAlertServiceSeq(server, cb){
-    server.getPrimaryService(alertwarningServiceUuid).then((service) => {
+    server.getPrimaryService(alertWarningServiceUuid).then((service) => {
         getBMSWarningCharacteristic(service, ()=>{
             getBMSAlertCharacteristic(service, ()=>{
                 cb();
             });
         });
-    });
-}
-function getBMSAlertServicePar(server, cb){
-    server.getPrimaryService(alertwarningServiceUuid).then((service) => {
-        getBMSWarningCharacteristic(service, ()=>{});
-        getBMSAlertCharacteristic(service, ()=>{});
-
-        cb();
     });
 }
 

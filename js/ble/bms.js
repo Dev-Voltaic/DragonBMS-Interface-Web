@@ -26,7 +26,7 @@ let shutdownControlCharacteristic;
 const userGPOCharacteristicUuid = "e9ea0501-e19b-482d-9293-c7907585fc48";
 let userGPOCharacteristic;
 
-const alertwarningServiceUuid = "e9ea0300-e19b-482d-9293-c7907585fc48";
+const alertWarningServiceUuid = "e9ea0300-e19b-482d-9293-c7907585fc48";
 const warningCharacteristicUuid = "e9ea0301-e19b-482d-9293-c7907585fc48";
 let warningCharacteristic;
 const alertCharacteristicUuid = "e9ea0302-e19b-482d-9293-c7907585fc48";
@@ -51,7 +51,7 @@ function connectBMS(){
             bmsDataLoggingServiceUuid,
             developmentServiceUuid,
             bmsConfigServiceUuid,
-            alertwarningServiceUuid,
+            alertWarningServiceUuid,
             runtimeControlServiceUuid,
             'device_information'
         ]/*,
@@ -133,91 +133,53 @@ async function bmsDeviceConnected(server) {
         //setConnectionStatus('Getting Services...');
         setAutoconnectBMSText("Getting Services");
 
+        console.log("sequentially getting characteristics");
 
-        // firstly only thought to be needed on mobile devices, is now used on every device
-        if(true){
-            console.log("mobile device! sequentially getting characteristics");
-                getDevelopmentServiceSeq(server, ()=>{
-                    console.log("got development");
-                    getRuntimeControlServiceSeq(server, ()=>{
-                        console.log("got runtime control");
-                        getBMSConfigServiceSeq(server, ()=>{
-                            console.log("got config/calib");
-                            getBMSAlertServiceSeq(server, ()=>{
-                                console.log("got alert");
-                                readBMSCalib(()=>{
-                                    readBMSConfig(()=>{
-                                        getBMSDataloggingServiceSeq(server, ()=>{
-                                            console.log("got datalogging");
-                                            // initial readout
+        // sequentially is just the better way!
+        getDevelopmentServiceSeq(server, () => {
+            console.log("got development");
+            getRuntimeControlServiceSeq(server, () => {
+                console.log("got runtime control");
+                getBMSConfigServiceSeq(server, () => {
+                    console.log("got configuration/calibration");
+                    getBMSAlertServiceSeq(server, () => {
+                        console.log("got alert");
+                        readBMSCalib(() => {
+                            readBMSConfig(() => {
+                                getBMSDataloggingServiceSeq(server, () => {
+                                    console.log("got data logging");
+                                    // initial readout
 
-                                            automaticReconnectBMS = true;
+                                    automaticReconnectBMS = true;
 
-                                            bleBMSConnected = true;
+                                    bleBMSConnected = true;
 
-                                            try{
-                                                getDeviceInfoSeq(server, (data)=>{
-                                                    console.log(data);
-                                                });
-                                            }catch (e) {
-                                                console.log("couldn't get device info service");
-                                            }
-
-
-                                            setTimeout(() => {
-                                                enableBoardGauges();
-                                                disableNothingConnectedOverlay();
-
-                                                if (bleInlineConnected) {
-                                                    zoom.to({element: table, padding: 0, pan: false});
-                                                }
-                                            }, 1000);
-
-
-
+                                    try {
+                                        getDeviceInfoSeq(server, (data) => {
+                                            console.log(data);
                                         });
-                                    });
+                                    } catch (e) {
+                                        console.log("couldn't get device info service");
+                                    }
+
+
+                                    setTimeout(() => {
+                                        enableBoardGauges();
+                                        disableNothingConnectedOverlay();
+
+                                        if (bleInlineConnected) {
+                                            zoom.to({element: table, padding: 0, pan: false});
+                                        }
+                                    }, 1000);
+
+
                                 });
                             });
                         });
                     });
                 });
-        }else{
-            // non mobile device
-
-            getDeviceInfoSeq(server, (data)=>{
-                console.log(data);
-                getId("bms-hardware-version").innerHTML = data.hardwareRevisionString;
-                getId("bms-firmware-version").innerHTML = data.firmwareRevisionString;
             });
-            getDevelopmentServicePar(server, ()=>{});
-            getRuntimeControlServicePar(server, ()=>{});
-            getBMSConfigServicePar(server, ()=>{});
-            getBMSAlertServicePar(server, ()=>{});
-            readBMSCalib(()=>{
-                readBMSConfig(()=> {
-                    getBMSDataloggingServiceSeq(server, ()=>{
-                        // initial readout
-                        readBMSCalib();
-                        readBMSConfig();
-
-                        automaticReconnectBMS = true;
-
-                        bleBMSConnected = true;
-
-
-                        setTimeout(() => {
-                            enableBoardGauges();
-                            disableNothingConnectedOverlay();
-
-                            if (bleInlineConnected) {
-                                zoom.to({element: table, padding: 0, pan: false});
-                            }
-                        }, 1000);
-                    });
-                });
-            });
-        }
+        });
     });
 
 }
@@ -255,7 +217,7 @@ function handleAlertIndication(event) {
 
 
 
-// poll faults from characteristic when datalogging gives state 4 (fault)
+// poll faults from characteristic when data logging gives state 4 (fault)
 function pollFaults(){
     if(stateMachineStateBuffer === 4 && bleBMSConnected){
         // try catch for "gatt operation already in progress"
