@@ -243,7 +243,7 @@ function resetInlineValues() {
     bleInlineDataPacket = [];
 
     dataLoggingBufferInline = [];
-    inlineDataloggingAveragingBuffer = [];
+    inlineDataLoggingAveragingBuffer = [];
 
     // reset range calculation stuff
     drivenDistanceOffset = -1;

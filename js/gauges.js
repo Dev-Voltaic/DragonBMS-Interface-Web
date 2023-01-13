@@ -36,28 +36,29 @@ function clearAlerts(counter, error){
 let gpo1 = false;
 let gpo2 = false;
 
-// todo: change to writeValue instead of writeValueWithoutResponse
-
 gpo1Button.addEventListener("click", () => {
-    gpo1 = !gpo1;
-    let value = gpo1 * 1 | gpo2 * 2;
-    userGPOCharacteristic.writeValueWithoutResponse(Uint8Array.from([value]).buffer).then(() => {
+    let value = !gpo1 * 1 | gpo2 * 2;
+    userGPOCharacteristic.writeValue(Uint8Array.from([value]).buffer).then(() => {
+        gpo1 = !gpo1;
         gpo1Button.innerHTML = gpo1 ? '1 ON' : '1 OFF';
+    }).catch(() => {
+        console.log("failed to set gpo state");
     });
 });
 
 gpo2Button.addEventListener("click", () => {
-    gpo2 = !gpo2;
-    let value = gpo1 * 1 | gpo2 * 2;
-    userGPOCharacteristic.writeValueWithoutResponse(Uint8Array.from([value]).buffer).then(() => {
+    let value = gpo1 * 1 | !gpo2 * 2;
+    userGPOCharacteristic.writeValue(Uint8Array.from([value]).buffer).then(() => {
+        gpo2 = !gpo2;
         gpo2Button.innerHTML = gpo2 ? '2 ON' : '2 OFF';
+    }).catch(() => {
+        console.log("failed to set gpo state")
     });
 });
 
 
 let warningBuffer = 0;
 let alertBuffer = 0;
-
 
 function updateConfigRelatedGauges(config) {
     // config info  tile
@@ -90,10 +91,8 @@ function updateConfigRelatedGauges(config) {
         numChannels ++;
     }
 
-
     configInfoRevOcp.innerHTML = String(config.protMaxReverseCurrent * 0.01 * numChannels) + "A";
     configInfoOcp.innerHTML = String(config.protMaxCurrent * 0.01 * numChannels) + "A";
-
 
 
     ch1InfoBatteryType.innerHTML = config.battCellCount + "S";
@@ -248,6 +247,13 @@ turnOnTd.addEventListener("click", () => {
     }
 });
 
+
+
+
+
+
+
+
 function setBMSCalculatedValues(data){
 
 
@@ -335,6 +341,8 @@ function setChannelCurrentInfo(data){
     ch3ControlCurrent.innerHTML = data.i3 + "A";
     ch3ControlPower.innerHTML = (parseFloat(data.u3) * parseFloat(data.i3)).toFixed(1) + "W";
 }
+
+
 
 
 function enableBoardGauges(){

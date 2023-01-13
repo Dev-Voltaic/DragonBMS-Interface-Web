@@ -13,7 +13,7 @@ let maxInlineValueBuffer = [];
 let inlineTempBuffer = [];
 
 
-let inlineDataloggingAveragingBuffer = [];
+let inlineDataLoggingAveragingBuffer = [];
 
 let lastInlineLoggingDataTimeStamp = Date.now();
 let inlineHertzSampleBuffer = [];
@@ -77,8 +77,8 @@ function processInlineData(data){
         values.speed = 0;
         values.rpm = 0;
     }else {
-        if (inlineDataloggingAveragingBuffer.unshift(bleInlineDataPacket) > 10) {
-            inlineDataloggingAveragingBuffer.pop();
+        if (inlineDataLoggingAveragingBuffer.unshift(bleInlineDataPacket) > 10) {
+            inlineDataLoggingAveragingBuffer.pop();
         }
         if (inlineTempBuffer.unshift(bleInlineDataPacket) > 40) {
             inlineTempBuffer.pop();
@@ -124,11 +124,11 @@ function processInlineData(data){
     }
 
 
-    setSpeedGaugeValues(averagedArray(inlineDataloggingAveragingBuffer, 1));
+    setSpeedGaugeValues(averagedArray(inlineDataLoggingAveragingBuffer, 1));
 
 
     let maxInlineValueInfo = [
-        parseFloat(averagedArray(inlineDataloggingAveragingBuffer, 1)[2]),
+        parseFloat(averagedArray(inlineDataLoggingAveragingBuffer, 1)[2]),
         values.motorTemp,
         values.integratedTemp
 

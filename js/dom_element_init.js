@@ -119,10 +119,69 @@ let nothingConnectedOverlay = getId("nothingConnectedOverlay");
 
 
 let inlineGauge = getId("inline-gauge");
-let inlineGaugeTd = getId("inline-gauge-td");
 
-// INFO ELEMENTS (TEXTS)
 
+// Info elements (class based)
+let tachoSpeedValues = document.getElementsByClassName("tacho-speed-value");
+let tachoRPMValues = document.getElementsByClassName("tacho-rpm-value");
+let tachoTripOdoValues = document.getElementsByClassName("tacho-trip-odometer-value");
+let tachoVehicleOdoValues = document.getElementsByClassName("tacho-vehicle-odometer-value");
+let sessionEconomyValues = document.getElementsByClassName("session-economy-value");
+let sessionRangeValues = document.getElementsByClassName("session-economy-value");
+let bmsPrechargeTempValues = document.getElementsByClassName("bms-precharge-temp-value");
+let bmsShuntTempValues = document.getElementsByClassName("bms-shunt-temp-value");
+let tachoMotorTempValues = document.getElementsByClassName("tacho-motor-temp-value");
+let tachoExternTempValues = document.getElementsByClassName("tacho-extern-temp-value");
+let bmsCombinedPowerValues = document.getElementsByClassName("bms-combined-power-value");
+let bmsCombinedCurrentValues = document.getElementsByClassName("bms-combined-current-value");
+let bmsOutputVoltageValues = document.getElementsByClassName("bms-output-voltage-value");
+
+let bmsMinSOCValues = document.getElementsByClassName("bms-min-soc-value");
+let bmsPowerLossValues = document.getElementsByClassName("bms-power-loss-value");
+let bmsCombinedEnergyUsedValues = document.getElementsByClassName("bms-combined-energy-used-value");
+
+
+let bmsCh1VoltageValues = document.getElementsByClassName("bms-ch1-voltage-value");
+let bmsCh1CurrentValues = document.getElementsByClassName("bms-ch1-current-value");
+let bmsCh1PowerValues = document.getElementsByClassName("bms-ch1-power-value");
+let bmsCh1SOCValues = document.getElementsByClassName("bms-ch1-soc-value");
+let bmsCh1TypeValues = document.getElementsByClassName("bms-ch1-type-value");
+let bmsCh1EnergyUsedValues = document.getElementsByClassName("bms-ch1-energy-used-value");
+
+let bmsCh2VoltageValues = document.getElementsByClassName("bms-ch2-voltage-value");
+let bmsCh2CurrentValues = document.getElementsByClassName("bms-ch2-current-value");
+let bmsCh2PowerValues = document.getElementsByClassName("bms-ch2-power-value");
+let bmsCh2SOCValues = document.getElementsByClassName("bms-ch2-soc-value");
+let bmsCh2TypeValues = document.getElementsByClassName("bms-ch2-type-value");
+let bmsCh2EnergyUsedValues = document.getElementsByClassName("bms-ch2-energy-used-value");
+
+let bmsCh3VoltageValues = document.getElementsByClassName("bms-ch3-voltage-value");
+let bmsCh3CurrentValues = document.getElementsByClassName("bms-ch3-current-value");
+let bmsCh3PowerValues = document.getElementsByClassName("bms-ch3-power-value");
+let bmsCh3SOCValues = document.getElementsByClassName("bms-ch3-soc-value");
+let bmsCh3TypeValues = document.getElementsByClassName("bms-ch3-type-value");
+let bmsCh3EnergyUsedValues = document.getElementsByClassName("bms-ch3-energy-used-value");
+
+
+let bmsMaxPrechargeTempValues = document.getElementsByClassName("bms-max-pch-temp-value");
+let bmsMaxShuntTempValues = document.getElementsByClassName("bms-max-shunt-temp-value");
+let tachoMaxMotorTempValues = document.getElementsByClassName("tacho-max-motor-temp-value");
+let tachoMaxExternTempValues = document.getElementsByClassName("tacho-extern-temp-value");
+let bmsMaxPowerValues = document.getElementsByClassName("bms-max-power-value");
+let tachoMaxSpeedValues = document.getElementsByClassName("tacho-max-speed-value");
+
+let bmsStateMachineStateValues = document.getElementsByClassName("bms-state-value");
+let bmsFaultStateValues = document.getElementsByClassName("bms-fault-state-value");
+
+let bmsConfigStartupValues = document.getElementsByClassName("bms-config-startup-value");
+let bmsConfigOverCurrentValues = document.getElementsByClassName("bms-config-over-current-value");
+let bmsConfigOverVoltageValues = document.getElementsByClassName("bms-config-over-voltage-value");
+let bmsConfigUnderVoltageValues = document.getElementsByClassName("bms-config-under-voltage-value");
+let bmsConfigUnderCurrentValues = document.getElementsByClassName("bms-config-under-current-value");
+let bmsConfigOverTempValues = document.getElementsByClassName("bms-config-over-temp-value");
+
+
+// INFO ELEMENTS (TEXTS) - ID Based
 
 // Combined / mobile
 let outputVoltageValue = getId("output-voltage");
