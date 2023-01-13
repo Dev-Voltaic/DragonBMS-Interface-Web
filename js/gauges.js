@@ -1,5 +1,12 @@
 // noinspection JSBitwiseOperatorUsage
 
+
+/*
+    BMS related
+ */
+
+
+
 clearAlertsButton.addEventListener("click", () => {
     clearAlerts(0, "")
 });
@@ -28,6 +35,8 @@ function clearAlerts(counter, error){
 
 let gpo1 = false;
 let gpo2 = false;
+
+// todo: change to writeValue instead of writeValueWithoutResponse
 
 gpo1Button.addEventListener("click", () => {
     gpo1 = !gpo1;
@@ -239,45 +248,49 @@ turnOnTd.addEventListener("click", () => {
     }
 });
 
-function setWattPlossTextVal(val) {
-    if(val === "-0.0"){val = "0.0"}
-    boardPowerlossValue.innerHTML = val + "W";
+function setBMSCalculatedValues(data){
+
+
+    // todo: replace all id identified text setting with class identifier function
+
+
+    // total current
+    let iTotalString = data.iTotal.toFixed(1);
+    if(iTotalString === "-0.0"){iTotalString = "0.0"}
+    combinedCurrentValue.innerHTML = iTotalString + "A";
+
+    // total power
+    let pTotalString = data.pTotal.toFixed(1);
+    if(pTotalString === "-0.0"){pTotalString = "0.0"}
+    combinedPowerValue.innerHTML = pTotalString + "kW";
+
+    // power loss
+    let pLossString = data.pLoss.toFixed(1);
+    if(pLossString === "-0.0"){pLossString = "0.0"}
+    boardPowerlossValue.innerHTML = pLossString + "W";
+
+    // used energy
+    combinedEnergyUsedValue.innerHTML = (data.energyUsed.combined / 3600).toFixed(1) + "Wh";
+    combinedEnergyUsedValue2.innerHTML = (data.energyUsed.combined / 3600).toFixed(1) + "Wh";
+    ch1InfoEnergyUsed.innerHTML = (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh";
+    ch2InfoEnergyUsed.innerHTML = (data.energyUsed.ch2 / 3600).toFixed(3) + "Wh";
+    ch3InfoEnergyUsed.innerHTML = (data.energyUsed.ch3 / 3600).toFixed(3) + "Wh";
+
+    // state of charge (soc)
+    ch1InfoSOC.innerHTML = (data.soc.ch1).toFixed(1) + "%";
+    ch2InfoSOC.innerHTML = (data.soc.ch2).toFixed(1) + "%";
+    ch3InfoSOC.innerHTML = (data.soc.ch3).toFixed(1) + "%";
+    minSOCValue.innerHTML = (data.soc.min).toFixed(1) + "%";
+
+
+
 }
 
-
-function setBMSTempValues(vals){
-    shuntTempValue.innerHTML = vals.shunt + "°C";
-    prechargeTempValue.innerHTML = vals.precharge + "°C";
+function setBMSTempValues(data){
+    shuntTempValue.innerHTML = data.tShunt + "°C";
+    prechargeTempValue.innerHTML = data.tPch + "°C";
 }
 
-function setInlineTempValues(vals){
-    motorTempValue.innerHTML = vals.motor + "°C";
-    externTempValue.innerHTML = vals.extern + "°C";
-}
-
-
-
-function setAmpTextVal(val) {
-    if(val === "-0.0"){val = "0.0"}
-    combinedCurrentValue.innerHTML = val + "A";
-}
-
-
-
-function setEnergyUsedVals(vals){
-    combinedEnergyUsedValue.innerHTML = (vals.combined / 3600).toFixed(1) + "Wh";
-    combinedEnergyUsedValue2.innerHTML = (vals.combined / 3600).toFixed(1) + "Wh";
-    ch1InfoEnergyUsed.innerHTML = (vals.ch1 / 3600).toFixed(3) + "Wh";
-    ch2InfoEnergyUsed.innerHTML = (vals.ch2 / 3600).toFixed(3) + "Wh";
-    ch3InfoEnergyUsed.innerHTML = (vals.ch3 / 3600).toFixed(3) + "Wh";
-}
-
-function setSOCVals(vals){
-    ch1InfoSOC.innerHTML = (vals.ch1).toFixed(1) + "%";
-    ch2InfoSOC.innerHTML = (vals.ch2).toFixed(1) + "%";
-    ch3InfoSOC.innerHTML = (vals.ch3).toFixed(1) + "%";
-    minSOCValue.innerHTML = (vals.min).toFixed(1) + "%";
-}
 
 function setOnTime(values) {
     let seconds = (values % 60).toString();
@@ -299,13 +312,6 @@ function setBMSMaxValues(vals) {
     maxShuntTemp.innerHTML = vals.shuntTemp + "°C";
     maxPrechargeTemp.innerHTML = vals.prechargeTemp + "°C";
 }
-
-function setInlineMaxValues(vals){
-    maxSpeedValue.innerHTML = vals.speed.toFixed(1) + "km/h";
-    maxMotorTemp.innerHTML = vals.motorTemp + "°C";
-    maxExternTemp.innerHTML = vals.externTemp + "°C";
-}
-
 
 function setChannelVoltageInfo(data){
     ch1InfoVoltage.innerHTML = data.u1 + "V";
@@ -330,12 +336,6 @@ function setChannelCurrentInfo(data){
     ch3ControlPower.innerHTML = (parseFloat(data.u3) * parseFloat(data.i3)).toFixed(1) + "W";
 }
 
-function setPTotalValue(value){
-    if(value === "-0.0"){value = "0.0"}
-    combinedPowerValue.innerHTML = value + "kW";
-}
-
-
 
 function enableBoardGauges(){
     for(let i = 0; i < boardElements.length; i++){
@@ -350,71 +350,6 @@ function disableBoardGauges(){
 disableBoardGauges();
 
 
-let inlineGaugeDiv = document.getElementById("inline-gauge");
-let vehicleOdometerValue = document.getElementById("vehicle-odo-val");
-let tripOdometerValue = document.getElementById("trip-odo-val");
-let vehicleSpeedValue = document.getElementById("speed-val");
-let resetTripButton = document.getElementById("resetTripOdo");
-let vehicleRPMValue = document.getElementById("speed-rpm-val");
-
-
-function setSpeedGaugeValues(values){
-    if(!values.direction){ // forwards
-        vehicleSpeedValue.innerHTML = values[2] + "km/h";
-    }else{ // backwards
-        vehicleSpeedValue.innerHTML = "-" + values[2].toFixed(1) + "km/h";
-    }
-
-    vehicleRPMValue.innerHTML = values[3] + "RPM";
-}
-
-function setTachoGauges(values){
-    tripOdometerValue.innerHTML = (values.tripOdo / 100000).toFixed(2) + "km";
-
-    vehicleOdometerValue.innerHTML = (Math.floor((values.vehicleOdo / 10)) / 10).toFixed(1) + "km";
-
-}
-
-
-function setEconomyGauges(values){
-    rangeValue.innerHTML = values.range.toFixed(1) + "km";
-    sessionEconomyValue.innerHTML = values.whkmSession.toFixed(1) + "Wh/km";
-}
-
-resetEconomyButton.addEventListener("click", () => {
-    // triggers a reset of all the offsets needed to calculate the sesison economy
-    // basically starts a new session for the measurement
-    console.log("new session values for economy!");
-    drivenDistanceOffset = -1;
-});
-
-
-resetTripButton.addEventListener("click", () => {
-    inlineOdometerCharacteristic.writeValueWithoutResponse(Uint8Array.from([0x01]).buffer).catch(_ =>{
-        console.log("failed to reset trip odometer");
-    });
-});
-
-
-
-
-function inlineConnected() {
-    inlineGaugeDiv.classList.remove("inline-gauge-disabled");
-    connectLastInlineOverlay.classList.add("hidden");
-
-/*
-    if (!bleBMSConnected) {
-        zoom.to({element: inlineGaugeTd, padding: 0, pan: false});
-    }
-    */
-}
-
-function inlineDisconnected(){
-    inlineGaugeDiv.classList.add("inline-gauge-disabled");
-    connectLastInlineOverlay.classList.remove("hidden");
-}
-
-inlineDisconnected();
 
 
 function updateWarningFields() {
@@ -633,6 +568,92 @@ function updateWarningFields() {
         clearAlertsFaultExplanation.innerHTML = faultExplanationText;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    INLINE related
+ */
+
+
+let inlineGaugeDiv = document.getElementById("inline-gauge");
+let vehicleOdometerValue = document.getElementById("vehicle-odo-val");
+let tripOdometerValue = document.getElementById("trip-odo-val");
+let vehicleSpeedValue = document.getElementById("speed-val");
+let resetTripButton = document.getElementById("resetTripOdo");
+let vehicleRPMValue = document.getElementById("speed-rpm-val");
+
+function setInlineMaxValues(vals){
+    maxSpeedValue.innerHTML = vals.speed.toFixed(1) + "km/h";
+    maxMotorTemp.innerHTML = vals.motorTemp + "°C";
+    maxExternTemp.innerHTML = vals.externTemp + "°C";
+}
+
+
+function setSpeedGaugeValues(values){
+    if(!values.direction){ // forwards
+        vehicleSpeedValue.innerHTML = values[2] + "km/h";
+    }else{ // backwards
+        vehicleSpeedValue.innerHTML = "-" + values[2].toFixed(1) + "km/h";
+    }
+
+    vehicleRPMValue.innerHTML = values[3] + "RPM";
+}
+
+function setTachoGauges(values){
+    tripOdometerValue.innerHTML = (values.tripOdo / 100000).toFixed(2) + "km";
+
+    vehicleOdometerValue.innerHTML = (Math.floor((values.vehicleOdo / 10)) / 10).toFixed(1) + "km";
+
+}
+
+
+
+function setInlineTempValues(vals){
+    motorTempValue.innerHTML = vals.motor + "°C";
+    externTempValue.innerHTML = vals.extern + "°C";
+}
+
+function setEconomyGauges(values){
+    rangeValue.innerHTML = values.range.toFixed(1) + "km";
+    sessionEconomyValue.innerHTML = values.whkmSession.toFixed(1) + "Wh/km";
+}
+
+resetEconomyButton.addEventListener("click", () => {
+    // triggers a reset of all the offsets needed to calculate the sesison economy
+    // basically starts a new session for the measurement
+    console.log("new session values for economy!");
+    drivenDistanceOffset = -1;
+});
+
+
+resetTripButton.addEventListener("click", () => {
+    inlineOdometerCharacteristic.writeValueWithoutResponse(Uint8Array.from([0x01]).buffer).catch(_ =>{
+        console.log("failed to reset trip odometer");
+    });
+});
+
+
+
+
+
 
 
 

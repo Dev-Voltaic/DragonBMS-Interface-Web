@@ -61,25 +61,14 @@ function processData(event) {
         (averagedDataPloss.u1 * averagedDataPloss.i1) +
         (averagedDataPloss.u1 * averagedDataPloss.i1) -
         (averagedDataPloss.uOut * (averagedDataPloss.i1 + averagedDataPloss.i2 + averagedDataPloss.i3))
-    ).toFixed(1);
+    );
 
-    setPTotalValue(P_total);
-
-
-
-
-    setBMSState(bmsLoggingPacket.stateMachineState);
-    handleTurnOnTd(bmsLoggingPacket.stateMachineState);
-    handleConfigWarningButtons(bmsLoggingPacket.stateMachineState);
 
 
     let totalAmps = parseFloat(averagedDataI.i1) + parseFloat(averagedDataI.i2) + parseFloat(averagedDataI.i3);
     if(isNaN(totalAmps)){
         totalAmps = 0;
     }
-
-
-
 
 
 
@@ -180,28 +169,24 @@ function processData(event) {
     //_________________________________________________
 
 
-    setBMSTempValues({
-        shunt: averagedDataT.tShunt,
-        precharge: averagedDataT.tPch
-    });
 
-    setWattPlossTextVal(P_loss);
-
-    setAmpTextVal(totalAmps.toFixed(1));
-
-
-    setEnergyUsedVals({
-        combined: usedEnergyTotal,
-        ch1: (bmsLoggingPacket.eU1 - usedEnergyOffset1),
-        ch2: (bmsLoggingPacket.eU2 - usedEnergyOffset2),
-        ch3: (bmsLoggingPacket.eU3 - usedEnergyOffset3)
-    });
-    setSOCVals({
-        ch1: SOC_1,
-        ch2: SOC_2,
-        ch3: SOC_3,
-        min: minSOC
-    });
+    const bmsCalculatedDataPacket = {
+        iTotal: totalAmps,
+        pTotal: P_total,
+        pLoss: P_loss,
+        energyUsed: {
+            combined: usedEnergyTotal,
+            ch1: (bmsLoggingPacket.eU1 - usedEnergyOffset1),
+            ch2: (bmsLoggingPacket.eU2 - usedEnergyOffset2),
+            ch3: (bmsLoggingPacket.eU3 - usedEnergyOffset3)
+        },
+        soc: {
+            ch1: SOC_1,
+            ch2: SOC_2,
+            ch3: SOC_3,
+            min: minSOC
+        }
+    };
 
 
 
@@ -231,6 +216,26 @@ function processData(event) {
         prechargeTempArray.unshift(sample[4]);
     });
 
+
+
+
+
+
+
+    /*
+        setting gui elements
+     */
+
+    setBMSState(bmsLoggingPacket.stateMachineState);
+    handleTurnOnTd(bmsLoggingPacket.stateMachineState);
+    handleConfigWarningButtons(bmsLoggingPacket.stateMachineState);
+
+
+    setChannelVoltageInfo(averagedDataU);
+    setChannelCurrentInfo(averagedDataI);
+
+    setBMSTempValues(averagedDataT);
+
     setBMSMaxValues({
         power: Math.max(...powersArray).toFixed(2),
         current: Math.max(...currentsArray),
@@ -239,10 +244,8 @@ function processData(event) {
         prechargeTemp: Math.max(...prechargeTempArray).toFixed(1)
     });
 
+    setBMSCalculatedValues(bmsCalculatedDataPacket);
 
-
-    setChannelVoltageInfo(averagedDataU);
-    setChannelCurrentInfo(averagedDataI);
 
     setCalibActualValues(averagedDataCalib);
 
