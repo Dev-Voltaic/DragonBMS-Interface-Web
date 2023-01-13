@@ -216,3 +216,67 @@ let gpo2Button = getId("GPO2");
 
 
 
+// classes for gauge id to class conversion:
+/*
+speed-val -> tacho-speed-value
+speed-rpm-val -> tacho-rpm-value
+trip-odo-val -> tacho-trip-odometer-value
+vehicle-odo-val -> tacho-vehicle-odometer-value
+sessionEconomyValue -> session-economy-value
+sessionRangeValue -> session-range-value
+precharge-temperature -> bms-precharge-temp-value
+shunt-temperature -> bms-shunt-temp-value
+motor-temperature -> tacho-motor-temp-value
+extern-temperature -> tacho-extern-temp-value
+combined-power -> bms-combined-power-value
+combined-current -> bms-combined-current-value
+output-voltage -> bms-output-voltage-value
+
+min-soc -> bms-min-soc-value
+board-powerloss -> bms-power-loss-value
+combined-energy-used -> bms-combined-energy-used-value
+
+ch1info-v -> bms-ch1-voltage-value
+ch1control-a -> bms-ch1-current-value
+ch1control-p -> bms-ch1-power-value
+ch1info-soc -> bms-ch1-soc-value
+ch1info-t -> bms-ch1-type-value
+ch1info-eu -> bms-ch1-energy-used-value
+
+ch2info-v -> bms-ch2-voltage-value
+ch2control-a -> bms-ch2-current-value
+ch2control-p -> bms-ch2-power-value
+ch2info-soc -> bms-ch2-soc-value
+ch2info-t -> bms-ch2-type-value
+ch2info-eu -> bms-ch2-energy-used-value
+
+ch3info-v -> bms-ch3-voltage-value
+ch3control-a -> bms-ch3-current-value
+ch3control-p -> bms-ch3-power-value
+ch3info-soc -> bms-ch3-soc-value
+ch3info-t -> bms-ch3-type-value
+ch3info-eu -> bms-ch3-energy-used-value
+
+
+maxPrechargeTemp -> bms-max-pch-temp-value
+maxShuntTemp -> bms-max-shunt-temp-value
+maxMotorTemp -> tacho-max-motor-temp-value
+maxExternTemp -> tacho-max-extern-temp-value
+max-power -> bms-max-power-value
+max-speed -> tacho-max-speed-value
+
+ontime -> bms-on-time-value
+combined-energy-used2 -> bms-combined-energy-used-value
+
+
+state-machine-state -> bms-state-value
+fault-state -> bms-fault-state-value
+config-info-startup -> bms-config-startup-value
+config-info-ocp -> bms-config-over-current-value
+config-info-ovp -> bms-config-over-voltage-value
+config-info-uvp -> bms-config-under-voltage-value
+config-info-revocp -> bms-config-under-current-value
+config-info-otp -> bms-config-over-temp-value
+
+
+*/
