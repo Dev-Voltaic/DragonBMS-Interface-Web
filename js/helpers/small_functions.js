@@ -224,6 +224,9 @@ function setValueTexts(elements, value){
 
 
 function deleteOlderDataPackets(buffer, time){
+    if(buffer.length < 2){
+        return;
+    }
     if(buffer.at(-1).time < (time * 1000)){
         buffer.pop();
         deleteOlderDataPackets(buffer, time);
