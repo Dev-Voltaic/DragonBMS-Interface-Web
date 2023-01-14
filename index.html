@@ -821,35 +821,32 @@
 
 
             <table id="board-config-table">
-                <tr class="no-height">
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
                 <tr>
                     <td>
                         <div class="dropdown">
-                            <span>Enabled Channels:</span>
+                            <label>Enabled Channels:</label>
                             <div class="dropdown-content">
                                 Which channels should are enabled - only these channels have the protection features and will turn on
                             </div>
                         </div>
                     </td>
                     <td>
-                        <label for="enabled-channels-1">Channel1</label>
-                        <input id="enabled-channels-1" type="checkbox">
-                        <br>
-                        <label for="enabled-channels-2">Channel2</label>
-                        <input id="enabled-channels-2" type="checkbox">
-                        <br>
-                        <label for="enabled-channels-3">Channel3</label>
-                        <input id="enabled-channels-3" type="checkbox">
+                        <div id="bms-config-enabled-channels-td">
+                            <div id="bms-config-enabled-channels-div">
+                                <input id="enabled-channels-1" type="checkbox">
+                                <label for="enabled-channels-1">Channel1</label>
+                                <br>
+                                <input id="enabled-channels-2" type="checkbox">
+                                <label for="enabled-channels-2">Channel2</label>
+                                <br>
+                                <input id="enabled-channels-3" type="checkbox">
+                                <label for="enabled-channels-3">Channel3</label>
+                            </div>
+                        </div>
                     </td>
+                </tr>
 
-                    <td class="seperator"></td>
-
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="battery-type-select">Battery Type:</label>
@@ -866,6 +863,7 @@
                         <option value="custom" disabled>Completely Custom</option> <!-- no cell number -->
                     </select></td>
                 </tr>
+
                 <tr>
                     <td class="battery-field">
                         <div class="dropdown">
@@ -877,7 +875,9 @@
                     </td>
                     <td class="battery-field"><label for="battery-cells"></label><input id="battery-cells" type="number" min="3" max="40"></td>
 
-                    <td class="seperator"></td>
+                </tr>
+
+                <tr>
 
                     <td>
                         <div class="dropdown">
@@ -889,6 +889,7 @@
                     </td>
                     <td><input id="battery-capacity" type="number" min="1"></td>
                 </tr>
+
                 <tr>
                     <td class="battery-field cell-field">
                         <div class="dropdown">
@@ -900,8 +901,9 @@
                     </td>
                     <td class="battery-field cell-field"><input id="max-cell-voltage" type="number" min="1"></td>
 
-                    <td class="seperator"></td>
+                </tr>
 
+                <tr>
                     <td class="battery-field cell-field">
                         <div class="dropdown">
                             <label for="min-cell-voltage">Minimal cell voltage [mV]:</label>
@@ -913,6 +915,7 @@
                     <td class="battery-field cell-field"><input id="min-cell-voltage" type="number" min="1"></td>
 
                 </tr>
+
                 <tr>
                     <td class="pack-field">
                         <div class="dropdown">
@@ -924,7 +927,9 @@
                     </td>
                     <td class="pack-field"><input id="pack-undervoltage" type="number" min="1"></td>
 
-                    <td class="seperator"></td>
+                </tr>
+
+                <tr>
 
                     <td class="pack-field">
                         <div class="dropdown">
@@ -936,7 +941,7 @@
                     </td>
                     <td class="pack-field"><input id="pack-overvoltage" type="number" min="1"></td>
                 </tr>
-                <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
+
                 <tr>
 
                     <td>
@@ -950,8 +955,9 @@
                     </td>
                     <td><input id="strand-max-current" type="number" min="1"></td>
 
-                    <td class="seperator"></td>
+                </tr>
 
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="strand-max-reverse-current">Strand max charge current [A]:</label>
@@ -976,8 +982,9 @@
                         </div>
                     </td>
                     <td><input id="strand-max-imbalance-current" type="number" min="1"></td>
+                </tr>
 
-                    <td class="seperator"></td>
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="spike-sensitivity-select">Current Spike sensitivity:</label>
@@ -1013,8 +1020,9 @@
                     </td>
                     <td><input id="logic-max-temp" type="number" min="40" max="90"></td>
 
-                    <td class="seperator"></td>
+                </tr>
 
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="power-max-temp">Board max temperature [°C]:</label>
@@ -1029,16 +1037,13 @@
                     <td><input id="power-max-temp" type="number" min="40" max="90"></td>
                 </tr>
 
-
                 <tr>
-                    <td><label for="datalogging-update-frequency">Datalogging update Frequency [Hz]:</label></td>
-                    <td><input id="datalogging-update-frequency" type="number" min="1" max="120"></td>
-
-                    <td class="seperator"></td>
-
-
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <label for="datalogging-update-frequency">Datalogging update Frequency [Hz]:</label>
+                    </td>
+                    <td>
+                        <input id="datalogging-update-frequency" type="number" min="1" max="120">
+                    </td>
                 </tr>
 
                 <!--
@@ -1055,7 +1060,6 @@
 
                 -->
 
-                <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
                 <tr>
                     <td>
                         <div class="dropdown">
@@ -1066,9 +1070,9 @@
                         </div>
                     </td>
                     <td><input id="autostart" type="checkbox"></td>
+                </tr>
 
-                    <td class="seperator"></td>
-
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="auto-poweroff">Auto poweroff time [minutes]:</label>
@@ -1079,10 +1083,11 @@
                     </td>
                     <td><input id="auto-poweroff" type="number"></td>
                 </tr>
+
                 <tr>
                     <td>
                         <div class="dropdown">
-                            <span>Update Count:</span>
+                            <label>Update Count:</label>
                             <div class="dropdown-content">
                                 The number of times, the configuration has been updated. This mostly serves as a confirmation, that
                                 all of your changes have been correctly sent and read back - if you save the changes, this number
@@ -1091,10 +1096,8 @@
                         </div>
                     </td>
                     <td id="updatecount"></td>
-                    <td class="seperator"></td>
-                    <td></td>
-                    <td></td>
                 </tr>
+
             </table>
         </div>
 
@@ -1122,13 +1125,13 @@
 
         <div id="inline-configuration-div">
 
-            <h2>Inline Board Configuration:</h2>
+            <h2>Tacho Configuration:</h2>
 
             <div class="readwrite-button-container">
                 <button id="inline-config-read">Read</button>
                 <button id="inline-config-write">Write</button>
             </div>
-            <table>
+            <table id="inline-configuration-table">
                 <tr>
                     <td>
                         <label for="ntc-type-select">Sensor Type:</label>
