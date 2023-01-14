@@ -53,20 +53,12 @@
 /*
     Style dependant on the device touch capability
  */
-#swipe-for-settings-container.touch .touchUI{
-    display: inherit;
-}
-
 #swipe-for-settings-container.touch .non-touchUI{
     display: none;
 }
 
 #swipe-for-settings-container.non-touch .touchUI{
     display: none;
-}
-
-#swipe-for-settings-container.non-touch .non-touchUI{
-    display: inherit;
 }
 
 
