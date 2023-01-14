@@ -222,6 +222,17 @@ function setValueTexts(elements, value){
 
 
 
+// like element.scrollInToView() but with the offset of the tilebar
+function scrollToElement(element){
+    let bodyRect = document.body.getBoundingClientRect();
+    let elemRect = element.getBoundingClientRect();
+    let offset = elemRect.top - bodyRect.top;
+
+    window.scrollTo(0, offset);
+}
+
+
+
 
 function deleteOlderDataPackets(buffer, time){
     if(buffer.length < 2){

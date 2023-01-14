@@ -8,7 +8,7 @@ const APP_PREFIX = 'dbms_interface-';
 // you need to change this version (version_01, version_02…).
 // If you don't change the version, the service worker will give your
 // users the old files!
-const VERSION = '1.9';
+const VERSION = '2.0';
 
 // The files to make available for offline use. make sure to add
 // others to this list

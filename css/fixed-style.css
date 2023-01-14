@@ -335,6 +335,13 @@ Channel control button (inside the above mentioned table)
 }
 
 
+/*
+    temporary, should be either disabled or fully visible based on hardware version
+ */
+#userGPO{
+    opacity: 50%;
+}
+
 
 
 /*

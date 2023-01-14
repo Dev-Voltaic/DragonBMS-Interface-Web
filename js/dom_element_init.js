@@ -1,6 +1,8 @@
 // MAIN TABLE
 let table = getId("main-table");
 
+let tilebar = getId("tilebar");
+
 // Zoom content
 let zoomContent = document.getElementById("zoom-content");
 
@@ -26,7 +28,7 @@ let boardConfigTurnOnButton = getId("board-turnonoff-config");
 let configWriteWarning = getId("config-write-warning");
 
 // Board Calib
-let boardCalibContainer = document.getElementById("board-configuration-div");
+let boardCalibContainer = document.getElementById("board-calibration-div");
 let boardCalibTable = getId("board-calibration-table");
 let boardCalibTurnOnButton = getId("board-turnonoff-calib");
 
