@@ -62,12 +62,12 @@ let alertBuffer = 0;
 
 function updateConfigRelatedGauges(config) {
     // config info  tile
-    configInfoStart.innerHTML = (config.boardAutoStart ? 'Autostart' : 'manual Start');
+    setValueTexts(bmsConfigStartupValues, (config.boardAutoStart ? 'Autostart' : 'manual Start'));
 
-    configInfoOvp.innerHTML = String(config.battCellCount * config.protMaxCellVoltage / 1000) + "V";
-    configInfoUvp.innerHTML = String(config.battCellCount * config.protMinCellVoltage / 1000) + "V";
+    setValueTexts(bmsConfigOverVoltageValues, String(config.battCellCount * config.protMaxCellVoltage / 1000) + "V");
+    setValueTexts(bmsConfigUnderVoltageValues, String(config.battCellCount * config.protMinCellVoltage / 1000) + "V");
 
-    configInfoOtp.innerHTML = String(Math.min(config.protMaxLogicTemp, config.protMaxPowerTemp)) + "°C";
+    setValueTexts(bmsConfigOverTempValues, String(Math.min(config.protMaxLogicTemp, config.protMaxPowerTemp)) + "°C");
 
 
     // disable non enabled channels and count number of enabled channels - to adjust protection values
@@ -91,25 +91,28 @@ function updateConfigRelatedGauges(config) {
         numChannels ++;
     }
 
-    configInfoRevOcp.innerHTML = String(config.protMaxReverseCurrent * 0.01 * numChannels) + "A";
-    configInfoOcp.innerHTML = String(config.protMaxCurrent * 0.01 * numChannels) + "A";
+    setValueTexts(bmsConfigUnderCurrentValues, String(config.protMaxReverseCurrent * 0.01 * numChannels) + "A");
+    setValueTexts(bmsConfigOverCurrentValues, String(config.protMaxCurrent * 0.01 * numChannels) + "A");
 
-
-    ch1InfoBatteryType.innerHTML = config.battCellCount + "S";
-    ch2InfoBatteryType.innerHTML = config.battCellCount + "S";
-    ch3InfoBatteryType.innerHTML = config.battCellCount + "S";
+    // should some day be editable on a per-channel basis
+    setValueTexts(bmsCh1TypeValues, config.battCellCount + "S");
+    setValueTexts(bmsCh2TypeValues, config.battCellCount + "S");
+    setValueTexts(bmsCh3TypeValues, config.battCellCount + "S");
 }
 
 
 function setBMSState(stateMachineState) {
     let stateMachineStateString;
+
+    // in honor of clemens, I won't change this ugly syntax
     if (stateMachineState === 0) stateMachineStateString = "Startup"
     else if (stateMachineState === 1) stateMachineStateString = "Precharging..."
     else if (stateMachineState === 2) stateMachineStateString = "Ready"
     else if (stateMachineState === 3) stateMachineStateString = "Operation"
     else if (stateMachineState === 4) stateMachineStateString = "Fault"
     else stateMachineStateString = "UNDEFINED STATE!"
-    bmsStateValue.innerHTML = stateMachineStateString;
+
+    setValueTexts(bmsStateMachineStateValues, stateMachineStateString);
 }
 
 
@@ -263,38 +266,35 @@ function setBMSCalculatedValues(data){
     // total current
     let iTotalString = data.iTotal.toFixed(1);
     if(iTotalString === "-0.0"){iTotalString = "0.0"}
-    combinedCurrentValue.innerHTML = iTotalString + "A";
+    setValueTexts(bmsCombinedCurrentValues, iTotalString + "A");
 
     // total power
     let pTotalString = data.pTotal.toFixed(1);
     if(pTotalString === "-0.0"){pTotalString = "0.0"}
-    combinedPowerValue.innerHTML = pTotalString + "kW";
+    setValueTexts(bmsCombinedPowerValues, pTotalString + "kW");
 
     // power loss
     let pLossString = data.pLoss.toFixed(1);
     if(pLossString === "-0.0"){pLossString = "0.0"}
-    boardPowerlossValue.innerHTML = pLossString + "W";
+    setValueTexts(bmsPowerLossValues, pLossString + "W");
 
     // used energy
-    combinedEnergyUsedValue.innerHTML = (data.energyUsed.combined / 3600).toFixed(1) + "Wh";
-    combinedEnergyUsedValue2.innerHTML = (data.energyUsed.combined / 3600).toFixed(1) + "Wh";
-    ch1InfoEnergyUsed.innerHTML = (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh";
-    ch2InfoEnergyUsed.innerHTML = (data.energyUsed.ch2 / 3600).toFixed(3) + "Wh";
-    ch3InfoEnergyUsed.innerHTML = (data.energyUsed.ch3 / 3600).toFixed(3) + "Wh";
+    setValueTexts(bmsCombinedEnergyUsedValues,  (data.energyUsed.combined / 3600).toFixed(1) + "Wh");
+    setValueTexts(bmsCh1EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
+    setValueTexts(bmsCh2EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
+    setValueTexts(bmsCh3EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
 
     // state of charge (soc)
-    ch1InfoSOC.innerHTML = (data.soc.ch1).toFixed(1) + "%";
-    ch2InfoSOC.innerHTML = (data.soc.ch2).toFixed(1) + "%";
-    ch3InfoSOC.innerHTML = (data.soc.ch3).toFixed(1) + "%";
-    minSOCValue.innerHTML = (data.soc.min).toFixed(1) + "%";
-
-
+    setValueTexts(bmsCh1SOCValues, (data.soc.ch1).toFixed(1) + "%");
+    setValueTexts(bmsCh2SOCValues, (data.soc.ch2).toFixed(1) + "%");
+    setValueTexts(bmsCh3SOCValues, (data.soc.ch3).toFixed(1) + "%");
+    setValueTexts(bmsMinSOCValues, (data.soc.min).toFixed(1) + "%");
 
 }
 
 function setBMSTempValues(data){
-    shuntTempValue.innerHTML = data.tShunt + "°C";
-    prechargeTempValue.innerHTML = data.tPch + "°C";
+    setValueTexts(bmsShuntTempValues, data.tShunt + "°C");
+    setValueTexts(bmsPrechargeTempValues, data.tPch + "°C");
 }
 
 
@@ -308,23 +308,23 @@ function setOnTime(values) {
     let hours = Math.floor(values / 3600).toString();
     while (hours.length < 2) hours = "0" + hours;
 
-    onTimeValue.innerHTML = hours + ":" + minutes + ":" + seconds;
+    setValueTexts(bmsOnTimeValues, hours + ":" + minutes + ":" + seconds);
 }
 
-function setBMSMaxValues(vals) {
-    maxPowerValue.innerHTML = vals.power + "kW";
-    maxCurrentValue.innerHTML = vals.current + "A";
-    minVoltValue.innerHTML = vals.voltage + "V";
-    maxShuntTemp.innerHTML = vals.shuntTemp + "°C";
-    maxPrechargeTemp.innerHTML = vals.prechargeTemp + "°C";
+function setBMSMaxValues(data) {
+    setValueTexts(bmsMaxPowerValues, data.power + "kW");
+    setValueTexts(bmsMaxCurrentValues, data.current + "A");
+    setValueTexts(bmsMinVoltageValues, data.voltage + "V");
+    setValueTexts(bmsMaxShuntTempValues, data.shuntTemp + "°C");
+    setValueTexts(bmsMaxPrechargeTempValues, data.prechargeTemp + "°C");
 }
 
 function setChannelVoltageInfo(data){
-    ch1InfoVoltage.innerHTML = data.u1 + "V";
-    ch2InfoVoltage.innerHTML = data.u2 + "V";
-    ch3InfoVoltage.innerHTML = data.u3 + "V";
+    setValueTexts(bmsCh1VoltageValues, data.u1 + "V");
+    setValueTexts(bmsCh2VoltageValues, data.u2 + "V");
+    setValueTexts(bmsCh3VoltageValues, data.u3 + "V");
 
-    outputVoltageValue.innerHTML = data.uOut + "V";
+    setValueTexts(bmsOutputVoltageValues, data.uOut + "V");
 }
 function setChannelCurrentInfo(data){
     if(data.i1 === "-0.00"){data.i1 = "0.00"}
@@ -332,14 +332,14 @@ function setChannelCurrentInfo(data){
     if(data.i3 === "-0.00"){data.i3 = "0.00"}
 
 
-    ch1ControlCurrent.innerHTML = data.i1 + "A";
-    ch1ControlPower.innerHTML = (parseFloat(data.u1) * parseFloat(data.i1)).toFixed(1) + "W";
+    setValueTexts(bmsCh1CurrentValues, data.i1 + "A");
+    setValueTexts(bmsCh1PowerValues, (parseFloat(data.u1) * parseFloat(data.i1)).toFixed(1) + "W");
 
-    ch2ControlCurrent.innerHTML = data.i2 + "A";
-    ch2ControlPower.innerHTML = (parseFloat(data.u2) * parseFloat(data.i2)).toFixed(1) + "W";
+    setValueTexts(bmsCh2CurrentValues, data.i2 + "A");
+    setValueTexts(bmsCh2PowerValues, (parseFloat(data.u2) * parseFloat(data.i2)).toFixed(1) + "W");
 
-    ch3ControlCurrent.innerHTML = data.i3 + "A";
-    ch3ControlPower.innerHTML = (parseFloat(data.u3) * parseFloat(data.i3)).toFixed(1) + "W";
+    setValueTexts(bmsCh3CurrentValues, data.i3 + "A");
+    setValueTexts(bmsCh3PowerValues, (parseFloat(data.u3) * parseFloat(data.i3)).toFixed(1) + "W");
 }
 
 
@@ -565,7 +565,7 @@ function updateWarningFields() {
 
     // only update field if needed - ensures animation is working correctly
     if(faultStateValue.innerHTML !== faultFieldText){
-        faultStateValue.innerHTML = faultFieldText;
+        setValueTexts(bmsFaultStateValues, faultFieldText);
     }
 
     // only update fields if needed - max fps!!!!
@@ -600,48 +600,39 @@ function updateWarningFields() {
     INLINE related
  */
 
-
-let inlineGaugeDiv = document.getElementById("inline-gauge");
-let vehicleOdometerValue = document.getElementById("vehicle-odo-val");
-let tripOdometerValue = document.getElementById("trip-odo-val");
-let vehicleSpeedValue = document.getElementById("speed-val");
-let resetTripButton = document.getElementById("resetTripOdo");
-let vehicleRPMValue = document.getElementById("speed-rpm-val");
-
-function setInlineMaxValues(vals){
-    maxSpeedValue.innerHTML = vals.speed.toFixed(1) + "km/h";
-    maxMotorTemp.innerHTML = vals.motorTemp + "°C";
-    maxExternTemp.innerHTML = vals.externTemp + "°C";
+function setInlineMaxValues(data){
+    setValueTexts(tachoMaxSpeedValues, data.speed.toFixed(1) + "km/h");
+    setValueTexts(tachoMaxMotorTempValues, data.motorTemp + "°C");
+    setValueTexts(tachoMaxExternTempValues, data.externTemp + "°C");
 }
 
 
 function setSpeedGaugeValues(values){
     if(!values.direction){ // forwards
-        vehicleSpeedValue.innerHTML = values[2] + "km/h";
+        setValueTexts(tachoSpeedValues, values[2] + "km/h");
     }else{ // backwards
-        vehicleSpeedValue.innerHTML = "-" + values[2].toFixed(1) + "km/h";
+        setValueTexts(tachoSpeedValues, "-" + values[2].toFixed(1) + "km/h");
     }
 
-    vehicleRPMValue.innerHTML = values[3] + "RPM";
+    setValueTexts(tachoRPMValues, values[3] + "RPM");
 }
 
 function setTachoGauges(values){
-    tripOdometerValue.innerHTML = (values.tripOdo / 100000).toFixed(2) + "km";
+    setValueTexts(tachoTripOdoValues, (values.tripOdo / 100000).toFixed(2) + "km");
 
-    vehicleOdometerValue.innerHTML = (Math.floor((values.vehicleOdo / 10)) / 10).toFixed(1) + "km";
-
+    setValueTexts(tachoVehicleOdoValues, (Math.floor((values.vehicleOdo / 10)) / 10).toFixed(1) + "km");
 }
 
 
 
-function setInlineTempValues(vals){
-    motorTempValue.innerHTML = vals.motor + "°C";
-    externTempValue.innerHTML = vals.extern + "°C";
+function setInlineTempValues(data){
+    setValueTexts(tachoMotorTempValues, data.motor + "°C");
+    setValueTexts(tachoExternTempValues, data.extern + "°C");
 }
 
 function setEconomyGauges(values){
-    rangeValue.innerHTML = values.range.toFixed(1) + "km";
-    sessionEconomyValue.innerHTML = values.whkmSession.toFixed(1) + "Wh/km";
+    setValueTexts(sessionRangeValues, values.range.toFixed(1) + "km");
+    setValueTexts(sessionEconomyValues, values.whkmSession.toFixed(1) + "Wh/km");
 }
 
 resetEconomyButton.addEventListener("click", () => {

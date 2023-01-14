@@ -214,6 +214,15 @@ function getLastXSeconds(array, seconds){
 
 
 
+function setValueTexts(elements, value){
+    for (const element of elements) {
+        element.innerHTML = value;
+    }
+}
+
+
+
+
 function deleteOlderDataPackets(buffer, time){
     if(buffer.at(-1).time < (time * 1000)){
         buffer.pop();

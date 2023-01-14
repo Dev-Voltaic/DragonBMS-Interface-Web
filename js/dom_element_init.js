@@ -4,11 +4,13 @@ let table = getId("main-table");
 // Zoom content
 let zoomContent = document.getElementById("zoom-content");
 
+
 // INTERFACE INFO
 let interfaceInfoContainer = getId("interface-info-container");
 
+    // Settings elements
 
-// INTERFACE INFO
+// BOARD INFO
 let boardInfoContainer = getId("board-info-container");
 let enableSwipeDownUpdate = getId("enable-swipe-down-update");
 
@@ -63,7 +65,13 @@ let inlineConfigDataLoggingFrequency = getId("inline-dl-frequency");
 let elementsDiv = getId("elementsDiv");
 
 
-// Swipe for Settings ELement
+
+
+
+
+
+
+    // Swipe for Settings Element
 let settingsSwipeContainer = document.getElementById("swipe-for-settings-container");
 let settingsSwipeText = document.getElementsByClassName("swipe-for-settings-text")[0];
 let settingsSwipeAction = document.getElementsByClassName("swipe-for-settings-action")[0];
@@ -78,28 +86,11 @@ let settingsHide = document.getElementById("settings-hide");
 
 
 
-// BUTTONS AND SUCH
-
-let precharge_button_div = getId("precharge-checkbox-template");
-let precharge_button = getId("precharge-button");
-
-
-let channel1_button = getId("ch1control-on");
-let channel2_button = getId("ch2control-on");
-let channel3_button = getId("ch3control-on");
-
-
-// CLEAR ALERTS AND TURN ON/OFF
-let clearAlertsButton = getId("clearAlertsButton");
-let clearAlertsTd = getId("clearAlertsTd");
-let turnOnTd = getId("switchOnTd");
-let clearAlertsFaultName = getId("clearAlerts-fault-name");
-let clearAlertsFaultExplanation = getId("clearAlerts-fault-explanation");
 
 
 
 
-// NO DEVICES CONNECTED OVERLAY
+    // NO DEVICES CONNECTED OVERLAY
 
 let connectLastDeviceButton = getId('autoconnectBMS');
 let connectLastInlineButton = getId('autoconnectInline');
@@ -116,12 +107,7 @@ let nothingConnectedOverlay = getId("nothingConnectedOverlay");
 
 
 
-
-
-let inlineGauge = getId("inline-gauge");
-
-
-// Info elements (class based)
+    // Info elements (class based)
 let tachoSpeedValues = document.getElementsByClassName("tacho-speed-value");
 let tachoRPMValues = document.getElementsByClassName("tacho-rpm-value");
 let tachoTripOdoValues = document.getElementsByClassName("tacho-trip-odometer-value");
@@ -139,7 +125,7 @@ let bmsOutputVoltageValues = document.getElementsByClassName("bms-output-voltage
 let bmsMinSOCValues = document.getElementsByClassName("bms-min-soc-value");
 let bmsPowerLossValues = document.getElementsByClassName("bms-power-loss-value");
 let bmsCombinedEnergyUsedValues = document.getElementsByClassName("bms-combined-energy-used-value");
-
+let bmsOnTimeValues = document.getElementsByClassName("bms-on-time-value");
 
 let bmsCh1VoltageValues = document.getElementsByClassName("bms-ch1-voltage-value");
 let bmsCh1CurrentValues = document.getElementsByClassName("bms-ch1-current-value");
@@ -170,6 +156,9 @@ let tachoMaxExternTempValues = document.getElementsByClassName("tacho-extern-tem
 let bmsMaxPowerValues = document.getElementsByClassName("bms-max-power-value");
 let tachoMaxSpeedValues = document.getElementsByClassName("tacho-max-speed-value");
 
+let bmsMaxCurrentValues = document.getElementsByClassName("bms-max-current-value");
+let bmsMinVoltageValues = document.getElementsByClassName("bms-min-voltage-value");
+
 let bmsStateMachineStateValues = document.getElementsByClassName("bms-state-value");
 let bmsFaultStateValues = document.getElementsByClassName("bms-fault-state-value");
 
@@ -181,98 +170,53 @@ let bmsConfigUnderCurrentValues = document.getElementsByClassName("bms-config-un
 let bmsConfigOverTempValues = document.getElementsByClassName("bms-config-over-temp-value");
 
 
-// INFO ELEMENTS (TEXTS) - ID Based
 
-// Combined / mobile
-let outputVoltageValue = getId("output-voltage");
-let shuntTempValue = getId("shunt-temperature");
-let prechargeTempValue = getId("precharge-temperature");
-let motorTempValue = getId("motor-temperature");
-let externTempValue = getId("extern-temperature");
-let combinedCurrentValue = getId("combined-current");
-let boardPowerlossValue = getId("board-powerloss");
-let combinedPowerValue = getId("combined-power");
-let combinedEnergyUsedValue = getId("combined-energy-used");
-let combinedEnergyUsedValue2 = getId("combined-energy-used2");
 
-let onTimeValue = getId("ontime");
 
-let rangeValue = getId("sessionRangeValue");
-let sessionEconomyValue = getId("sessionEconomyValue");
+
+
+
+
+
+
+
+
+    // BMS Control elements
+
+// Clear alerts and turn on/off
+let clearAlertsButton = getId("clearAlertsButton");
+let clearAlertsTd = getId("clearAlertsTd");
+let turnOnTd = getId("switchOnTd");
+let clearAlertsFaultName = getId("clearAlerts-fault-name");
+let clearAlertsFaultExplanation = getId("clearAlerts-fault-explanation");
+
 let resetEconomyButton = getId("resetEconomyButton");
-
-
-// 3 Strands Info
-let ch1InfoVoltage = getId("ch1info-v");
-let ch1InfoSOC = getId("ch1info-soc");
-let ch1InfoBatteryType = getId("ch1info-t");
-let ch1infoet = getId("ch1info-et");
-let ch1InfoEnergyUsed = getId("ch1info-eu");
-
-let ch2InfoVoltage = getId("ch2info-v");
-let ch2InfoSOC = getId("ch2info-soc");
-let ch2InfoBatteryType = getId("ch2info-t");
-let ch2infoet = getId("ch2info-et");
-let ch2InfoEnergyUsed = getId("ch2info-eu");
-
-let ch3InfoVoltage = getId("ch3info-v");
-let ch3InfoSOC = getId("ch3info-soc");
-let ch3InfoBatteryType = getId("ch3info-t");
-let ch3infoet = getId("ch3info-et");
-let ch3InfoEnergyUsed = getId("ch3info-eu");
-
-
-let minSOCValue = getId("min-soc");
-
-
-
 let boardElements = document.getElementsByClassName("board-element");
 
-
-
 // bms & fault states
-let bmsStateValue = getId("state-machine-state");
 let faultStateValue = getId("fault-state");
-
 
 let turnOnButton = getId("turnOnButton");
 
-
-
-// Max values
-let maxSpeedValue = getId("max-speed");
-let maxPowerValue = getId("max-power");
-let maxCurrentValue = getId("max-amp-big-val");
-let minVoltValue = getId("min-volt-big-val");
-
-let maxPrechargeTemp = getId("maxPrechargeTemp");
-let maxShuntTemp = getId("maxShuntTemp");
-let maxMotorTemp = getId("maxMotorTemp");
-let maxExternTemp = getId("maxExternTemp");
-
-
-// Channel Control Gauge
-let ch1ControlCurrent = getId("ch1control-a");
-let ch1ControlPower = getId("ch1control-p");
-let ch2ControlCurrent = getId("ch2control-a");
-let ch2ControlPower = getId("ch2control-p");
-let ch3ControlCurrent = getId("ch3control-a");
-let ch3ControlPower = getId("ch3control-p");
-
-// Config Info Gauge
-let configInfoStart = getId("config-info-startup");
-let configInfoShort = getId("config-info-short");
-let configInfoOcp = getId("config-info-ocp");
-let configInfoUvp = getId("config-info-uvp");
-let configInfoOvp = getId("config-info-ovp");
-let configInfoRevOcp = getId("config-info-revocp");
-let configInfoOtp = getId("config-info-otp");
-
-
+// BMS User GPO
 let gpo1Button = getId("GPO1");
 let gpo2Button = getId("GPO2");
 
+// Dev tile stuff
+let precharge_button_div = getId("precharge-checkbox-template");
+let precharge_button = getId("precharge-button");
+let channel1_button = getId("ch1control-on");
+let channel2_button = getId("ch2control-on");
+let channel3_button = getId("ch3control-on");
 
+
+
+
+
+
+// INLINE
+let inlineGaugeDiv = document.getElementById("inline-gauge");
+let resetTripButton = document.getElementById("resetTripOdo");
 
 
 // classes for gauge id to class conversion:
@@ -324,6 +268,8 @@ maxExternTemp -> tacho-max-extern-temp-value
 max-power -> bms-max-power-value
 max-speed -> tacho-max-speed-value
 
+max-amp-big-val -> bms-max-current-value
+min-volt-big-val -> bms-max-current-value
 ontime -> bms-on-time-value
 combined-energy-used2 -> bms-combined-energy-used-value
 

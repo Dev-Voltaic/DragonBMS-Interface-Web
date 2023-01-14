@@ -88,7 +88,7 @@ function tableEventListener(target){
                     } else {
                         selected_cell.classList.add("disabled");
                         selected_cell.childNodes.forEach((child) => {
-                            if (child === inlineGauge) {
+                            if (child === inlineGaugeDiv) {
                                 selected_cell.classList.remove("disabled");
                             }
                         });

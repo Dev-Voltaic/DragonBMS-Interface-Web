@@ -12,7 +12,7 @@
     -->
     <link rel="stylesheet" href="css/fixed-style.css">
     <!--
-        DEFAULT DARKMODE YAAAYYY
+        DEFAULT DARK MODE YAY
     -->
     <link rel="stylesheet" href="css/index-dark.css">
 
@@ -65,7 +65,8 @@
                 </a>
             </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown hidden">
+            <!-- remove hidden class if logging works -->
             <span id="logging-span">Logging</span>
             <div class="dropdown-content">
                 <p id="tileBarSelectDataloggingDirectory">Select Directory</p>
@@ -516,7 +517,7 @@
                                 <div>
                                     <div>
                                         <h5>60s min<br>Voltage:</h5>
-                                        <h3 class="bms-max-current-value" id="min-volt-big-val">0A</h3>
+                                        <h3 class="bms-min-voltage-value" id="min-volt-big-val">0A</h3>
                                     </div>
                                 </div>
                             </td>
@@ -594,11 +595,11 @@
                         <h6 class="float-right bms-config-over-current-value" id="config-info-ocp">0</h6>
                     </div>
                     <div class="left-right-text-container">
-                        <h4 class="float-left">Overvoltage:</h4>
+                        <h4 class="float-left">Over voltage:</h4>
                         <h6 class="float-right bms-config-over-voltage-value" id="config-info-ovp">0</h6>
                     </div>
                     <div class="left-right-text-container">
-                        <h4 class="float-left">Undervoltage:</h4>
+                        <h4 class="float-left">Under voltage:</h4>
                         <h6 class="float-right bms-config-under-voltage-value" id="config-info-uvp">0</h6>
                     </div>
                     <div class="left-right-text-container">
@@ -606,7 +607,7 @@
                         <h6 class="float-right bms-config-under-current-value" id="config-info-revocp">0</h6>
                     </div>
                     <div class="left-right-text-container">
-                        <h4 class="float-left">Overtemperature:</h4>
+                        <h4 class="float-left">Over temperature:</h4>
                         <h6 class="float-right bms-config-over-temp-value" id="config-info-otp">0</h6>
                     </div>
                 </div>
