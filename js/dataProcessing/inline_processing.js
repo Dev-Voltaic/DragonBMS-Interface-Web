@@ -57,7 +57,7 @@ function processInlineData(data){
         }
     });
 
-    document.getElementById("tacho-hz").innerHTML = "T: " +  inlineHertzSampleBuffer.length + "Hz";
+    setValueTexts(tachoDataLoggingFrequencyValues, "T: " +  inlineHertzSampleBuffer.length + "Hz");
 
 
 
@@ -106,13 +106,12 @@ function processInlineData(data){
     }
 
     if(bleBMSConnected){
-        // distance driven in the session
-        // in meters
+        // distance driven in the session in meters
         let drivenDistanceSession = (values.tripOdo / 1000) - drivenDistanceOffset;
-        // in mWh
+        // energy used in the session in mWh
         let energyUsedSession = ((usedEnergy1 + usedEnergy2 + usedEnergy3) - usedEnergyOffset) / 3.6;
 
-        // wh/km for the whole session
+        // wh/km for the session
         let sessionEconomy = energyUsedSession / drivenDistanceSession;
 
         let range = -(remainingEnergy1 + remainingEnergy2 + remainingEnergy3) / sessionEconomy;
@@ -165,9 +164,9 @@ function processInlineData(data){
 
     if (dataLoggingEnabled && !bleBMSConnected) {
 
-        let datastringInline = "";
+        let dataStringInline = "";
         if (bleInlineConnected && bleInlineDataPacket !== []) {
-            datastringInline = [
+            dataStringInline = [
                 bleInlineDataPacket[0], // ms_today
                 bleInlineDataPacket[1], // stamp
                 "",
@@ -188,7 +187,7 @@ function processInlineData(data){
             ].join(";");
 
 
-            if (dataLoggingBufferInline.push(datastringInline) > 20) {
+            if (dataLoggingBufferInline.push(dataStringInline) > 20) {
                 dataLoggingBufferInline.push(""); // to add a newline on the end of a packet
 
 

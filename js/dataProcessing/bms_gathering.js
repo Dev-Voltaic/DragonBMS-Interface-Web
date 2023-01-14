@@ -40,7 +40,7 @@ function gatherBMSData(event){
         }
     });
 
-    document.getElementById("bms-hz").innerHTML = "BMS: " +  hertzSampleBuffer.length + "Hz";
+    setValueTexts(bmsDataLoggingFrequencyValues, "BMS: " +  hertzSampleBuffer.length + "Hz");
 
 
 

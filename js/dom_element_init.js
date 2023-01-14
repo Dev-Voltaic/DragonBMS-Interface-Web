@@ -107,7 +107,13 @@ let nothingConnectedOverlay = getId("nothingConnectedOverlay");
 
 
 
+
+
     // Info elements (class based)
+let bmsDataLoggingFrequencyValues = document.getElementsByClassName("bms-hz");
+let tachoDataLoggingFrequencyValues = document.getElementsByClassName("tacho-hz");
+
+
 let tachoSpeedValues = document.getElementsByClassName("tacho-speed-value");
 let tachoRPMValues = document.getElementsByClassName("tacho-rpm-value");
 let tachoTripOdoValues = document.getElementsByClassName("tacho-trip-odometer-value");
