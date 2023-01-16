@@ -7,7 +7,7 @@
  */
 let zoom = (function () {
 
-    let TRANSITION_DURATION = 500;
+    let TRANSITION_DURATION = 300;
 
     // The current zoom level (scale)
     let level = 1;
@@ -35,14 +35,6 @@ let zoom = (function () {
     document.addEventListener('keyup', function (event) {
         if (level !== 1 && event.keyCode === 27) {
             zoom.out();
-        }
-    });
-
-    // Monitor mouse movement for panning
-    document.addEventListener('mousemove', function (event) {
-        if (level !== 1) {
-            mouseX = event.clientX;
-            mouseY = event.clientY;
         }
     });
 
