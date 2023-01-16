@@ -1,11 +1,11 @@
 /*
      FOR THE MAIN TABLE
- */
+*/
 
 
 /*
 Disable double-tap to zoom on touch devices
- */
+*/
 * {
     touch-action: manipulation;
 }
