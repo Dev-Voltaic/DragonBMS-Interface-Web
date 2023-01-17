@@ -229,14 +229,21 @@ boardCalibTurnOnButton.addEventListener("click", () => {
     }
 });
 
-turnOnTd.addEventListener("click", () => {
+
+function turnOnTdPressed(){
     if (turnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
-        turnOnButton.classList.add("orange");
-        turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
-            turnOnButton.classList.remove("orange");
-            //console.log("turned on");
-        }).catch(_ => {
-            console.log("failed to turn on");
+        // turn on the animation of filling the button
+        turnOnButton.classList.add("animateTurnOnButton");
+        // listen for the animation to end (mouse has been down for 0.5s if this event fires)
+        turnOnButton.addEventListener('animationend', function(_) {
+            turnOnButton.classList.add("orange");
+
+            turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
+                turnOnButton.classList.remove("orange");
+                //console.log("turned on");
+            }).catch(_ => {
+                console.log("failed to turn on");
+            });
         });
     }
     if (turnOnButton.innerHTML.includes("OFF")) {
@@ -248,7 +255,19 @@ turnOnTd.addEventListener("click", () => {
             console.log("failed to turn off");
         });
     }
-});
+}
+
+function turnOnTdReleased(){
+    if (turnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
+        // stop the animation if the mouse button is released
+        turnOnButton.classList.remove("animateTurnOnButton");
+    }
+}
+turnOnTd.addEventListener("mousedown", turnOnTdPressed);
+turnOnTd.addEventListener("touchstart", turnOnTdPressed);
+
+turnOnTd.addEventListener("mouseup", turnOnTdReleased);
+turnOnTd.addEventListener("touchend", turnOnTdReleased);
 
 
 
