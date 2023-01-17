@@ -4,6 +4,7 @@
  * MIT licensed
  *
  * Copyright (C) 2011-2014 Hakim El Hattab, http://hakim.se
+ * modified by p3h3 in 2022-2023
  */
 let zoom = (function () {
 

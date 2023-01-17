@@ -62,8 +62,9 @@ tileBarZoomIn.addEventListener("click", () => {
     zoom.to({element: selected_cell, padding: 0, pan: false});
     // "click" onto the same selected cell again to disable the selection
     tableEventListener(selected_cell);
-});
-
+    /// yet re-enable the "Zoom IN/Out" button
+    tileBarZoomIn.classList.remove("hidden");
+})
 
 // LOGGING
 
