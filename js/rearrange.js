@@ -131,24 +131,21 @@ table.addEventListener("click", (e)=> {
     tableEventListener(e.target);
 });
 
+
+// double tap routine
 let lastClick = 0;
 table.addEventListener('touchstart', function(e) {
     e.preventDefault(); // to disable browser default zoom on double tap
     let date = new Date();
     let time = date.getTime();
-    const time_between_taps = 200; // 200ms
+    const time_between_taps = 400; // 400ms
     if (time - lastClick < time_between_taps) {
-        let is_td = false;
-        let tds = document.getElementsByClassName("main-table-td-2row");
-        for (let i = 0; i < tds.length; i++) {
-            if(tds[i].isEqualNode(e.target)){
-                is_td = true;
-            }
+        let objToZoomOn = e.target;
+        // loop through all the sub components to only zoom on the target td, not for example the button
+        while(typeof objToZoomOn != "undefined" && !objToZoomOn.classList.contains("main-table-td-2row")){
+            objToZoomOn = objToZoomOn.parentNode;
         }
-
-        if(is_td){
-            zoom.to({element: e.target, padding: 0, pan: false});
-        }
+        zoom.to({element: objToZoomOn, padding: 0, pan: false});
     }
     lastClick = time;
 })

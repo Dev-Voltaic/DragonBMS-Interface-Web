@@ -19,7 +19,7 @@ function gatherBMSData(event){
     let packetSequenceNumber = (value.getUint8(2) << 8) | value.getUint8(1);
 
     if(loggingDataInterval < configBuffer.dataloggingUpdateInterval * 0.5){
-        console.log("dropped");
+        //console.log("dropped");
         return;
     }
 

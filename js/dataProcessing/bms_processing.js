@@ -47,16 +47,12 @@ function processData(event) {
     // delete all packets that are older than needed
     deleteOlderDataPackets(bmsAveragingBuffer, interfaceConfig.maxAveragingInterval)
 
-    console.log(bmsAveragingBuffer);
-
     const averagedDataU = averagedData(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalU), 1);
     const averagedDataI = averagedData(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalI), 2);
     const averagedDataT = averagedData(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalT), 1);
     const averagedDataCalib = averagedData(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalT), 4);
 
     const averagedDataPLoss = averagedDataNumbers(getLastXSeconds(bmsAveragingBuffer, interfaceConfig.averagingIntervalT));
-
-    console.log(averagedDataPLoss);
 
 
     // calculating further values
