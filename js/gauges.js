@@ -258,11 +258,6 @@ turnOnTd.addEventListener("click", () => {
 
 
 function setBMSCalculatedValues(data){
-
-
-    // todo: replace all id identified text setting with class identifier function
-
-
     // total current
     let iTotalString = data.iTotal.toFixed(1);
     if(iTotalString === "-0.0"){iTotalString = "0.0"}

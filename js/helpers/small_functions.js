@@ -153,13 +153,13 @@ function averagedData(array, rounding) {
 
     // loop through all data packets and add their values up in the summed data packet
     array.forEach(dataPacket => {
-        console.log(dataPacket);
+        //console.log(dataPacket);
         for (const [key, value] of Object.entries(dataPacket)) {
             summedDataPacket[key] = summedDataPacket[key] + value;
         }
     });
 
-    console.log(summedDataPacket);
+    //console.log(summedDataPacket);
 
     // copy array keys and values
     let averagedArray = {... array[0]};
@@ -167,7 +167,7 @@ function averagedData(array, rounding) {
     for (const [key, _] of Object.entries(averagedArray)) {
         averagedArray[key] = ((summedDataPacket[key] / array.length).toFixed(rounding));
     }
-    return averagedArray[0];
+    return averagedArray;
 }
 
 function averagedDataNumbers(array) {
@@ -186,13 +186,13 @@ function averagedDataNumbers(array) {
 
     // loop through all data packets and add their values up in the summed data packet
     array.forEach(dataPacket => {
-        console.log(dataPacket);
+        //console.log(dataPacket);
         for (const [key, value] of Object.entries(dataPacket)) {
             summedDataPacket[key] = summedDataPacket[key] + value;
         }
     });
 
-    console.log(summedDataPacket);
+    //console.log(summedDataPacket);
 
     // copy array keys and values
     let averagedArray = {... array[0]};
@@ -200,7 +200,7 @@ function averagedDataNumbers(array) {
     for (const [key, _] of Object.entries(averagedArray)) {
         averagedArray[key] = (summedDataPacket[key] / array.length);
     }
-    return averagedArray[0];
+    return averagedArray;
 }
 
 
@@ -238,7 +238,12 @@ function deleteOlderDataPackets(buffer, time){
     if(buffer.length < 2){
         return;
     }
-    if(buffer.at(-1).time < (time * 1000)){
+
+    const nowTimeStamp = Date.now();
+
+    // more efficient to do this recursively than looping through the whole array
+    // (since the array will always be sorted from newest to oldest)
+    if(buffer.at(-1).time < (nowTimeStamp - (time * 1000))){
         buffer.pop();
         deleteOlderDataPackets(buffer, time);
     }
