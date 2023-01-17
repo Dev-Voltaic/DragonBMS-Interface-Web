@@ -131,6 +131,8 @@ table.addEventListener("click", (e)=> {
     tableEventListener(e.target);
 });
 
+
+// if franz wants adjustable double tap time, this is where
 /*
 // double tap routine
 let lastClick = 0;

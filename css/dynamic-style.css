@@ -27,7 +27,7 @@ Animation for moving in the background
 .animateTurnOnButton {
     background: linear-gradient( green , green) rgba(0,0,0,0) no-repeat 0 0;
     background-size: 0 100%;
-    animation: move-in-background 0.5s ease-in 1 forwards;
+    animation: move-in-background 0.35s ease-in 1 forwards;
 }
 
 @keyframes move-in-background {
