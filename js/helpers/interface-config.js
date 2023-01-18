@@ -2,18 +2,10 @@ let interfaceConfig = {};
 
 // adjust the interface according to config values
 function updateConfig(){
-    const lastDarkMode = localStorage.getItem("lastDarkmode") || "";
+    const lastColorMode = localStorage.getItem("lastColorMode") || "dark";
 
-    if(lastDarkMode === "light"){
-        adjustDarkmode(false); // for light mode
-        dark_mode = false;
-    }
-
-    // actually unnecessary since it's dark by default
-    if(lastDarkMode === "dark"){
-        adjustDarkmode(true); // for light mode
-        dark_mode = true;
-    }
+    const customColorForeground = localStorage.getItem("customColorForeground") || "#ffffff";
+    const customColorBackground = localStorage.getItem("customColorBackground") || "#000000";
 
     // Times for data averaging intervals
     const bmsDataAveragingIntervalU = parseFloat(localStorage.getItem("averagingIntervalU") || "0.25");
@@ -29,13 +21,20 @@ function updateConfig(){
         );
 
     interfaceConfig = {
-        darkMode: lastDarkMode,
+        colorMode: lastColorMode,
+
+        customColorForeground: customColorForeground,
+        customColorBackground: customColorBackground,
+
         averagingIntervalU: bmsDataAveragingIntervalU,
         averagingIntervalI: bmsDataAveragingIntervalI,
         averagingIntervalT: bmsDataAveragingIntervalT,
         averagingIntervalCalib: bmsDataAveragingIntervalCalib,
         maxAveragingInterval: maxAveragingInterval
     };
+
+
+    adjustColorMode(lastColorMode);
 }
 
 
