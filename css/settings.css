@@ -177,9 +177,19 @@ All tables inside the settings container
 #interface-configuration-table input[type=checkbox] {
     transform: scale(2);
 }
-/* no goofy up/down buttons */
+/* no goofy up/down buttons
 #interface-configuration-table input::-webkit-outer-spin-button, #interface-configuration-table input::-webkit-inner-spin-button {
     -webkit-appearance: none;
+}*/
+
+/*
+stuff for the color pickers
+ */
+
+.full .clr-field button {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
 }
 
 
