@@ -126,6 +126,73 @@ All tables inside the settings container
 
 
 /*
+    INTERFACE CONFIG
+ */
+
+#interface-configuration-table-container{
+    display: flex;
+    justify-content: center;
+}
+
+#interface-configuration-table{
+    width: 100%;
+    margin: 20vh auto auto;
+}
+#interface-configuration-table {
+    display: grid;
+
+    font-size: 3vw;
+
+    grid-auto-flow: column;
+    border-collapse: collapse;
+    width: 100%;
+    margin: auto;
+}
+
+#interface-configuration-table  td:first-child {
+    text-align: left;
+}
+#interface-configuration-table td {
+    padding: 0;
+    margin: 0;
+    width: 50%;
+}
+#interface-configuration-table tr {
+    border-bottom: 3px dotted grey;
+}
+
+#interface-configuration-table td:last-child {
+    text-align: right;
+}
+
+#interface-configuration-table td:first-child {
+    text-align: left;
+}
+
+#interface-configuration-table select, #interface-configuration-table button, #interface-configuration-table input {
+    font-family: 'Pervitina', monospace;
+    font-size: inherit;
+    text-align: inherit;
+}
+#interface-configuration-table input[type=checkbox] {
+    transform: scale(2);
+}
+/* no goofy up/down buttons */
+#interface-configuration-table input::-webkit-outer-spin-button, #interface-configuration-table input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
     BOARD CONFIG
  */
 
