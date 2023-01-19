@@ -13,7 +13,7 @@ clearAlertsButton.addEventListener("click", () => {
 
 function clearAlerts(counter, error){
     if (counter === 10){
-        alert("Failed to clear alerts: " + error);
+        //alert("Failed to clear alerts: " + error);
         return;
     }
 
