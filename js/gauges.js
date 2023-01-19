@@ -1,6 +1,22 @@
 // noinspection JSBitwiseOperatorUsage
 
 
+
+
+// set the cursor to the right on all input fields (a bit whack but there is no nicer solution)
+document.querySelectorAll("input[type='number']").forEach(item => {
+    item.addEventListener('focus', event => {
+        console.log("focussed on input");
+        const value = event.target.value;
+        event.target.value = '';
+        setTimeout(()=>{
+            event.target.value = value;
+        }, 1);
+    })
+});
+
+
+
 /*
     BMS related
  */
@@ -11,7 +27,7 @@ clearAlertsButton.addEventListener("click", () => {
     clearAlerts(0, "")
 });
 
-function clearAlerts(counter, error){
+function clearAlerts(counter, _){
     if (counter === 10){
         //alert("Failed to clear alerts: " + error);
         return;
