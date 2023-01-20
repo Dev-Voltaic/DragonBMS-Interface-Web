@@ -219,23 +219,33 @@ function handleAlertIndication(event) {
 
 // poll faults from characteristic when data logging gives state 4 (fault)
 function pollFaults(){
-    if(stateMachineStateBuffer === 4 && bleBMSConnected){
+    // with no logging data, there is no need to poll the faults
+    if(typeof bmsAveragingBuffer.at(0) === "undefined"){
+        setTimeout(pollFaults, 500);
+        return;
+    }
+    if(bmsAveragingBuffer.at(0).stateMachineState === 4 && bleBMSConnected){
         // try catch for "gatt operation already in progress"
+        /*
         try {
-            alertCharacteristic.readValue().then(alertValue => {
-                alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0));
-            });
+
         } catch (error) { //"gatt operation already in progress"
-        }
+        }*/
+        alertCharacteristic.readValue().then(alertValue => {
+            alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0));
+        });
 
         // try catch for "gatt operation already in progress"
+        /*
         try {
-            warningCharacteristic.readValue().then(warningValue => {
-                warningBuffer = (((warningValue.getUint8(3) << 24) | (warningValue.getUint8(2) << 16)) | (warningValue.getUint8(1) << 8)) | (warningValue.getUint8(0))
-            });
-            updateWarningFields();
+
+
         } catch (error) { //"gatt operation already in progress"
-        }
+        }*/
+        warningCharacteristic.readValue().then(warningValue => {
+            warningBuffer = (((warningValue.getUint8(3) << 24) | (warningValue.getUint8(2) << 16)) | (warningValue.getUint8(1) << 8)) | (warningValue.getUint8(0))
+        });
+        updateWarningFields();
     }
     setTimeout(pollFaults, 500);
 }

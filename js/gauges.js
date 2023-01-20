@@ -256,6 +256,7 @@ function turnOnTdPressed(){
 
             turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
                 turnOnButton.classList.remove("orange");
+                turnOnButton.classList.remove("animateTurnOnButton");
                 //console.log("turned on");
             }).catch(_ => {
                 console.log("failed to turn on");

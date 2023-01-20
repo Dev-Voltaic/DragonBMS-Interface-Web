@@ -22,9 +22,6 @@ let remainingEnergy1 = 0; // Watt hours
 let remainingEnergy2 = 0; // Watt hours
 let remainingEnergy3 = 0; // Watt hours
 
-
-let stateMachineStateBuffer;
-
 let hertzSampleBuffer = [];
 
 
