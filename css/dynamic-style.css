@@ -29,6 +29,11 @@ Animation for moving in the background
     background-size: 0 100%;
     animation: move-in-background 0.35s ease-in 1 forwards;
 }
+.animateTurnOffButton {
+    background: linear-gradient( red , red) rgba(0,0,0,0) no-repeat 0 0;
+    background-size: 0 100%;
+    animation: move-in-background 0.35s ease-in 1 forwards;
+}
 
 @keyframes move-in-background {
     to {

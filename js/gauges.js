@@ -246,7 +246,19 @@ boardCalibTurnOnButton.addEventListener("click", () => {
 });
 
 
-function turnOnTdPressed(){
+let turnOnTdMoveStart = {x: 0, y: 0};
+
+function turnOnTdPressed(event){
+    // save the touch event start to be compared to move event - cancel turn on/off on scroll
+    try{
+        turnOnTdMoveStart.x = event.changedTouches[0].screenX;
+        turnOnTdMoveStart.y = event.changedTouches[0].screenY;
+    }catch(e) {
+        if(!(e instanceof TypeError)){
+            console.log(e);
+        }
+    }
+
     if (turnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
         // turn on the animation of filling the button
         turnOnButton.classList.add("animateTurnOnButton");
@@ -256,32 +268,53 @@ function turnOnTdPressed(){
 
             turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
                 turnOnButton.classList.remove("orange");
-                turnOnButton.classList.remove("animateTurnOnButton");
                 //console.log("turned on");
-            }).catch(_ => {
-                console.log("failed to turn on");
+            }).catch(e => {
+                console.log("failed to turn on" + e);
             });
+            turnOnButton.classList.remove("animateTurnOnButton");
         });
     }
     if (turnOnButton.innerHTML.includes("OFF")) {
-        turnOnButton.classList.add("orange");
-        turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
-            turnOnButton.classList.remove("orange");
-            //console.log("turned off");
-        }).catch(_ => {
-            console.log("failed to turn off");
+        turnOnButton.classList.add("animateTurnOffButton");
+        // listen for the animation to end (mouse has been down for 0.5s if this event fires)
+        turnOnButton.addEventListener('animationend', function(_) {
+            turnOnButton.classList.add("orange");
+
+            turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
+                turnOnButton.classList.remove("orange");
+                //console.log("turned on");
+            }).catch(e => {
+                console.log("failed to turn off" + e);
+            });
+            turnOnButton.classList.remove("animateTurnOffButton");
         });
     }
 }
 
-function turnOnTdReleased(){
-    if (turnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
-        // stop the animation if the mouse button is released
+// cancel animation if touch user only wants to scroll
+function turnOnTdMoved(event){
+    const moveX = turnOnTdMoveStart.x - event.changedTouches[0].screenX;
+    const moveY = turnOnTdMoveStart.y - event.changedTouches[0].screenY;
+    const swipeDistance = Math.sqrt(Math.pow(moveX, 2) + Math.pow(moveY, 2));
+    if(swipeDistance > window.outerHeight * 0.01){
         turnOnButton.classList.remove("animateTurnOnButton");
+        turnOnButton.classList.remove("animateTurnOffButton");
+    }
+}
+
+function turnOnTdReleased(){
+    // stop the animations if the mouse button/touch action is released
+    if (turnOnButton.innerHTML.includes("ON")) {
+        turnOnButton.classList.remove("animateTurnOnButton");
+    }
+    if (turnOnButton.innerHTML.includes("OFF")) {
+        turnOnButton.classList.remove("animateTurnOffButton");
     }
 }
 turnOnTd.addEventListener("mousedown", turnOnTdPressed);
 turnOnTd.addEventListener("touchstart", turnOnTdPressed);
+turnOnTd.addEventListener("touchmove", turnOnTdMoved);
 
 turnOnTd.addEventListener("mouseup", turnOnTdReleased);
 turnOnTd.addEventListener("touchend", turnOnTdReleased);
