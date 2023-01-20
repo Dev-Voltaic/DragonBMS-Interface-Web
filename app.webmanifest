@@ -3,7 +3,7 @@
   "short_name": "DragonBMS",
   "theme_color": "#333333",
   "background_color": "#000000",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "portrait",
   "scope": "/DragonBMS-Interface-Web/",
   "start_url": "/DragonBMS-Interface-Web/",

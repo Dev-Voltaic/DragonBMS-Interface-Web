@@ -90,7 +90,7 @@ async function startBMSNotifications(device) {
         if (!bleInlineConnected) {
             enableNothingConnectedOverlay();
 
-            nothingConnectedOverlayTimeout();
+            //nothingConnectedOverlayTimeout();
 
             resetAutoconnectBMSSilentInstant();
 

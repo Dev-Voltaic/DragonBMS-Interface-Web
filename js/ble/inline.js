@@ -69,7 +69,7 @@ async function startInlineNotifications(device) {
             zoom.out({element: selected_cell, padding: 0, pan: false});
             enableNothingConnectedOverlay();
 
-            nothingConnectedOverlayTimeout();
+            //nothingConnectedOverlayTimeout();
 
             inlineDisconnected();
             resetAutoconnectTachoSilentInstant();
