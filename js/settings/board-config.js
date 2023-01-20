@@ -22,18 +22,31 @@ function readBMSConfig(cb){
 }
 
 getId("board-config-write").addEventListener("click", () => {
+    writeBoardConfig(0);
+});
+
+function writeBoardConfig(counter){
+    if (counter === 10){
+        //alert("Failed to clear alerts: " + error);
+        indicateBMSConfigFailure();
+        return;
+    }
     // writing config characteristic
     console.log(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer);
     bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer).then(_ => {
         indicateBMSConfigSuccess();
         console.log("successfully wrote config");
+
+        // read back only after write was successful
+        setTimeout(() => {
+            readBMSConfig(()=>{});
+        }, 200);
     }).catch(_ => {
-        indicateBMSConfigFailure();
+        setTimeout( ()=>{
+            writeBoardConfig(counter + 1);
+        }, 100);
     });
-    setTimeout(() => {
-        readBMSConfig(()=>{});
-    }, 200);
-});
+}
 
 
 /*

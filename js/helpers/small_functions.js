@@ -88,7 +88,10 @@ function mobileDevice(){
     return /Android|iPhone/i.test(navigator.userAgent);
 }
 
-let isChrome = !!window.chrome;
+let isChrome = false;
+if(typeof(window) !== "undefined"){
+    isChrome = !!window.chrome;
+}
 
 
 // function for capping a value between two numbers
@@ -102,4 +105,146 @@ const cap = (value, low, high) => low + mod(value - low, high - low + 1);
 function isTouchDevice() {
     return (('ontouchstart' in window) ||
         (navigator.maxTouchPoints > 0));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function averagedArray(array, averaging) {
+    let summedArray = [];
+    let averageArray = [];
+    array.forEach(sub => {
+        sub.map(Number).forEach((num, index) => {
+            if(summedArray[index]){
+                summedArray[index] += num;
+            }else{
+                summedArray[index] = num;
+            }
+        });
+    });
+    summedArray.forEach(sum => {
+        averageArray.push((sum / array.length).toFixed(averaging));
+    });
+    return averageArray;
+}
+
+
+function averagedData(array, rounding) {
+    // safety, kids!
+    if(array.length === 0){
+        return;
+    }
+
+    // copy array keys and values
+    // {... original} = copy (copy by value - not by reference)
+    let summedDataPacket = {... array[0]};
+    // set all values to 0
+    for (const [key, _] of Object.entries(summedDataPacket)) {
+        summedDataPacket[key] = 0;
+    }
+
+    // loop through all data packets and add their values up in the summed data packet
+    array.forEach(dataPacket => {
+        //console.log(dataPacket);
+        for (const [key, value] of Object.entries(dataPacket)) {
+            summedDataPacket[key] = summedDataPacket[key] + value;
+        }
+    });
+
+    //console.log(summedDataPacket);
+
+    // copy array keys and values
+    let averagedArray = {... array[0]};
+    // set values for keys to averaged values rounded via.toFixed
+    for (const [key, _] of Object.entries(averagedArray)) {
+        averagedArray[key] = ((summedDataPacket[key] / array.length).toFixed(rounding));
+    }
+    return averagedArray;
+}
+
+function averagedDataNumbers(array) {
+    // safety, kids!
+    if(array.length === 0){
+        return;
+    }
+
+    // copy array keys and values
+    // {... original} = copy (copy by value - not by reference)
+    let summedDataPacket = {... array[0]};
+    // set all values to 0
+    for (const [key, _] of Object.entries(summedDataPacket)) {
+        summedDataPacket[key] = 0;
+    }
+
+    // loop through all data packets and add their values up in the summed data packet
+    array.forEach(dataPacket => {
+        //console.log(dataPacket);
+        for (const [key, value] of Object.entries(dataPacket)) {
+            summedDataPacket[key] = summedDataPacket[key] + value;
+        }
+    });
+
+    //console.log(summedDataPacket);
+
+    // copy array keys and values
+    let averagedArray = {... array[0]};
+    // set values for keys to averaged values rounded via.toFixed
+    for (const [key, _] of Object.entries(averagedArray)) {
+        averagedArray[key] = (summedDataPacket[key] / array.length);
+    }
+    return averagedArray;
+}
+
+
+
+function getLastXSeconds(array, seconds){
+    let now = Date.now();
+    return array.filter((element) => {
+        return element.time > (now - 1000 * seconds);
+    });
+}
+
+
+
+function setValueTexts(elements, value){
+    for (const element of elements) {
+        element.innerHTML = value;
+    }
+}
+
+
+
+// like element.scrollInToView() but with the offset of the tilebar
+function scrollToElement(element){
+    let bodyRect = document.body.getBoundingClientRect();
+    let elemRect = element.getBoundingClientRect();
+    let offset = elemRect.top - bodyRect.top;
+
+    window.scrollTo(0, offset);
+}
+
+
+
+
+function deleteOlderDataPackets(buffer, time){
+    if(buffer.length < 2){
+        return;
+    }
+
+    const nowTimeStamp = Date.now();
+
+    // more efficient to do this recursively than looping through the whole array
+    // (since the array will always be sorted from newest to oldest)
+    if(buffer.at(-1).time < (nowTimeStamp - (time * 1000))){
+        buffer.pop();
+        deleteOlderDataPackets(buffer, time);
+    }
 }

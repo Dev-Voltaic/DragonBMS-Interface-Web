@@ -1,12 +1,35 @@
 // noinspection JSBitwiseOperatorUsage
 
+
+
+
+// set the cursor to the right on all input fields (a bit whack but there is no nicer solution)
+document.querySelectorAll("input[type='number']").forEach(item => {
+    item.addEventListener('focus', event => {
+        console.log("focussed on input");
+        const value = event.target.value;
+        event.target.value = '';
+        setTimeout(()=>{
+            event.target.value = value;
+        }, 1);
+    })
+});
+
+
+
+/*
+    BMS related
+ */
+
+
+
 clearAlertsButton.addEventListener("click", () => {
     clearAlerts(0, "")
 });
 
-function clearAlerts(counter, error){
+function clearAlerts(counter, _){
     if (counter === 10){
-        alert("Failed to clear alerts: " + error);
+        //alert("Failed to clear alerts: " + error);
         return;
     }
 
@@ -30,18 +53,22 @@ let gpo1 = false;
 let gpo2 = false;
 
 gpo1Button.addEventListener("click", () => {
-    gpo1 = !gpo1;
-    let value = gpo1 * 1 | gpo2 * 2;
-    userGPOCharacteristic.writeValueWithoutResponse(Uint8Array.from([value]).buffer).then(() => {
+    let value = !gpo1 * 1 | gpo2 * 2;
+    userGPOCharacteristic.writeValue(Uint8Array.from([value]).buffer).then(() => {
+        gpo1 = !gpo1;
         gpo1Button.innerHTML = gpo1 ? '1 ON' : '1 OFF';
+    }).catch(() => {
+        console.log("failed to set gpo state");
     });
 });
 
 gpo2Button.addEventListener("click", () => {
-    gpo2 = !gpo2;
-    let value = gpo1 * 1 | gpo2 * 2;
-    userGPOCharacteristic.writeValueWithoutResponse(Uint8Array.from([value]).buffer).then(() => {
+    let value = gpo1 * 1 | !gpo2 * 2;
+    userGPOCharacteristic.writeValue(Uint8Array.from([value]).buffer).then(() => {
+        gpo2 = !gpo2;
         gpo2Button.innerHTML = gpo2 ? '2 ON' : '2 OFF';
+    }).catch(() => {
+        console.log("failed to set gpo state")
     });
 });
 
@@ -49,15 +76,14 @@ gpo2Button.addEventListener("click", () => {
 let warningBuffer = 0;
 let alertBuffer = 0;
 
-
 function updateConfigRelatedGauges(config) {
     // config info  tile
-    configInfoStart.innerHTML = (config.boardAutoStart ? 'Autostart' : 'manual Start');
+    setValueTexts(bmsConfigStartupValues, (config.boardAutoStart ? 'Autostart' : 'manual Start'));
 
-    configInfoOvp.innerHTML = String(config.battCellCount * config.protMaxCellVoltage / 1000) + "V";
-    configInfoUvp.innerHTML = String(config.battCellCount * config.protMinCellVoltage / 1000) + "V";
+    setValueTexts(bmsConfigOverVoltageValues, String(config.battCellCount * config.protMaxCellVoltage / 1000) + "V");
+    setValueTexts(bmsConfigUnderVoltageValues, String(config.battCellCount * config.protMinCellVoltage / 1000) + "V");
 
-    configInfoOtp.innerHTML = String(Math.min(config.protMaxLogicTemp, config.protMaxPowerTemp)) + "°C";
+    setValueTexts(bmsConfigOverTempValues, String(Math.min(config.protMaxLogicTemp, config.protMaxPowerTemp)) + "°C");
 
 
     // disable non enabled channels and count number of enabled channels - to adjust protection values
@@ -81,14 +107,28 @@ function updateConfigRelatedGauges(config) {
         numChannels ++;
     }
 
+    setValueTexts(bmsConfigUnderCurrentValues, String(config.protMaxReverseCurrent * 0.01 * numChannels) + "A");
+    setValueTexts(bmsConfigOverCurrentValues, String(config.protMaxCurrent * 0.01 * numChannels) + "A");
 
-    configInfoRevOcp.innerHTML = String(config.protMaxReverseCurrent * 0.01 * numChannels) + "A";
-    configInfoOcp.innerHTML = String(config.protMaxCurrent * 0.01 * numChannels) + "A";
+    // should some day be editable on a per-channel basis
+    setValueTexts(bmsCh1TypeValues, config.battCellCount + "S");
+    setValueTexts(bmsCh2TypeValues, config.battCellCount + "S");
+    setValueTexts(bmsCh3TypeValues, config.battCellCount + "S");
 }
 
 
-function setBMSState(val) {
-    bmsStateValue.innerHTML = val;
+function setBMSState(stateMachineState) {
+    let stateMachineStateString;
+
+    // in honor of clemens, I won't change this ugly syntax
+    if (stateMachineState === 0) stateMachineStateString = "Startup"
+    else if (stateMachineState === 1) stateMachineStateString = "Precharging..."
+    else if (stateMachineState === 2) stateMachineStateString = "Ready"
+    else if (stateMachineState === 3) stateMachineStateString = "Operation"
+    else if (stateMachineState === 4) stateMachineStateString = "Fault"
+    else stateMachineStateString = "UNDEFINED STATE!"
+
+    setValueTexts(bmsStateMachineStateValues, stateMachineStateString);
 }
 
 
@@ -205,80 +245,121 @@ boardCalibTurnOnButton.addEventListener("click", () => {
     }
 });
 
-turnOnTd.addEventListener("click", () => {
+
+let turnOnTdMoveStart = {x: 0, y: 0};
+
+function turnOnTdPressed(event){
+    // save the touch event start to be compared to move event - cancel turn on/off on scroll
+    try{
+        turnOnTdMoveStart.x = event.changedTouches[0].screenX;
+        turnOnTdMoveStart.y = event.changedTouches[0].screenY;
+    }catch(e) {
+        // sometimes, there is no changed Touch in the event (don't ask why)
+        if(!(e instanceof TypeError)){
+            console.log(e);
+        }
+    }
+
     if (turnOnButton.innerHTML.includes("ON")) { // if the button says "Switch on", switch on when pressed
-        turnOnButton.classList.add("orange");
-        turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
-            turnOnButton.classList.remove("orange");
-            //console.log("turned on");
-        }).catch(_ => {
-            console.log("failed to turn on");
+        // turn on the animation of filling the button
+        turnOnButton.classList.add("animateTurnOnButton");
+        // listen for the animation to end (mouse has been down for 0.5s if this event fires)
+        turnOnButton.addEventListener('animationend', function(_) {
+            turnOnButton.classList.add("orange");
+
+            turnOnCharacteristic.writeValue(Uint8Array.from([1]).buffer).then(_ => {
+                turnOnButton.classList.remove("orange");
+                //console.log("turned on");
+            }).catch(e => {
+                console.log("failed to turn on" + e);
+            });
+            turnOnButton.classList.remove("animateTurnOnButton");
         });
     }
     if (turnOnButton.innerHTML.includes("OFF")) {
-        turnOnButton.classList.add("orange");
-        turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
-            turnOnButton.classList.remove("orange");
-            //console.log("turned off");
-        }).catch(_ => {
-            console.log("failed to turn off");
+        turnOnButton.classList.add("animateTurnOffButton");
+        // listen for the animation to end (mouse has been down for 0.5s if this event fires)
+        turnOnButton.addEventListener('animationend', function(_) {
+            turnOnButton.classList.add("orange");
+
+            turnOnCharacteristic.writeValue(Uint8Array.from([0]).buffer).then(_ => {
+                turnOnButton.classList.remove("orange");
+                //console.log("turned on");
+            }).catch(e => {
+                console.log("failed to turn off" + e);
+            });
+            turnOnButton.classList.remove("animateTurnOffButton");
         });
     }
-});
-
-
-function setWTextVal(val){
-    if(val === "-0.00"){val = "0.00"}
-    combinedPowerValue.innerHTML = val + "kW";
-}
-function setVTextVal(val){
-    outputVoltageValue.innerHTML = val + "V";
-}
-function setWattPlossTextVal(val) {
-    if(val === "-0.0"){val = "0.0"}
-    boardPowerlossValue.innerHTML = val + "W";
 }
 
-
-function setBMSTempValues(vals){
-    shuntTempValue.innerHTML = vals.shunt + "°C";
-    prechargeTempValue.innerHTML = vals.precharge + "°C";
+// cancel animation if touch user only wants to scroll
+function turnOnTdMoved(event){
+    const moveX = turnOnTdMoveStart.x - event.changedTouches[0].screenX;
+    const moveY = turnOnTdMoveStart.y - event.changedTouches[0].screenY;
+    const swipeDistance = Math.sqrt(Math.pow(moveX, 2) + Math.pow(moveY, 2));
+    if(swipeDistance > window.outerHeight * 0.01){
+        turnOnButton.classList.remove("animateTurnOnButton");
+        turnOnButton.classList.remove("animateTurnOffButton");
+    }
 }
 
-function setInlineTempValues(vals){
-    motorTempValue.innerHTML = vals.motor + "°C";
-    externTempValue.innerHTML = vals.extern + "°C";
+function turnOnTdReleased(){
+    // stop the animations if the mouse button/touch action is released
+    if (turnOnButton.innerHTML.includes("ON")) {
+        turnOnButton.classList.remove("animateTurnOnButton");
+    }
+    if (turnOnButton.innerHTML.includes("OFF")) {
+        turnOnButton.classList.remove("animateTurnOffButton");
+    }
+}
+turnOnTd.addEventListener("mousedown", turnOnTdPressed);
+turnOnTd.addEventListener("touchstart", turnOnTdPressed);
+turnOnTd.addEventListener("touchmove", turnOnTdMoved);
+
+turnOnTd.addEventListener("mouseup", turnOnTdReleased);
+turnOnTd.addEventListener("touchend", turnOnTdReleased);
+
+
+
+
+
+
+
+
+function setBMSCalculatedValues(data){
+    // total current
+    let iTotalString = data.iTotal.toFixed(1);
+    if(iTotalString === "-0.0"){iTotalString = "0.0"}
+    setValueTexts(bmsCombinedCurrentValues, iTotalString + "A");
+
+    // total power
+    let pTotalString = data.pTotal.toFixed(1);
+    if(pTotalString === "-0.0"){pTotalString = "0.0"}
+    setValueTexts(bmsCombinedPowerValues, pTotalString + "kW");
+
+    // power loss
+    let pLossString = data.pLoss.toFixed(1);
+    if(pLossString === "-0.0"){pLossString = "0.0"}
+    setValueTexts(bmsPowerLossValues, pLossString + "W");
+
+    // used energy
+    setValueTexts(bmsCombinedEnergyUsedValues,  (data.energyUsed.combined / 3600).toFixed(1) + "Wh");
+    setValueTexts(bmsCh1EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
+    setValueTexts(bmsCh2EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
+    setValueTexts(bmsCh3EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
+
+    // state of charge (soc)
+    setValueTexts(bmsCh1SOCValues, (data.soc.ch1).toFixed(1) + "%");
+    setValueTexts(bmsCh2SOCValues, (data.soc.ch2).toFixed(1) + "%");
+    setValueTexts(bmsCh3SOCValues, (data.soc.ch3).toFixed(1) + "%");
+    setValueTexts(bmsMinSOCValues, (data.soc.min).toFixed(1) + "%");
+
 }
 
-
-
-function setAmpTextVal(val) {
-    if(val === "-0.0"){val = "0.0"}
-    combinedCurrentValue.innerHTML = val + "A";
-}
-
-
-
-function setEnergyUsedVals(vals){
-    combinedEnergyUsedValue.innerHTML = (vals.combined / 3600).toFixed(1) + "Wh";
-    combinedEnergyUsedValue2.innerHTML = (vals.combined / 3600).toFixed(1) + "Wh";
-    ch1InfoEnergyUsed.innerHTML = (vals.ch1 / 3600).toFixed(3) + "Wh";
-    ch2InfoEnergyUsed.innerHTML = (vals.ch2 / 3600).toFixed(3) + "Wh";
-    ch3InfoEnergyUsed.innerHTML = (vals.ch3 / 3600).toFixed(3) + "Wh";
-}
-
-function setSOCVals(vals){
-    ch1InfoSOC.innerHTML = (vals.ch1).toFixed(1) + "%";
-    ch2InfoSOC.innerHTML = (vals.ch2).toFixed(1) + "%";
-    ch3InfoSOC.innerHTML = (vals.ch3).toFixed(1) + "%";
-    minSOCValue.innerHTML = (vals.min).toFixed(1) + "%";
-}
-
-
-function setBatteryType(val) {
-    ch1InfoBatteryType.innerHTML = val + "S Li-Ion";
-    ch2InfoBatteryType.innerHTML = val + "S Li-Ion";
-    ch3InfoBatteryType.innerHTML = val + "S Li-Ion";
+function setBMSTempValues(data){
+    setValueTexts(bmsShuntTempValues, data.tShunt + "°C");
+    setValueTexts(bmsPrechargeTempValues, data.tPch + "°C");
 }
 
 
@@ -292,47 +373,40 @@ function setOnTime(values) {
     let hours = Math.floor(values / 3600).toString();
     while (hours.length < 2) hours = "0" + hours;
 
-    onTimeValue.innerHTML = hours + ":" + minutes + ":" + seconds;
+    setValueTexts(bmsOnTimeValues, hours + ":" + minutes + ":" + seconds);
 }
 
-function setBMSMaxValues(vals) {
-    maxPowerValue.innerHTML = vals.power + "kW";
-    maxCurrentValue.innerHTML = vals.current + "A";
-    minVoltValue.innerHTML = vals.voltage + "V";
-    maxShuntTemp.innerHTML = vals.shuntTemp + "°C";
-    maxPrechargeTemp.innerHTML = vals.prechargeTemp + "°C";
+function setBMSMaxValues(data) {
+    setValueTexts(bmsMaxPowerValues, data.power + "kW");
+    setValueTexts(bmsMaxCurrentValues, data.current + "A");
+    setValueTexts(bmsMinVoltageValues, data.voltage + "V");
+    setValueTexts(bmsMaxShuntTempValues, data.shuntTemp + "°C");
+    setValueTexts(bmsMaxPrechargeTempValues, data.prechargeTemp + "°C");
 }
 
-function setInlineMaxValues(vals){
-    maxSpeedValue.innerHTML = vals.speed.toFixed(1) + "km/h";
-    maxMotorTemp.innerHTML = vals.motorTemp + "°C";
-    maxExternTemp.innerHTML = vals.externTemp + "°C";
+function setChannelVoltageInfo(data){
+    setValueTexts(bmsCh1VoltageValues, data.u1 + "V");
+    setValueTexts(bmsCh2VoltageValues, data.u2 + "V");
+    setValueTexts(bmsCh3VoltageValues, data.u3 + "V");
+
+    setValueTexts(bmsOutputVoltageValues, data.uOut + "V");
+}
+function setChannelCurrentInfo(data){
+    if(data.i1 === "-0.00"){data.i1 = "0.00"}
+    if(data.i2 === "-0.00"){data.i2 = "0.00"}
+    if(data.i3 === "-0.00"){data.i3 = "0.00"}
+
+
+    setValueTexts(bmsCh1CurrentValues, data.i1 + "A");
+    setValueTexts(bmsCh1PowerValues, (parseFloat(data.u1) * parseFloat(data.i1)).toFixed(1) + "W");
+
+    setValueTexts(bmsCh2CurrentValues, data.i2 + "A");
+    setValueTexts(bmsCh2PowerValues, (parseFloat(data.u2) * parseFloat(data.i2)).toFixed(1) + "W");
+
+    setValueTexts(bmsCh3CurrentValues, data.i3 + "A");
+    setValueTexts(bmsCh3PowerValues, (parseFloat(data.u3) * parseFloat(data.i3)).toFixed(1) + "W");
 }
 
-
-function setChannelInfo(data){
-    ch1InfoVoltage.innerHTML = data[0] + "V";
-    ch2InfoVoltage.innerHTML = data[1] + "V";
-    ch3InfoVoltage.innerHTML = data[2] + "V";
-
-    setVTextVal(data[3]);
-
-    if(data[4] === "-0.00"){data[4] = "0.00"}
-    if(data[5] === "-0.00"){data[5] = "0.00"}
-    if(data[6] === "-0.00"){data[6] = "0.00"}
-
-
-    ch1ControlCurrent.innerHTML = data[4] + "A";
-    ch1ControlPower.innerHTML = (parseFloat(data[0]) * parseFloat(data[4])).toFixed(1) + "W";
-
-    ch2ControlCurrent.innerHTML = data[5] + "A";
-    ch2ControlPower.innerHTML = (parseFloat(data[1]) * parseFloat(data[5])).toFixed(1) + "W";
-
-    ch3ControlCurrent.innerHTML = data[6] + "A";
-    ch3ControlPower.innerHTML = (parseFloat(data[2]) * parseFloat(data[6])).toFixed(1) + "W";
-
-    setWTextVal(data[7]);
-}
 
 
 
@@ -349,71 +423,6 @@ function disableBoardGauges(){
 disableBoardGauges();
 
 
-let inlineGaugeDiv = document.getElementById("inline-gauge");
-let vehicleOdometerValue = document.getElementById("vehicle-odo-val");
-let tripOdometerValue = document.getElementById("trip-odo-val");
-let vehicleSpeedValue = document.getElementById("speed-val");
-let resetTripButton = document.getElementById("resetTripOdo");
-let vehicleRPMValue = document.getElementById("speed-rpm-val");
-
-
-function setSpeedGaugeValues(values){
-    if(!values.direction){ // forwards
-        vehicleSpeedValue.innerHTML = values[2] + "km/h";
-    }else{ // backwards
-        vehicleSpeedValue.innerHTML = "-" + values[2].toFixed(1) + "km/h";
-    }
-
-    vehicleRPMValue.innerHTML = values[3] + "RPM";
-}
-
-function setTachoGauges(values){
-    tripOdometerValue.innerHTML = (values.tripOdo / 100000).toFixed(2) + "km";
-
-    vehicleOdometerValue.innerHTML = (Math.floor((values.vehicleOdo / 10)) / 10).toFixed(1) + "km";
-
-}
-
-
-function setEconomyGauges(values){
-    rangeValue.innerHTML = values.range.toFixed(1) + "km";
-    sessionEconomyValue.innerHTML = values.whkmSession.toFixed(1) + "Wh/km";
-}
-
-resetEconomyButton.addEventListener("click", () => {
-    // triggers a reset of all the offsets needed to calculate the sesison economy
-    // basically starts a new session for the measurement
-    console.log("new session values for economy!");
-    drivenDistanceOffset = -1;
-});
-
-
-resetTripButton.addEventListener("click", () => {
-    inlineOdometerCharacteristic.writeValueWithoutResponse(Uint8Array.from([0x01]).buffer).catch(_ =>{
-        console.log("failed to reset trip odometer");
-    });
-});
-
-
-
-
-function inlineConnected() {
-    inlineGaugeDiv.classList.remove("inline-gauge-disabled");
-    connectLastInlineOverlay.classList.add("hidden");
-
-/*
-    if (!bleBMSConnected) {
-        zoom.to({element: inlineGaugeTd, padding: 0, pan: false});
-    }
-    */
-}
-
-function inlineDisconnected(){
-    inlineGaugeDiv.classList.add("inline-gauge-disabled");
-    connectLastInlineOverlay.classList.remove("hidden");
-}
-
-inlineDisconnected();
 
 
 function updateWarningFields() {
@@ -621,7 +630,7 @@ function updateWarningFields() {
 
     // only update field if needed - ensures animation is working correctly
     if(faultStateValue.innerHTML !== faultFieldText){
-        faultStateValue.innerHTML = faultFieldText;
+        setValueTexts(bmsFaultStateValues, faultFieldText);
     }
 
     // only update fields if needed - max fps!!!!
@@ -632,6 +641,83 @@ function updateWarningFields() {
         clearAlertsFaultExplanation.innerHTML = faultExplanationText;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    INLINE related
+ */
+
+function setInlineMaxValues(data){
+    setValueTexts(tachoMaxSpeedValues, data.speed.toFixed(1) + "km/h");
+    setValueTexts(tachoMaxMotorTempValues, data.motorTemp + "°C");
+    setValueTexts(tachoMaxExternTempValues, data.externTemp + "°C");
+}
+
+
+function setSpeedGaugeValues(values){
+    if(!values.direction){ // forwards
+        setValueTexts(tachoSpeedValues, values[2] + "km/h");
+    }else{ // backwards
+        setValueTexts(tachoSpeedValues, "-" + values[2].toFixed(1) + "km/h");
+    }
+
+    setValueTexts(tachoRPMValues, values[3] + "RPM");
+}
+
+function setTachoGauges(values){
+    setValueTexts(tachoTripOdoValues, (values.tripOdo / 100000).toFixed(2) + "km");
+
+    setValueTexts(tachoVehicleOdoValues, (Math.floor((values.vehicleOdo / 10)) / 10).toFixed(1) + "km");
+}
+
+
+
+function setInlineTempValues(data){
+    setValueTexts(tachoMotorTempValues, data.motor + "°C");
+    setValueTexts(tachoExternTempValues, data.extern + "°C");
+}
+
+function setEconomyGauges(values){
+    setValueTexts(sessionRangeValues, values.range.toFixed(1) + "km");
+    setValueTexts(sessionEconomyValues, values.whkmSession.toFixed(1) + "Wh/km");
+}
+
+resetEconomyButton.addEventListener("click", () => {
+    // triggers a reset of all the offsets needed to calculate the sesison economy
+    // basically starts a new session for the measurement
+    console.log("new session values for economy!");
+    drivenDistanceOffset = -1;
+});
+
+
+resetTripButton.addEventListener("click", () => {
+    inlineOdometerCharacteristic.writeValueWithoutResponse(Uint8Array.from([0x01]).buffer).catch(_ =>{
+        console.log("failed to reset trip odometer");
+    });
+});
+
+
+
+
+
 
 
 

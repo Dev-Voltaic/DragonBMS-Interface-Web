@@ -17,7 +17,7 @@ function readInlineConfig(){
 
 getId("inline-config-write").addEventListener("click", () => {
     // writing config characteristic
-    console.log((getInlineConfigValues()));
+    console.log(Uint8Array.from(getInlineBufferFromConfig(getInlineConfigValues())).buffer);
     inlineConfigCharacteristic.writeValue(Uint8Array.from(getInlineBufferFromConfig(getInlineConfigValues())).buffer).then(_ => {
         indicateInlineConfigSuccess();
         console.log("successfully wrote config");
@@ -146,11 +146,11 @@ function getInlineConfigValues() {
     config.tempSensorType = getTempSensorType();
     config.ntc_r = getIdValue("r-value") / 10;
     config.divider_r = getIdValue("r-value-divider") / 10;
-    config.ntc_b = getIdValue("b-value");
+    config.ntc_b = parseInt(getIdValue("b-value"));
     config.reversed = getIdChecked("reversed");
     config.backwards_negative = getIdChecked("back-neg");
-    config.impulses = getIdValue("distperpulse");
-    config.motor_poles = getIdValue("motor-poles");
+    config.impulses = parseInt(getIdValue("distperpulse"));
+    config.motor_poles = parseInt(getIdValue("motor-poles"));
 
     // fields that might not be there dependent on the firmware version
 
@@ -163,7 +163,7 @@ function getInlineConfigValues() {
 
 function setInlineConfigValues(config) {
     console.log("Got config: ");
-    console.log(config);
+    //console.log(config);
     setTempSensorType(config.tempSensorType);
     getId("r-value").value = config.ntc_r * 10;
     getId("r-value-divider").value = config.divider_r * 10;
@@ -176,7 +176,7 @@ function setInlineConfigValues(config) {
     if(typeof config.dataLoggingUpdateInterval !== 'undefined') {
         inlineConfigDataLoggingFrequency.disabled = false;
 
-        setCurrentSpikeSensitivity(config.dataLoggingUpdateInterval);
+        getId("inline-dl-frequency").value = config.dataLoggingUpdateInterval;
     }else{
         inlineConfigDataLoggingFrequency.disabled = true;
     }

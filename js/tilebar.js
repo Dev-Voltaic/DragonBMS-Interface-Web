@@ -24,10 +24,11 @@ document.getElementById("tileBarDisconnect").addEventListener("click", ()=>{
 document.getElementById("tileBarBoardInfo").addEventListener("click", ()=>{
     if(boardInfoContainer.classList.contains("hidden")){
         boardInfoContainer.classList.remove("hidden");
-        boardInfoContainer.scrollIntoView();
+        scrollToElement(boardInfoContainer);
     }else{
         boardInfoContainer.classList.add("hidden");
-        table.scrollIntoView();
+
+        scrollToElement(table);
     }
 });
 document.getElementById("tileBarBoardConfig").addEventListener("click", () => {
@@ -35,7 +36,8 @@ document.getElementById("tileBarBoardConfig").addEventListener("click", () => {
         settingsContainer.classList.remove("hidden");
         visualiseSettingsAvailable();
     }
-    boardConfigContainer.scrollIntoView();
+    scrollToElement(boardConfigContainer);
+
     // normally there would be an else add hidden to the class list
     // here, there is not, because there is a separate "hide settings" option
 });
@@ -44,16 +46,14 @@ document.getElementById("tileBarBoardCalib").addEventListener("click", () => {
         settingsContainer.classList.remove("hidden");
         visualiseSettingsAvailable();
     }
-    boardCalibContainer.scrollIntoView();
+    scrollToElement(boardCalibContainer);
 });
 document.getElementById("tileBarTachoConfig").addEventListener("click", () => {
     if(settingsContainer.classList.contains("hidden")){
         settingsContainer.classList.remove("hidden");
         visualiseSettingsAvailable();
     }
-    inlineConfigContainer.scrollIntoView();
-    // normally there would be an else add hidden to the class list
-    // here, there is not, because there is a separate "hide settings" option
+    scrollToElement(inlineConfigContainer);
 });
 
 
@@ -62,8 +62,9 @@ tileBarZoomIn.addEventListener("click", () => {
     zoom.to({element: selected_cell, padding: 0, pan: false});
     // "click" onto the same selected cell again to disable the selection
     tableEventListener(selected_cell);
-});
-
+    // yet re-enable the "Zoom IN/Out" button
+    //tileBarZoomIn.classList.remove("hidden");
+})
 
 // LOGGING
 
@@ -135,6 +136,6 @@ if(!isChrome){
     table.classList.add("hidden");
     nothingConnectedOverlay.classList.add("hidden");
     settingsSwipeContainer.classList.add("hidden");
-    getId("tilebar").classList.add("disabled");
+    tilebar.classList.add("disabled");
     alert("This site is tailored around Progressive Wep App services that are only supported in full by Chrome.\nPlease open this site in Chrome only as we can't ensure functionality otherwise ;)");
 }

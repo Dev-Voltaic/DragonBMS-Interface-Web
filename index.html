@@ -12,7 +12,7 @@
     -->
     <link rel="stylesheet" href="css/fixed-style.css">
     <!--
-        DEFAULT DARKMODE YAAAYYY
+        DEFAULT DARK MODE YAY
     -->
     <link rel="stylesheet" href="css/index-dark.css">
 
@@ -65,7 +65,8 @@
                 </a>
             </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown hidden">
+            <!-- remove hidden class if logging works -->
             <span id="logging-span">Logging</span>
             <div class="dropdown-content">
                 <p id="tileBarSelectDataloggingDirectory">Select Directory</p>
@@ -91,15 +92,15 @@
 
     <div id="tilebar-right">
         <div>
-            <span id="bms-hz">BMS: </span>
+            <span class="bms-hz">BMS: </span>
         </div>
 
         <div>
-            <span id="tacho-hz">T: </span>
+            <span class="tacho-hz">T: </span>
         </div>
 
         <div>
-            <span id="version-number" class="blue">1.6</span>
+            <span id="version-number" class="blue">2.3</span>
         </div>
     </div>
 
@@ -134,14 +135,14 @@
                     <div class="big-value-flex-div height40">
                         <div>
                             <h4 class="h1-label">Speed:</h4>
-                            <h1 id="speed-val">0km/h</h1>
+                            <h1 class="tacho-speed-value">0km/h</h1>
                         </div>
                     </div>
 
                     <div class="big-value-flex-div height40">
                         <div>
                             <h4 class="h1-label">Motor RPM:</h4>
-                            <h1 id="speed-rpm-val">0RPM</h1>
+                            <h1 class="tacho-rpm-value">0RPM</h1>
                         </div>
                     </div>
 
@@ -151,7 +152,7 @@
                                 <div>
                                     <div>
                                         <h5><button id="resetTripOdo">Reset</button>Trip Odometer:</h5>
-                                        <h3 id="trip-odo-val">km</h3>
+                                        <h3 class="tacho-trip-odometer-value">km</h3>
                                     </div>
                                 </div>
                             </td>
@@ -159,7 +160,7 @@
                                 <div>
                                     <div>
                                         <h5 class="llh2">Vehicle Odometer:</h5>
-                                        <h3 id="vehicle-odo-val">km</h3>
+                                        <h3 class="tacho-vehicle-odometer-value">km</h3>
                                     </div>
                                 </div>
                             </td>
@@ -170,7 +171,7 @@
                                             <button id="resetEconomyButton">Reset</button>
                                             Economy:
                                         </h5>
-                                        <h3 id="sessionEconomyValue">Wh/km</h3>
+                                        <h3 class="session-economy-value">Wh/km</h3>
                                     </div>
                                 </div>
                             </td>
@@ -178,7 +179,7 @@
                                 <div>
                                     <div>
                                         <h5>Range:</h5>
-                                        <h3 id="sessionRangeValue">km</h3>
+                                        <h3 class="session-range-value">km</h3>
                                     </div>
                                 </div>
                             </td>
@@ -214,7 +215,7 @@
                                 <div>
                                     <div>
                                         <h5>BMS-Precharge<br>Temperature:</h5>
-                                        <h3 id="precharge-temperature">°C</h3>
+                                        <h3 class="bms-precharge-temp-value">°C</h3>
                                     </div>
                                 </div>
                             </td>
@@ -222,7 +223,7 @@
                                 <div>
                                     <div>
                                         <h5>BMS-Shunt<br>Temperature:</h5>
-                                        <h3 id="shunt-temperature">°C</h3>
+                                        <h3 class="bms-shunt-temp-value">°C</h3>
                                     </div>
                                 </div>
                             </td>
@@ -230,7 +231,7 @@
                                 <div>
                                     <div>
                                         <h5>Motor<br>Temperature:</h5>
-                                        <h3 id="motor-temperature">°C</h3>
+                                        <h3 class="tacho-motor-temp-value">°C</h3>
                                     </div>
                                 </div>
                             </td>
@@ -238,7 +239,7 @@
                                 <div>
                                     <div>
                                         <h5>Extern<br>Temperature:</h5>
-                                        <h3 id="extern-temperature">°C</h3>
+                                        <h3 class="tacho-extern-temp-value">°C</h3>
                                     </div>
                                 </div>
                             </td>
@@ -248,7 +249,7 @@
                     <div class="big-value-flex-div height30">
                         <div class="normal-div">
                             <h4 class="h1-label">Power:</h4>
-                            <h1 id="combined-power">0W</h1>
+                            <h1 class= "bms-combined-power-value">0W</h1>
                         </div>
                     </div>
 
@@ -256,11 +257,11 @@
                         <div class="normal-div width100">
                             <div class="normal-div float-left width50">
                                 <h4 class="h1-label">Current:</h4>
-                                <h2 id="combined-current">0A</h2>
+                                <h2 class="bms-combined-current-value">0A</h2>
                             </div>
                             <div class="normal-div float-right width50">
                                 <h4 class="h1-label">Output Voltage:</h4>
-                                <h2 id="output-voltage">0V</h2>
+                                <h2 class="bms-output-voltage-value">0V</h2>
                             </div>
                         </div>
                     </div>
@@ -271,7 +272,7 @@
                                 <div>
                                     <div>
                                         <h5>Battery State:</h5>
-                                        <h3 id="min-soc">%</h3>
+                                        <h3 class="bms-min-soc-value">%</h3>
                                     </div>
                                 </div>
                             </td>
@@ -290,7 +291,7 @@
                                 <div>
                                     <div>
                                         <h5>Power loss:</h5>
-                                        <h3 id="board-powerloss">0W</h3>
+                                        <h3 class="bms-power-loss-value">0W</h3>
                                     </div>
                                 </div>
                             </td>
@@ -298,7 +299,7 @@
                                 <div>
                                     <div>
                                         <h5>Used Energy:</h5>
-                                        <h3 id="combined-energy-used">0Wh</h3>
+                                        <h3 class="bms-combined-energy-used-value">0Wh</h3>
                                     </div>
                                 </div>
                             </td>
@@ -335,68 +336,67 @@
                                 <div>
                                     <h4>Battery 1</h4>
                                     <h5>Voltage:</h5>
-                                    <h3 id="ch1info-v">0V</h3>
+                                    <h3 class="bms-ch1-voltage-value">0V</h3>
 
 
                                     <h5>Current:</h5>
-                                    <h3 id="ch1control-a">0A</h3>
+                                    <h3 class="bms-ch1-current-value">0A</h3>
 
                                     <h5>Power:</h5>
-                                    <h3 id="ch1control-p">0W</h3>
+                                    <h3 class="bms-ch1-power-value">0W</h3>
 
-                                    <h5 >State of Charge:</h5>
-                                    <h3 id="ch1info-soc">0%</h3>
+                                    <h5>State of Charge:</h5>
+                                    <h3 class="bms-ch1-soc-value">0%</h3>
 
                                     <h5>Type:</h5>
-                                    <h3 id="ch1info-t">0S Li-Ion</h3>
-
+                                    <h3 class="bms-ch1-type-value">0S Li-Ion</h3>
 
                                     <h5>Used Energy:</h5>
-                                    <h3 id="ch1info-eu">0Wh</h3>
+                                    <h3 class="bms-ch1-energy-used-value">0Wh</h3>
                                 </div>
                             </td>
                             <td id="channel-info-2">
                                 <div>
                                     <h4>Battery 2</h4>
                                     <h5>Voltage:</h5>
-                                    <h3 id="ch2info-v">0V</h3>
+                                    <h3 class="bms-ch2-voltage-value">0V</h3>
 
                                     <h5>Current:</h5>
-                                    <h3 id="ch2control-a">0A</h3>
+                                    <h3 class="bms-ch2-current-value">0A</h3>
 
                                     <h5>Power:</h5>
-                                    <h3 id="ch2control-p">0W</h3>
+                                    <h3 class="bms-ch2-power-value">0W</h3>
 
                                     <h5>State of Charge:</h5>
-                                    <h3 id="ch2info-soc">0%</h3>
+                                    <h3 class="bms-ch2-soc-value">0%</h3>
 
                                     <h5>Type:</h5>
-                                    <h3 id="ch2info-t">0S Li-Ion</h3>
+                                    <h3 class="bms-ch2-type-value">0S Li-Ion</h3>
 
                                     <h5 >Used Energy:</h5>
-                                    <h3 id="ch2info-eu">0Wh</h3>
+                                    <h3 class="bms-ch2-energy-used-value">0Wh</h3>
                                 </div>
                             </td>
                             <td id="channel-info-3">
                                 <div>
                                     <h4>Battery 3</h4>
                                     <h5>Voltage:</h5>
-                                    <h3 id="ch3info-v">0V</h3>
+                                    <h3 class="bms-ch3-voltage-value">0V</h3>
 
                                     <h5>Current:</h5>
-                                    <h3 id="ch3control-a">0A</h3>
+                                    <h3 class="bms-ch3-current-value">0A</h3>
 
                                     <h5>Power:</h5>
-                                    <h3 id="ch3control-p">0W</h3>
+                                    <h3 class="bms-ch3-power-value">0W</h3>
 
                                     <h5>State of Charge:</h5>
-                                    <h3 id="ch3info-soc">0%</h3>
+                                    <h3 class="bms-ch3-soc-value">0%</h3>
 
                                     <h5>Type:</h5>
-                                    <h3 id="ch3info-t">0S Li-Ion</h3>
+                                    <h3 class="bms-ch3-type-value">0S Li-Ion</h3>
 
                                     <h5>Used Energy:</h5>
-                                    <h3 id="ch3info-eu">0Wh</h3>
+                                    <h3 class="bms-ch3-energy-used-value">0Wh</h3>
                                 </div>
                             </td>
                         </tr>
@@ -454,7 +454,7 @@
                                 <div>
                                     <div>
                                         <h5>max<br>Precharge Temp:</h5>
-                                        <h3 id="maxPrechargeTemp">°C</h3>
+                                        <h3 class="bms-max-pch-temp-value">°C</h3>
                                     </div>
                                 </div>
                             </td>
@@ -462,7 +462,7 @@
                                 <div>
                                     <div>
                                         <h5>max<br>Shunt Temp:</h5>
-                                        <h3 id="maxShuntTemp">°C</h3>
+                                        <h3 class="bms-max-shunt-temp-value">°C</h3>
                                     </div>
                                 </div>
                             </td>
@@ -470,7 +470,7 @@
                                 <div>
                                     <div>
                                         <h5>max<br>Motor Temp:</h5>
-                                        <h3 id="maxMotorTemp">°C</h3>
+                                        <h3 class="tacho-max-motor-temp-value">°C</h3>
                                     </div>
                                 </div>
                             </td>
@@ -478,7 +478,7 @@
                                 <div>
                                     <div>
                                         <h5>max<br>Extern Temp:</h5>
-                                        <h3 id="maxExternTemp">°C</h3>
+                                        <h3 class="tacho-max-extern-temp-value">°C</h3>
                                     </div>
                                 </div>
                             </td>
@@ -490,13 +490,13 @@
                     <div class="big-value-flex-div height30">
                         <div>
                             <h4 class="h1-label">Max Power:</h4>
-                            <h1 id="max-power">0W</h1>
+                            <h1 class="bms-max-power-value">0W</h1>
                         </div>
                     </div>
                     <div class="big-value-flex-div height30">
                         <div>
                             <h4 class="h1-label">Max Speed:</h4>
-                            <h1 id="max-speed">0km/h</h1>
+                            <h1 class="tacho-max-speed-value">0km/h</h1>
                         </div>
                     </div>
 
@@ -509,7 +509,7 @@
                                 <div>
                                     <div>
                                         <h5>60s max<br>Current:</h5>
-                                        <h3 id="max-amp-big-val">0V</h3>
+                                        <h3 class="bms-max-current-value">0V</h3>
                                     </div>
                                 </div>
                             </td>
@@ -517,7 +517,7 @@
                                 <div>
                                     <div>
                                         <h5>60s min<br>Voltage:</h5>
-                                        <h3 id="min-volt-big-val">0A</h3>
+                                        <h3 class="bms-min-voltage-value">0A</h3>
                                     </div>
                                 </div>
                             </td>
@@ -525,7 +525,7 @@
                                 <div>
                                     <div>
                                         <h5>On Time:</h5>
-                                        <h3 id="ontime">00:00:00</h3>
+                                        <h3 class="bms-on-time-value">00:00:00</h3>
                                     </div>
                                 </div>
                             </td>
@@ -533,7 +533,7 @@
                                 <div>
                                     <div>
                                         <h5>Used Energy:</h5>
-                                        <h3 id="combined-energy-used2">0Wh</h3>
+                                        <h3 class="bms-combined-energy-used-value">0Wh</h3>
                                     </div>
                                 </div>
                             </td>
@@ -574,13 +574,13 @@
                 <div class="gauge-div">
                     <div class="left-right-text-container">
                         <h4 class="float-left">BMS State:</h4>
-                        <h6 class="float-right" id="state-machine-state">off</h6>
+                        <h6 class="float-right bms-state-value">off</h6>
                     </div>
                     <div class="left-right-text-container">
                         <h4 class="float-left">Faults:</h4>
                         <div class="float-right marquee">
                             <div>
-                                <h6 id="fault-state">
+                                <h6 class="bms-fault-state-value" id="fault-state">
                                     None
                                 </h6>
                             </div>
@@ -588,27 +588,27 @@
                     </div>
                     <div class="left-right-text-container">
                         <h4 class="float-left">Mode:</h4>
-                        <h6 class="float-right" id="config-info-startup">Autostart</h6>
+                        <h6 class="float-right bms-config-startup-value">Autostart</h6>
                     </div>
                     <div class="left-right-text-container">
-                        <h4 class="float-left">Overcurrent:</h4>
-                        <h6 class="float-right" id="config-info-ocp">0</h6>
+                        <h4 class="float-left">Over current discharge:</h4>
+                        <h6 class="float-right bms-config-over-current-value">0</h6>
                     </div>
                     <div class="left-right-text-container">
-                        <h4 class="float-left">Overvoltage:</h4>
-                        <h6 class="float-right" id="config-info-ovp">0</h6>
+                        <h4 class="float-left">Over voltage:</h4>
+                        <h6 class="float-right bms-config-over-voltage-value">0</h6>
                     </div>
                     <div class="left-right-text-container">
-                        <h4 class="float-left">Undervoltage:</h4>
-                        <h6 class="float-right" id="config-info-uvp">0</h6>
+                        <h4 class="float-left">Under voltage:</h4>
+                        <h6 class="float-right bms-config-under-voltage-value">0</h6>
                     </div>
                     <div class="left-right-text-container">
-                        <h4 class="float-left">Reverse current:</h4>
-                        <h6 class="float-right" id="config-info-revocp">0</h6>
+                        <h4 class="float-left">Over current charge:</h4>
+                        <h6 class="float-right bms-config-under-current-value">0</h6>
                     </div>
                     <div class="left-right-text-container">
-                        <h4 class="float-left">Overtemperature:</h4>
-                        <h6 class="float-right" id="config-info-otp">0</h6>
+                        <h4 class="float-left">Over temperature:</h4>
+                        <h6 class="float-right bms-config-over-temp-value">0</h6>
                     </div>
                 </div>
             </td></tr>
@@ -766,7 +766,7 @@
         <h2>DragonBMS Interface</h2>
         <h3>Version:</h3>
         <p id="version-number-2"></p>
-        <div class="decriptioncontainer">
+        <div class="decription-container">
             <p>
                 DragonBMS Interface is a program for interfacing with the Voltaic DragonBMS System.
 
@@ -791,7 +791,7 @@
         <h3>DragonBMS Interface</h3>
         <br>
         <p>Name:</p>
-        <p id="bms-devicename"></p>
+        <p id="bms-device-name"></p>
         <p>Hardware Version:</p>
         <p id="bms-hardware-version"></p>
         <p>Firmware Version:</p>
@@ -821,35 +821,32 @@
 
 
             <table id="board-config-table">
-                <tr class="no-height">
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
                 <tr>
                     <td>
                         <div class="dropdown">
-                            <span>Enabled Channels:</span>
+                            <label>Enabled Channels:</label>
                             <div class="dropdown-content">
                                 Which channels should are enabled - only these channels have the protection features and will turn on
                             </div>
                         </div>
                     </td>
                     <td>
-                        <label for="enabled-channels-1">Channel1</label>
-                        <input id="enabled-channels-1" type="checkbox">
-                        <br>
-                        <label for="enabled-channels-2">Channel2</label>
-                        <input id="enabled-channels-2" type="checkbox">
-                        <br>
-                        <label for="enabled-channels-3">Channel3</label>
-                        <input id="enabled-channels-3" type="checkbox">
+                        <div id="bms-config-enabled-channels-td">
+                            <div id="bms-config-enabled-channels-div">
+                                <input id="enabled-channels-1" type="checkbox">
+                                <label for="enabled-channels-1">Channel1</label>
+                                <br>
+                                <input id="enabled-channels-2" type="checkbox">
+                                <label for="enabled-channels-2">Channel2</label>
+                                <br>
+                                <input id="enabled-channels-3" type="checkbox">
+                                <label for="enabled-channels-3">Channel3</label>
+                            </div>
+                        </div>
                     </td>
+                </tr>
 
-                    <td class="seperator"></td>
-
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="battery-type-select">Battery Type:</label>
@@ -866,6 +863,7 @@
                         <option value="custom" disabled>Completely Custom</option> <!-- no cell number -->
                     </select></td>
                 </tr>
+
                 <tr>
                     <td class="battery-field">
                         <div class="dropdown">
@@ -877,7 +875,9 @@
                     </td>
                     <td class="battery-field"><label for="battery-cells"></label><input id="battery-cells" type="number" min="3" max="40"></td>
 
-                    <td class="seperator"></td>
+                </tr>
+
+                <tr>
 
                     <td>
                         <div class="dropdown">
@@ -889,6 +889,7 @@
                     </td>
                     <td><input id="battery-capacity" type="number" min="1"></td>
                 </tr>
+
                 <tr>
                     <td class="battery-field cell-field">
                         <div class="dropdown">
@@ -900,8 +901,9 @@
                     </td>
                     <td class="battery-field cell-field"><input id="max-cell-voltage" type="number" min="1"></td>
 
-                    <td class="seperator"></td>
+                </tr>
 
+                <tr>
                     <td class="battery-field cell-field">
                         <div class="dropdown">
                             <label for="min-cell-voltage">Minimal cell voltage [mV]:</label>
@@ -913,6 +915,7 @@
                     <td class="battery-field cell-field"><input id="min-cell-voltage" type="number" min="1"></td>
 
                 </tr>
+
                 <tr>
                     <td class="pack-field">
                         <div class="dropdown">
@@ -924,7 +927,9 @@
                     </td>
                     <td class="pack-field"><input id="pack-undervoltage" type="number" min="1"></td>
 
-                    <td class="seperator"></td>
+                </tr>
+
+                <tr>
 
                     <td class="pack-field">
                         <div class="dropdown">
@@ -936,7 +941,7 @@
                     </td>
                     <td class="pack-field"><input id="pack-overvoltage" type="number" min="1"></td>
                 </tr>
-                <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
+
                 <tr>
 
                     <td>
@@ -950,8 +955,9 @@
                     </td>
                     <td><input id="strand-max-current" type="number" min="1"></td>
 
-                    <td class="seperator"></td>
+                </tr>
 
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="strand-max-reverse-current">Strand max charge current [A]:</label>
@@ -976,13 +982,14 @@
                         </div>
                     </td>
                     <td><input id="strand-max-imbalance-current" type="number" min="1"></td>
+                </tr>
 
-                    <td class="seperator"></td>
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="spike-sensitivity-select">Current Spike sensitivity:</label>
                             <div class="dropdown-content">
-                                The current spike sensitivity changes the instant overcurrent (short) protection value. If this is set too high, a short may be detected too late or not at all.
+                                The current spike sensitivity changes the instant over current (short) protection value. If this is set too high, a short may be detected too late or not at all.
                                 If you encounter short Faults under high loads at low speeds, your drivetrain may have a current spike problem, which means that the motor controller is seeking
                                 really high currents for short durations and is thereby potentially harming the battery. You can just turn down the sensitivity to avoid the faults, we would
                                 however advise you to look at other options of avoiding spikes (additional filter capacitors near the motor controller).
@@ -1003,7 +1010,7 @@
                         <div class="dropdown">
                             <label for="logic-max-temp">Precharge Transistor max temperature [°C]:</label>
                             <div class="dropdown-content">
-                                The precharge transistor regulated the current needed to charge the output capacitance (motorcontrollers, etc.).
+                                The precharge transistor regulated the current needed to charge the output capacitance (motor controllers, etc.).
                                 Per physics, this transistor dissipates the same energy that the capacitors are charged with, which
                                 means, that it gets warm. This max temperature may be set from experience to catch unusually high
                                 output capacities or to prolong the life of the transistor. You can't break anything with this setting
@@ -1013,13 +1020,14 @@
                     </td>
                     <td><input id="logic-max-temp" type="number" min="40" max="90"></td>
 
-                    <td class="seperator"></td>
+                </tr>
 
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="power-max-temp">Board max temperature [°C]:</label>
                             <div class="dropdown-content">
-                                The shunt temperature is a good representation of how warm the powerstage of the DragonBMS is.
+                                The shunt temperature is a good representation of how warm the power stage of the DragonBMS is.
                                 You may set the temperature as you like if you need this BMS to be below a certain temperature
                                 As with the precharge transistor, setting this max temp lower might let you catch anomalies in your
                                 setup before it's too late.
@@ -1029,16 +1037,13 @@
                     <td><input id="power-max-temp" type="number" min="40" max="90"></td>
                 </tr>
 
-
                 <tr>
-                    <td><label for="datalogging-update-frequency">Datalogging update Frequency [Hz]:</label></td>
-                    <td><input id="datalogging-update-frequency" type="number" min="1" max="120"></td>
-
-                    <td class="seperator"></td>
-
-
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <label for="datalogging-update-frequency">Datalogging update Frequency [Hz]:</label>
+                    </td>
+                    <td>
+                        <input id="datalogging-update-frequency" type="number" min="1" max="120">
+                    </td>
                 </tr>
 
                 <!--
@@ -1055,7 +1060,6 @@
 
                 -->
 
-                <tr><td></td><td></td><td class="seperator"></td><td></td><td></td></tr>
                 <tr>
                     <td>
                         <div class="dropdown">
@@ -1066,9 +1070,9 @@
                         </div>
                     </td>
                     <td><input id="autostart" type="checkbox"></td>
+                </tr>
 
-                    <td class="seperator"></td>
-
+                <tr>
                     <td>
                         <div class="dropdown">
                             <label for="auto-poweroff">Auto poweroff time [minutes]:</label>
@@ -1079,10 +1083,11 @@
                     </td>
                     <td><input id="auto-poweroff" type="number"></td>
                 </tr>
+
                 <tr>
                     <td>
                         <div class="dropdown">
-                            <span>Update Count:</span>
+                            <label>Update Count:</label>
                             <div class="dropdown-content">
                                 The number of times, the configuration has been updated. This mostly serves as a confirmation, that
                                 all of your changes have been correctly sent and read back - if you save the changes, this number
@@ -1091,10 +1096,8 @@
                         </div>
                     </td>
                     <td id="updatecount"></td>
-                    <td class="seperator"></td>
-                    <td></td>
-                    <td></td>
                 </tr>
+
             </table>
         </div>
 
@@ -1122,13 +1125,13 @@
 
         <div id="inline-configuration-div">
 
-            <h2>Inline Board Configuration:</h2>
+            <h2>Tacho Configuration:</h2>
 
             <div class="readwrite-button-container">
                 <button id="inline-config-read">Read</button>
                 <button id="inline-config-write">Write</button>
             </div>
-            <table>
+            <table id="inline-configuration-table">
                 <tr>
                     <td>
                         <label for="ntc-type-select">Sensor Type:</label>
@@ -1152,7 +1155,6 @@
                     <td class="customTempInput">
                         <label for="r-value">Thermistor R at 25°C [Ohm]</label>
                     </td>
-
 
                     <td class="customTempInput">
                         <input id="r-value" type="number" min="1">
@@ -1282,10 +1284,6 @@
 
 
         <div id="board-calibration-div">
-
-            <div class="frame">
-                <img id="logo" src="img/icon/512x512.png" alt="Voltaic Logo">
-            </div>
 
             <h2>Calibration values:</h2>
             <h4 id="calib-write-warning" class="orange">Warning - might not be editable. Turn off first!</h4>
@@ -1495,8 +1493,10 @@
 <script src="js/settings/inline-config.js"></script>
 <script src="js/settings/board-calib.js"></script>
 
-<script src="js/dataProcessing/bms.js"></script>
-<script src="js/dataProcessing/inline.js"></script>
+<script src="js/dataProcessing/bms_gathering.js"></script>
+<script src="js/dataProcessing/inline_gathering.js"></script>
+<script src="js/dataProcessing/bms_processing.js"></script>
+<script src="js/dataProcessing/inline_processing.js"></script>
 
 <script src="js/ble/bmsServiceInit.js"></script>
 <script src="js/ble/bms.js"></script>

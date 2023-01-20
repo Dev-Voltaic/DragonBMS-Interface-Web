@@ -71,6 +71,28 @@ connectLastInlineButton.addEventListener('click', async () => {
  */
 
 
+function inlineConnected() {
+    inlineGaugeDiv.classList.remove("inline-gauge-disabled");
+    connectLastInlineOverlay.classList.add("hidden");
+
+    /*
+        if (!bleBMSConnected) {
+            zoom.to({element: inlineGaugeTd, padding: 0, pan: false});
+        }
+        */
+}
+
+function inlineDisconnected(){
+    inlineGaugeDiv.classList.add("inline-gauge-disabled");
+    connectLastInlineOverlay.classList.remove("hidden");
+}
+
+inlineDisconnected();
+
+
+
+
+
 
 function resetAutoconnectBMS(){
     autoConnectBMSError();
@@ -221,7 +243,7 @@ function resetInlineValues() {
     bleInlineDataPacket = [];
 
     dataLoggingBufferInline = [];
-    inlineDataloggingAveragingBuffer = [];
+    inlineDataLoggingAveragingBuffer = [];
 
     // reset range calculation stuff
     drivenDistanceOffset = -1;

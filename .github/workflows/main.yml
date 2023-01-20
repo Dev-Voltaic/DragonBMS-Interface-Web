@@ -1,0 +1,54 @@
+name: Push to Development Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  publish:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Pushing into other repo
+        run: |
+          echo $(ls)
+          
+          # cloning deployment repo
+          git clone https://${{ secrets.gh_token }}@github.com/p3h3/DaronBMS-Interface-Web.git
+          
+          
+          echo $(ls)
+          
+          #moving everything from the existing repo into the deployment repo
+          # copy everything to new dir tmp
+          mkdir tmp
+          ls | grep -v DaronBMS-Interface-Web | grep -v tmp | xargs mv -t tmp
+          #delete everything but dot files in the deployment repo
+          cd DaronBMS-Interface-Web
+          shopt -s dotglob extglob
+          rm -r !(.*)
+          cd ../
+          
+          mv tmp/* DaronBMS-Interface-Web
+          
+          
+          echo $(ls)
+          
+          #committing and pushing into other repo
+          cd DaronBMS-Interface-Web
+          echo $(ls)
+          
+          git config user.email "hi@p3h3.de"
+          git config user.name "p3h3"
+          
+          echo "${{ secrets.gh_token  }}" | gh auth login --with-token
+          
+          git add .
+          git commit -m "automatic update from main branch of DragonBMS-Interface-Web"
+          git push
+          

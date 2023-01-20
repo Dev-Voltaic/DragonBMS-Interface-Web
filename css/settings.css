@@ -53,20 +53,12 @@
 /*
     Style dependant on the device touch capability
  */
-#swipe-for-settings-container.touch .touchUI{
-    display: inherit;
-}
-
 #swipe-for-settings-container.touch .non-touchUI{
     display: none;
 }
 
 #swipe-for-settings-container.non-touch .touchUI{
     display: none;
-}
-
-#swipe-for-settings-container.non-touch .non-touchUI{
-    display: inherit;
 }
 
 
@@ -129,66 +121,141 @@ All tables inside the settings container
     margin-top: 5vh;
 }
 
-#inline-configuration-div  td:first-child {
-    text-align: left;
-}
-#inline-configuration-div td {
-    border-bottom: 4px dotted grey;
-}
-
-#inline-configuration-div td:last-child {
-    text-align: right;
-}
-
-#inline-configuration-div td:first-child {
-    text-align: left;
-}
-#inline-configuration-div td {
-    border-bottom: 4px dotted grey;
-}
-
-#inline-configuration-div select {
-    font-family: 'Pervitina', monospace;
-    font-size: inherit;
-}
-
-#inline-configuration-div button {
-    font-family: 'Pervitina', monospace;
-    font-size: inherit;
-}
-
-#inline-configuration-div {
-    font-size: 3vw;
-}
-
-#inline-configuration-div input::-webkit-outer-spin-button, #inline-configuration-div input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    /* padding: 1em; */
-}
-
-#inline-configuration-div input {
-    font-family: 'Pervitina', monospace;
-    font-size: inherit;
-    text-align: inherit;
-}
 
 
 
 
+/*
+    BOARD CONFIG
+ */
 
 #board-configuration-div{
     width: 100%;
     margin: 20vh auto auto;
 }
+#board-config-table {
+    display: grid;
+
+    font-size: 3vw;
+
+    grid-auto-flow: column;
+    border-collapse: collapse;
+    width: 100%;
+    margin: auto;
+}
+
+#board-config-table  td:first-child {
+    text-align: left;
+}
+#board-config-table td {
+    padding: 0;
+    margin: 0;
+}
+#board-config-table tr {
+    border-bottom: 3px dotted grey;
+}
+
+#board-config-table td:last-child {
+    text-align: right;
+}
+
+#board-config-table td:first-child {
+    text-align: left;
+}
+
+#board-config-table select, #board-config-table button, #board-config-table input {
+    font-family: 'Pervitina', monospace;
+    font-size: inherit;
+    text-align: inherit;
+}
+#board-config-table input[type=checkbox] {
+    transform: scale(2);
+}
+/* no goofy up/down buttons */
+#board-config-table input::-webkit-outer-spin-button, #board-config-table input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* special treatment for the enabled channels */
+#bms-config-enabled-channels-div {
+    text-align: left;
+}
+#bms-config-enabled-channels-td {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+
+
+
+/*
+    INLINE CONFIG
+ */
 
 #inline-configuration-div{
     width: 100%;
-    margin: 20vh auto auto;
+    margin: 40vh auto auto;
 }
+
+
+#inline-configuration-table  td:first-child {
+    text-align: left;
+}
+#inline-configuration-table td {
+    border-bottom: 3px dotted grey;
+}
+
+#inline-configuration-table td:last-child {
+    text-align: right;
+}
+
+#inline-configuration-table td:first-child {
+    text-align: left;
+}
+
+#inline-configuration-table select, #inline-configuration-table button, #inline-configuration-table input {
+    font-family: 'Pervitina', monospace;
+    font-size: inherit;
+    text-align: inherit;
+}
+
+#inline-configuration-div {
+    font-size: 3vw;
+}
+#inline-configuration-table input[type=checkbox] {
+    transform: scale(2);
+}
+/* no goofy up/down buttons */
+#inline-configuration-table input::-webkit-outer-spin-button, #inline-configuration-table input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 #board-calibration-div{
     width: 100%;
-    margin: 20vh auto auto;
+    margin: 40vh auto auto;
 }
+
+
+
+
+
 
 
 
@@ -199,46 +266,10 @@ All tables inside the settings container
     display: inherit;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 .logo{
     width: 30vw;
 }
 
-#board-config-table {
-    display: grid;
-    grid-auto-flow: column;
-    border-collapse: collapse;
-    width: 100%;
-    margin: auto;
-}
-
-
-#board-config-table td {
-    text-align: left;
-    width: 24%;
-    border: dotted 1px #313131;
-}
-#board-config-table td .seperator{
-    width: 4%;
-    border: none;
-}
-
 .no-height {
     height: 0;
-}
-
-#board-config-table tr {
-    height: 6vw;
-    width: 100%;
 }

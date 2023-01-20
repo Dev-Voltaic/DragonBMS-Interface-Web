@@ -8,7 +8,7 @@ const APP_PREFIX = 'dbms_interface-';
 // you need to change this version (version_01, version_02…).
 // If you don't change the version, the service worker will give your
 // users the old files!
-const VERSION = '1.6';
+const VERSION = '2.3';
 
 // The files to make available for offline use. make sure to add
 // others to this list
@@ -22,7 +22,7 @@ const URLS = [
 
 
 self.addEventListener("fetch", (event) => {
-    console.log(`Handling fetch event for ${event.request.url}`);
+    //console.log(`Handling fetch event for ${event.request.url}`);
 
     event.respondWith(
         caches.match(event.request).then((response) => {
@@ -30,11 +30,11 @@ self.addEventListener("fetch", (event) => {
                 console.log("Found response in cache:", response);
                 return response;
             }
-            console.log("No response found in cache. About to fetch from network…");
+            //console.log("No response found in cache. About to fetch from network…");
 
             return fetch(event.request)
                 .then((response) => {
-                    console.log("Response from network is:", response);
+                    //console.log("Response from network is:", response);
 
                     return response;
                 })

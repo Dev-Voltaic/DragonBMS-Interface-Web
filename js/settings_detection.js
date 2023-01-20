@@ -24,7 +24,7 @@ if(isTouchDevice()){
         // get the distance the user swiped
         const swipeDistance = settingsSwipeContainer.scrollTop;
 
-        console.log(swipeDistance);
+        //console.log(swipeDistance);
         if (swipeDistance >= (minDistance * 0.9)) {
             settingsContainer.classList.remove("hidden");
         }

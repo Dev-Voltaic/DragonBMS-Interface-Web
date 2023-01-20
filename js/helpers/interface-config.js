@@ -1,4 +1,4 @@
-
+let interfaceConfig = {};
 
 // adjust the interface according to config values
 function updateConfig(){
@@ -14,5 +14,29 @@ function updateConfig(){
         adjustDarkmode(true); // for light mode
         dark_mode = true;
     }
+
+    // Times for data averaging intervals
+    const bmsDataAveragingIntervalU = parseFloat(localStorage.getItem("averagingIntervalU") || "0.25");
+    const bmsDataAveragingIntervalI = parseFloat(localStorage.getItem("averagingIntervalI") || "0.3");
+    const bmsDataAveragingIntervalT = parseFloat(localStorage.getItem("averagingIntervalT") || "0.6");
+    const bmsDataAveragingIntervalCalib = parseFloat(localStorage.getItem("averagingIntervalCalib") || "0.5");
+
+    const maxAveragingInterval = Math.max(
+        bmsDataAveragingIntervalU,
+        bmsDataAveragingIntervalI,
+        bmsDataAveragingIntervalT,
+        bmsDataAveragingIntervalCalib
+        );
+
+    interfaceConfig = {
+        darkMode: lastDarkMode,
+        averagingIntervalU: bmsDataAveragingIntervalU,
+        averagingIntervalI: bmsDataAveragingIntervalI,
+        averagingIntervalT: bmsDataAveragingIntervalT,
+        averagingIntervalCalib: bmsDataAveragingIntervalCalib,
+        maxAveragingInterval: maxAveragingInterval
+    };
 }
+
+
 updateConfig();

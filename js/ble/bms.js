@@ -26,7 +26,7 @@ let shutdownControlCharacteristic;
 const userGPOCharacteristicUuid = "e9ea0501-e19b-482d-9293-c7907585fc48";
 let userGPOCharacteristic;
 
-const alertwarningServiceUuid = "e9ea0300-e19b-482d-9293-c7907585fc48";
+const alertWarningServiceUuid = "e9ea0300-e19b-482d-9293-c7907585fc48";
 const warningCharacteristicUuid = "e9ea0301-e19b-482d-9293-c7907585fc48";
 let warningCharacteristic;
 const alertCharacteristicUuid = "e9ea0302-e19b-482d-9293-c7907585fc48";
@@ -41,23 +41,6 @@ let bleBMSDeviceId;
 
 let automaticReconnectBMS = false;
 
-let averagedArray = (array, averaging) => {
-    let summedArray = [];
-    let averageArray = [];
-    array.forEach(sub => {
-        sub.map(Number).forEach((num, index) => {
-            if(summedArray[index]){
-                summedArray[index] += num;
-            }else{
-                summedArray[index] = num;
-            }
-        });
-    });
-    summedArray.forEach(sum => {
-        averageArray.push((sum / array.length).toFixed(averaging));
-    });
-    return averageArray;
-}
 
 function connectBMS(){
     setAutoconnectBMSText("Searching");
@@ -68,7 +51,7 @@ function connectBMS(){
             bmsDataLoggingServiceUuid,
             developmentServiceUuid,
             bmsConfigServiceUuid,
-            alertwarningServiceUuid,
+            alertWarningServiceUuid,
             runtimeControlServiceUuid,
             'device_information'
         ]/*,
@@ -107,7 +90,7 @@ async function startBMSNotifications(device) {
         if (!bleInlineConnected) {
             enableNothingConnectedOverlay();
 
-            nothingConnectedOverlayTimeout();
+            //nothingConnectedOverlayTimeout();
 
             resetAutoconnectBMSSilentInstant();
 
@@ -150,91 +133,53 @@ async function bmsDeviceConnected(server) {
         //setConnectionStatus('Getting Services...');
         setAutoconnectBMSText("Getting Services");
 
+        console.log("sequentially getting characteristics");
 
-        // firstly only thought to be needed on mobile devices, is now used on every device
-        if(true){
-            console.log("mobile device! sequentially getting characteristics");
-                getDevelopmentServiceSeq(server, ()=>{
-                    console.log("got development");
-                    getRuntimeControlServiceSeq(server, ()=>{
-                        console.log("got runtime control");
-                        getBMSConfigServiceSeq(server, ()=>{
-                            console.log("got config/calib");
-                            getBMSAlertServiceSeq(server, ()=>{
-                                console.log("got alert");
-                                readBMSCalib(()=>{
-                                    readBMSConfig(()=>{
-                                        getBMSDataloggingServiceSeq(server, ()=>{
-                                            console.log("got datalogging");
-                                            // initial readout
+        // sequentially is just the better way!
+        getDevelopmentServiceSeq(server, () => {
+            console.log("got development");
+            getRuntimeControlServiceSeq(server, () => {
+                console.log("got runtime control");
+                getBMSConfigServiceSeq(server, () => {
+                    console.log("got configuration/calibration");
+                    getBMSAlertServiceSeq(server, () => {
+                        console.log("got alert");
+                        readBMSCalib(() => {
+                            readBMSConfig(() => {
+                                getBMSDataloggingServiceSeq(server, () => {
+                                    console.log("got data logging");
+                                    // initial readout
 
-                                            automaticReconnectBMS = true;
+                                    automaticReconnectBMS = true;
 
-                                            bleBMSConnected = true;
+                                    bleBMSConnected = true;
 
-                                            try{
-                                                getDeviceInfoSeq(server, (data)=>{
-                                                    console.log(data);
-                                                });
-                                            }catch (e) {
-                                                console.log("couldn't get device info service");
-                                            }
-
-
-                                            setTimeout(() => {
-                                                enableBoardGauges();
-                                                disableNothingConnectedOverlay();
-
-                                                if (bleInlineConnected) {
-                                                    zoom.to({element: table, padding: 0, pan: false});
-                                                }
-                                            }, 1000);
-
-
-
+                                    try {
+                                        getDeviceInfoSeq(server, (data) => {
+                                            console.log(data);
                                         });
-                                    });
+                                    } catch (e) {
+                                        console.log("couldn't get device info service");
+                                    }
+
+
+                                    setTimeout(() => {
+                                        enableBoardGauges();
+                                        disableNothingConnectedOverlay();
+
+                                        if (bleInlineConnected) {
+                                            zoom.to({element: table, padding: 0, pan: false});
+                                        }
+                                    }, 1000);
+
+
                                 });
                             });
                         });
                     });
                 });
-        }else{
-            // non mobile device
-
-            getDeviceInfoSeq(server, (data)=>{
-                console.log(data);
-                getId("bms-hardware-version").innerHTML = data.hardwareRevisionString;
-                getId("bms-firmware-version").innerHTML = data.firmwareRevisionString;
             });
-            getDevelopmentServicePar(server, ()=>{});
-            getRuntimeControlServicePar(server, ()=>{});
-            getBMSConfigServicePar(server, ()=>{});
-            getBMSAlertServicePar(server, ()=>{});
-            readBMSCalib(()=>{
-                readBMSConfig(()=> {
-                    getBMSDataloggingServiceSeq(server, ()=>{
-                        // initial readout
-                        readBMSCalib();
-                        readBMSConfig();
-
-                        automaticReconnectBMS = true;
-
-                        bleBMSConnected = true;
-
-
-                        setTimeout(() => {
-                            enableBoardGauges();
-                            disableNothingConnectedOverlay();
-
-                            if (bleInlineConnected) {
-                                zoom.to({element: table, padding: 0, pan: false});
-                            }
-                        }, 1000);
-                    });
-                });
-            });
-        }
+        });
     });
 
 }
@@ -272,25 +217,35 @@ function handleAlertIndication(event) {
 
 
 
-// poll faults from characteristic when datalogging gives state 4 (fault)
+// poll faults from characteristic when data logging gives state 4 (fault)
 function pollFaults(){
-    if(stateMachineStateBuffer === 4 && bleBMSConnected){
+    // with no logging data, there is no need to poll the faults
+    if(typeof bmsAveragingBuffer.at(0) === "undefined"){
+        setTimeout(pollFaults, 500);
+        return;
+    }
+    if(bmsAveragingBuffer.at(0).stateMachineState === 4 && bleBMSConnected){
         // try catch for "gatt operation already in progress"
+        /*
         try {
-            alertCharacteristic.readValue().then(alertValue => {
-                alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0));
-            });
+
         } catch (error) { //"gatt operation already in progress"
-        }
+        }*/
+        alertCharacteristic.readValue().then(alertValue => {
+            alertBuffer = (((alertValue.getUint8(3) << 24) | (alertValue.getUint8(2) << 16)) | (alertValue.getUint8(1) << 8)) | (alertValue.getUint8(0));
+        });
 
         // try catch for "gatt operation already in progress"
+        /*
         try {
-            warningCharacteristic.readValue().then(warningValue => {
-                warningBuffer = (((warningValue.getUint8(3) << 24) | (warningValue.getUint8(2) << 16)) | (warningValue.getUint8(1) << 8)) | (warningValue.getUint8(0))
-            });
-            updateWarningFields();
+
+
         } catch (error) { //"gatt operation already in progress"
-        }
+        }*/
+        warningCharacteristic.readValue().then(warningValue => {
+            warningBuffer = (((warningValue.getUint8(3) << 24) | (warningValue.getUint8(2) << 16)) | (warningValue.getUint8(1) << 8)) | (warningValue.getUint8(0))
+        });
+        updateWarningFields();
     }
     setTimeout(pollFaults, 500);
 }
