@@ -105,6 +105,8 @@ async function inlineDeviceConnected(server){
     server.getPrimaryService(inlineConfigServiceUuid).then((service)=>{
         service.getCharacteristic(inlineConfigCharacteristicUuid).then((characteristic) => {
             inlineConfigCharacteristic = characteristic;
+
+            readInlineConfig();
         });
         service.getCharacteristic(inlineOdometerCharacteristicUuid).then((characteristic) => {
             inlineOdometerCharacteristic = characteristic;

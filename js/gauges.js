@@ -254,6 +254,7 @@ function turnOnTdPressed(event){
         turnOnTdMoveStart.x = event.changedTouches[0].screenX;
         turnOnTdMoveStart.y = event.changedTouches[0].screenY;
     }catch(e) {
+        // sometimes, there is no changed Touch in the event (don't ask why)
         if(!(e instanceof TypeError)){
             console.log(e);
         }

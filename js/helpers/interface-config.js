@@ -17,9 +17,9 @@ function updateConfig(){
 
     // Times for data averaging intervals
     const bmsDataAveragingIntervalU = parseFloat(localStorage.getItem("averagingIntervalU") || "0.25");
-    const bmsDataAveragingIntervalI = parseFloat(localStorage.getItem("averagingIntervalU") || "0.3");
-    const bmsDataAveragingIntervalT = parseFloat(localStorage.getItem("averagingIntervalU") || "0.6");
-    const bmsDataAveragingIntervalCalib = parseFloat(localStorage.getItem("averagingIntervalU") || "0.5");
+    const bmsDataAveragingIntervalI = parseFloat(localStorage.getItem("averagingIntervalI") || "0.3");
+    const bmsDataAveragingIntervalT = parseFloat(localStorage.getItem("averagingIntervalT") || "0.6");
+    const bmsDataAveragingIntervalCalib = parseFloat(localStorage.getItem("averagingIntervalCalib") || "0.5");
 
     const maxAveragingInterval = Math.max(
         bmsDataAveragingIntervalU,
