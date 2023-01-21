@@ -7,10 +7,11 @@ function updateConfig(){
     const customColorForeground = localStorage.getItem("customColorForeground") || "#ffffff";
     const customColorBackground = localStorage.getItem("customColorBackground") || "#000000";
 
-    const autoReadBMSConfigCalib = localStorage.getItem("autoReadBMSConfigCalib") || true;
+    // JSON.parse for string to boolean conversion
+    const autoReadBMSConfigCalib = JSON.parse(localStorage.getItem("autoReadBMSConfigCalib") || true);
 
     // Times for data averaging intervals
-    const bmsDataAveragingIntervalU = parseFloat(localStorage.getItem("averagingIntervalU") || "0.25");
+    const bmsDataAveragingIntervalU = parseFloat(localStorage.getItem('averagingIntervalU') || "0.25");
     const bmsDataAveragingIntervalI = parseFloat(localStorage.getItem("averagingIntervalU") || "0.3");
     const bmsDataAveragingIntervalT = parseFloat(localStorage.getItem("averagingIntervalU") || "0.6");
     const bmsDataAveragingIntervalCalib = parseFloat(localStorage.getItem("averagingIntervalU") || "0.5");
@@ -42,7 +43,27 @@ function updateConfig(){
 }
 
 
-updateConfig();
+// hack to make color pickers render before filling them with their color
+setTimeout(()=>{
+    updateConfig();
+}, 100);
+
+
+
+
+
+
+
+
+
+interfaceBMSAutoReadConfigCalib.addEventListener("change", ()=>{
+    localStorage.setItem('autoReadBMSConfigCalib', interfaceBMSAutoReadConfigCalib.checked);
+
+    updateConfig();
+});
+
+
+
 
 
 

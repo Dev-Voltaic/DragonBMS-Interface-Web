@@ -138,18 +138,16 @@ async function bmsDeviceConnected(server) {
 
         // sequentially is just the better way!
         getDevelopmentServiceSeq(server, () => {
-            console.log("got development");
             setAutoconnectBMSText("Getting Services");
             getRuntimeControlServiceSeq(server, () => {
-                console.log("got runtime control");
                 setAutoconnectBMSText("Getting Config Service");
                 getBMSConfigServiceSeq(server, () => {
-                    console.log("got configuration/calibration");
                     setAutoconnectBMSText("Getting Alert Service");
                     getBMSAlertServiceSeq(server, () => {
-                        console.log("got alert");
-                        setAutoconnectBMSText("Reading Config&Calib");
+                        console.log(interfaceConfig);
                         if(interfaceConfig.autoReadBMSConfigCalib){
+                            setAutoconnectBMSText("Reading Config&Calib");
+                            console.log("auto-reading bms config/calib")
                             readBMSCalib(() => {
                                 readBMSConfig(() => {
                                     getDeviceInfoSeq(server, (deviceInfoData) => {

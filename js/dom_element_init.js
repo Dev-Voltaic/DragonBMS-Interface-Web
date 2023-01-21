@@ -9,6 +9,7 @@ let zoomContent = document.getElementById("zoom-content");
 
 // INTERFACE INFO
 let interfaceInfoContainer = getId("interface-info-container");
+let interfaceBMSAutoReadConfigCalib = getId("interface-bms-auto-read-config-calib");
 
     // Settings elements
 
