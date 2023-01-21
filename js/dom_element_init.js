@@ -15,6 +15,7 @@ let interfaceInfoContainer = getId("interface-info-container");
 // BOARD INFO
 let boardInfoContainer = getId("board-info-container");
 let enableSwipeDownUpdate = getId("enable-swipe-down-update");
+let bmsNameFields = document.getElementsByClassName("bms-name-field");
 
 
 

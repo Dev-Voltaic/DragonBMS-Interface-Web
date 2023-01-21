@@ -841,6 +841,14 @@
                     </tr>
                     <tr>
                         <td>
+                            <label for="interface-auto-read-config-calib">Auto-Read Config/Calib</label>
+                        </td>
+                        <td>
+                            <input id="interface-auto-read-config-calib" type="checkbox">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <label for="interface-dev-tile-active">Dev-Tile active</label>
                         </td>
                         <td>
@@ -899,6 +907,19 @@
 
 
             <table id="board-config-table">
+
+                <tr>
+                    <td>
+                        <div class="dropdown">
+                            <label for="board-config-device-name">Device Name</label>
+                            <div class="dropdown-content">
+                                The Name displayed in the bluetooth connection dialog.
+                            </div>
+                        </div>
+                    </td>
+                    <td><input id="board-config-device-name" type="text" class="bms-name-field"></td>
+                </tr>
+
                 <tr>
                     <td>
                         <div class="dropdown">

@@ -220,6 +220,12 @@ function setValueTexts(elements, value){
     }
 }
 
+function setValueValues(elements, value){
+    for (const element of elements) {
+        element.value = value;
+    }
+}
+
 
 
 // like element.scrollInToView() but with the offset of the tilebar

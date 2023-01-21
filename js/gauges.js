@@ -273,7 +273,9 @@ turnOnTd.addEventListener("touchend", turnOnTdReleased);
 
 
 
-
+function updateBMSNameFields(name){
+    setValueValues(bmsNameFields, name);
+}
 
 
 function setBMSCalculatedValues(data){

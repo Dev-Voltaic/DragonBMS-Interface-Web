@@ -7,6 +7,8 @@ function updateConfig(){
     const customColorForeground = localStorage.getItem("customColorForeground") || "#ffffff";
     const customColorBackground = localStorage.getItem("customColorBackground") || "#000000";
 
+    const autoReadBMSConfigCalib = localStorage.getItem("autoReadBMSConfigCalib") || true;
+
     // Times for data averaging intervals
     const bmsDataAveragingIntervalU = parseFloat(localStorage.getItem("averagingIntervalU") || "0.25");
     const bmsDataAveragingIntervalI = parseFloat(localStorage.getItem("averagingIntervalU") || "0.3");
@@ -25,6 +27,8 @@ function updateConfig(){
 
         customColorForeground: customColorForeground,
         customColorBackground: customColorBackground,
+
+        autoReadBMSConfigCalib: autoReadBMSConfigCalib,
 
         averagingIntervalU: bmsDataAveragingIntervalU,
         averagingIntervalI: bmsDataAveragingIntervalI,

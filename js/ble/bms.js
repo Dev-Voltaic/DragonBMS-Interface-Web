@@ -9,6 +9,8 @@ const bmsConfigCharacteristicUuid = "e9ea0101-e19b-482d-9293-c7907585fc48";
 let bmsConfigCharacteristic;
 const calibCharacteristicUuid = "e9ea0102-e19b-482d-9293-c7907585fc48";
 let calibCharacteristic;
+const bleDeviceNameSetCharacteristicUuid = "e9ea0103-e19b-482d-9293-c7907585fc48";
+let bmsDeviceNameCharacteristic;
 
 const developmentServiceUuid = "e9ea0400-e19b-482d-9293-c7907585fc48";
 const prechargeControlCharacteristicUuid = "e9ea0403-e19b-482d-9293-c7907585fc48"; // bodge
@@ -79,7 +81,6 @@ function connectBMS(){
 
 async function startBMSNotifications(device) {
     bleBMSDevice = device;
-    bleBMSDeviceName = device.name;
     bleBMSDeviceId = device.id;
 
     device.addEventListener('gattserverdisconnected', ()=> {
@@ -131,51 +132,77 @@ async function bmsDeviceConnected(server) {
         bleServer = server;
 
         //setConnectionStatus('Getting Services...');
-        setAutoconnectBMSText("Getting Services");
+        setAutoconnectBMSText("Getting Runtime Services");
 
         console.log("sequentially getting characteristics");
 
         // sequentially is just the better way!
         getDevelopmentServiceSeq(server, () => {
             console.log("got development");
+            setAutoconnectBMSText("Getting Services");
             getRuntimeControlServiceSeq(server, () => {
                 console.log("got runtime control");
+                setAutoconnectBMSText("Getting Config Service");
                 getBMSConfigServiceSeq(server, () => {
                     console.log("got configuration/calibration");
+                    setAutoconnectBMSText("Getting Alert Service");
                     getBMSAlertServiceSeq(server, () => {
                         console.log("got alert");
-                        readBMSCalib(() => {
-                            readBMSConfig(() => {
-                                getBMSDataloggingServiceSeq(server, () => {
-                                    console.log("got data logging");
-                                    // initial readout
+                        setAutoconnectBMSText("Reading Config&Calib");
+                        if(interfaceConfig.autoReadBMSConfigCalib){
+                            readBMSCalib(() => {
+                                readBMSConfig(() => {
+                                    getDeviceInfoSeq(server, (deviceInfoData) => {
+                                        getDeviceName((deviceName) => {
+                                            console.log("got all config options")
+                                            bleBMSDeviceName = deviceName;
+                                            updateBMSNameFields(deviceName);
 
-                                    automaticReconnectBMS = true;
+                                            getBMSDataloggingServiceSeq(server, () => {
+                                                console.log("got data logging");
 
-                                    bleBMSConnected = true;
+                                                automaticReconnectBMS = true;
+                                                bleBMSConnected = true;
 
-                                    try {
-                                        getDeviceInfoSeq(server, (data) => {
-                                            console.log(data);
+                                                setTimeout(() => {
+                                                    enableBoardGauges();
+                                                    disableNothingConnectedOverlay();
+
+                                                    if (bleInlineConnected) {
+                                                        zoom.to({element: table, padding: 0, pan: false});
+                                                    }
+                                                }, 1000);
+                                            });
                                         });
-                                    } catch (e) {
-                                        console.log("couldn't get device info service");
-                                    }
-
-
-                                    setTimeout(() => {
-                                        enableBoardGauges();
-                                        disableNothingConnectedOverlay();
-
-                                        if (bleInlineConnected) {
-                                            zoom.to({element: table, padding: 0, pan: false});
-                                        }
-                                    }, 1000);
-
-
+                                    });
                                 });
                             });
-                        });
+                        }else{
+                            getDeviceInfoSeq(server, (deviceInfoData) => {
+                                getDeviceName((deviceName) => {
+                                    console.log("got all config options")
+                                    bleBMSDeviceName = deviceName;
+                                    updateBMSNameFields(deviceName);
+
+                                    getBMSDataloggingServiceSeq(server, () => {
+                                        console.log("got data logging");
+
+                                        automaticReconnectBMS = true;
+                                        bleBMSConnected = true;
+
+                                        setTimeout(() => {
+                                            enableBoardGauges();
+                                            disableNothingConnectedOverlay();
+
+                                            if (bleInlineConnected) {
+                                                zoom.to({element: table, padding: 0, pan: false});
+                                            }
+                                        }, 1000);
+                                    });
+                                });
+                            });
+                        }
+
                     });
                 });
             });
@@ -266,4 +293,4 @@ function pollUptime() {
     setTimeout(pollUptime, 400);
 }
 
-pollUptime();
+//pollUptime();

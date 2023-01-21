@@ -22,17 +22,41 @@ function readBMSConfig(cb){
 }
 
 getId("board-config-write").addEventListener("click", () => {
+    stopBMSDataLogging();
+
     // writing config characteristic
     console.log(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer);
     bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer).then(_ => {
-        indicateBMSConfigSuccess();
-        console.log("successfully wrote config");
+
+        if(getIdValue("board-config-device-name") !== bleBMSDeviceName){
+            let encoder = new TextEncoder();
+            bmsDeviceNameCharacteristic.writeValue(encoder.encode(getIdValue("board-config-device-name")).buffer).then(_ => {
+                indicateBMSConfigSuccess();
+                console.log("successfully wrote config & updated name");
+
+                setTimeout(() => {
+                    readBMSConfig(()=>{});
+
+                    // update device name
+                    getDeviceName((deviceName) => {
+                        updateBMSNameFields(deviceName);
+
+                        // as the last step - re-enable data logging
+                        startBMSDataLogging();
+                    });
+
+                }, 200);
+            }).catch(e => {
+                console.log(e);
+                indicateBMSConfigFailure();
+            });
+        }else{
+            console.log("successfully wrote config");
+            indicateBMSConfigSuccess();
+        }
     }).catch(_ => {
         indicateBMSConfigFailure();
     });
-    setTimeout(() => {
-        readBMSConfig(()=>{});
-    }, 200);
 });
 
 
