@@ -2,7 +2,7 @@
 
 <html lang="en"><head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <!--meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"-->
 
 
     <title>DragonBMS Interface</title>
@@ -30,6 +30,10 @@
     <link rel="stylesheet" href="css/settings.css">
 
 
+    <!--
+    Library stylesheets
+    -->
+    <link rel="stylesheet" href="css/libraries/coloris.css"/>
 
 
     <!-- COOL, this is a progressive web app now -->
@@ -100,7 +104,7 @@
         </div>
 
         <div>
-            <span id="version-number" class="blue">2.3</span>
+            <span id="version-number" class="blue">2.4</span>
         </div>
     </div>
 
@@ -773,11 +777,101 @@
                 It both acts as a Monitor for live data, a data logger for later analysis and a configuration tool to
                 make the BMS fit your needs.
             </p>
+
+            <p>
+                To really make the interface feel like your own, use the config:
+            </p>
+
+            <p>
+                (to make the color changes visible, go toggle "ColorMode" until you see the changes)
+            </p>
+
+            <div id="interface-configuration-table-container">
+                <table id="interface-configuration-table">
+                    <tr>
+                        <td>
+                            <label for="interface-foreground-color">Foreground Color</label>
+                        </td>
+
+                        <td class="full">
+                            <input id="interface-foreground-color" class="coloris foreground-color" type="text" data-coloris>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="interface-background-color">Background Color</label>
+                        </td>
+                        <td class="full">
+                            <input id="interface-background-color" class="coloris background-color" type="text" data-coloris>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="interface-averaging-time-u">Averaging Time U[s]</label>
+                        </td>
+                        <td>
+                            <input id="interface-averaging-time-u" type="number">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="interface-averaging-time-i">Averaging Time I[s]</label>
+                        </td>
+                        <td>
+                            <input id="interface-averaging-time-i" type="number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="interface-averaging-time-t">Averaging Time T[s]</label>
+                        </td>
+                        <td>
+                            <input id="interface-averaging-time-t" type="number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="interface-averaging-time-calib">Averaging Time Calib[s]</label>
+                        </td>
+                        <td>
+                            <input id="interface-averaging-time-calib" type="number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="interface-filter-bms-connection">Filter BMS Connection</label>
+                        </td>
+                        <td>
+                            <input id="interface-filter-bms-connection" type="checkbox">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="interface-bms-auto-read-config-calib">Auto-Read BMS Config/Calib</label>
+                        </td>
+                        <td>
+                            <input id="interface-bms-auto-read-config-calib" type="checkbox">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="interface-dev-tile-active">Dev-Tile active</label>
+                        </td>
+                        <td>
+                            <input id="interface-dev-tile-active" type="checkbox">
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
             <p>
                 As this is a progressive web app, the newest version is basically just a swipe down away.
                 As we found this feature to be a bit distracting in everyday use, you can enable the swipe down updates <b><u id="enable-swipe-down-update">here</u></b>
             </p>
-            <p>Note: <br> Hi, my name is Peter, and I am the developer of this software. I would kindly ask you to be a bit gentle as it's still a pre-release version that needs more development and testing. If you have severe problems or want to make a usability friendly suggestion, feel free to contact me!</p>
+            <p>Note: <br> I would kindly ask you to be a bit gentle as it's still a pre-release version that needs more development and testing. If you have severe problems or want to make a usability friendly suggestion, feel free to contact me!</p>
             <p>You can reach me via: hi@p3h3.de</p>
         </div>
     </div>
@@ -821,6 +915,19 @@
 
 
             <table id="board-config-table">
+
+                <tr>
+                    <td>
+                        <div class="dropdown">
+                            <label for="board-config-device-name">Device Name</label>
+                            <div class="dropdown-content">
+                                The Name displayed in the bluetooth connection dialog.
+                            </div>
+                        </div>
+                    </td>
+                    <td><input id="board-config-device-name" type="text" class="bms-name-field"></td>
+                </tr>
+
                 <tr>
                     <td>
                         <div class="dropdown">
@@ -1471,12 +1578,14 @@
 </div>
 
 
+<script src="js/libraries/coloris.js"></script>
+
 
 <script src="js/serviceworker/sw_init.js"></script>
 
 <script src="js/helpers/small_functions.js"></script>
 <script src="js/dom_element_init.js"></script>
-<script src="js/helpers/dark_mode.js"></script>
+<script src="js/helpers/color_mode.js"></script>
 <script src="js/helpers/configcalib_processing.js"></script>
 <script src="js/helpers/zoom.js"></script>
 
@@ -1500,6 +1609,7 @@
 
 <script src="js/ble/bmsServiceInit.js"></script>
 <script src="js/ble/bms.js"></script>
+<script src="js/ble/inlineServiceInit.js"></script>
 <script src="js/ble/inline.js"></script>
 
 

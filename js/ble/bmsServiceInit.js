@@ -167,7 +167,9 @@ function getBMSConfigServiceSeq(server, cb){
     server.getPrimaryService(bmsConfigServiceUuid).then((service) => {
         getBMSConfigCharacteristic(service, ()=>{
             getBMSCalibCharacteristic(service, ()=>{
-                cb();
+                getBMSNameCharacteristic(service, ()=>{
+                    cb();
+                });
             });
         });
     });
@@ -187,7 +189,32 @@ function getBMSCalibCharacteristic(service, cb){
         cb();
     });
 }
+function getBMSNameCharacteristic(service, cb){
+    try{
+        service.getCharacteristic(bleDeviceNameSetCharacteristicUuid).then((characteristic) => {
+            bmsDeviceNameCharacteristic = characteristic;
 
+            cb();
+        }).catch(()=>{
+            console.log("older firmware - no device name write support");
+            cb();
+        });
+    }catch(e) {
+        console.log("wtf");
+    }
+}
+
+function getDeviceName(cb){
+    // only read device name if characteristic is supported
+    if(typeof bmsDeviceNameCharacteristic === "undefined"){
+        cb();
+    }else{
+        let decoder = new TextDecoder('utf-8');
+        bmsDeviceNameCharacteristic.readValue().then(value => {
+            cb(decoder.decode(value));
+        });
+    }
+}
 
 
 
@@ -260,4 +287,11 @@ function getBMSDataloggingServiceSeq(server, cb){
             });
         });
     });
+}
+
+function stopBMSDataLogging(){
+    bmsDataLoggingCharacteristic.removeEventListener('characteristicvaluechanged', processData);
+}
+function startBMSDataLogging(){
+    bmsDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', processData);
 }

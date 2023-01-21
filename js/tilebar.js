@@ -121,7 +121,7 @@ document.getElementById("tileBarAbout").addEventListener("click", ()=>{
 // DARKMODE
 
 document.getElementById("tileBarDarkmode").addEventListener("click", ()=>{
-    toggleDarkmode();
+    toggleColorMode();
 });
 
 

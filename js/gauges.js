@@ -324,7 +324,13 @@ turnOnTd.addEventListener("touchend", turnOnTdReleased);
 
 
 
-
+function updateBMSNameFields(name){
+    if(typeof name === "undefined"){
+        setValueValues(bmsNameFields, "too old firmware");
+    }else{
+        setValueValues(bmsNameFields, name);
+    }
+}
 
 
 function setBMSCalculatedValues(data){

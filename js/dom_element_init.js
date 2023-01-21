@@ -9,12 +9,20 @@ let zoomContent = document.getElementById("zoom-content");
 
 // INTERFACE INFO
 let interfaceInfoContainer = getId("interface-info-container");
+let interfaceBMSFilterConnection = getId("interface-filter-bms-connection");
+let interfaceBMSAutoReadConfigCalib = getId("interface-bms-auto-read-config-calib");
+let interfaceAveragingTimeU = getId("interface-averaging-time-u");
+let interfaceAveragingTimeI = getId("interface-averaging-time-i");
+let interfaceAveragingTimeT = getId("interface-averaging-time-t");
+let interfaceAveragingTimeCalib = getId("interface-averaging-time-calib");
+let interfaceDevTileActive = getId("interface-dev-tile-active");
 
     // Settings elements
 
 // BOARD INFO
 let boardInfoContainer = getId("board-info-container");
 let enableSwipeDownUpdate = getId("enable-swipe-down-update");
+let bmsNameFields = document.getElementsByClassName("bms-name-field");
 
 
 

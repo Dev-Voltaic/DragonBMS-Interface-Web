@@ -22,6 +22,8 @@ function readBMSConfig(cb){
 }
 
 getId("board-config-write").addEventListener("click", () => {
+    stopBMSDataLogging();
+
     writeBoardConfig(0);
 });
 
@@ -34,13 +36,33 @@ function writeBoardConfig(counter){
     // writing config characteristic
     console.log(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer);
     bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer).then(_ => {
-        indicateBMSConfigSuccess();
-        console.log("successfully wrote config");
 
-        // read back only after write was successful
-        setTimeout(() => {
-            readBMSConfig(()=>{});
-        }, 200);
+        if(getIdValue("board-config-device-name") !== bleBMSDeviceName && typeof bleBMSDeviceName !== "undefined"){
+            let encoder = new TextEncoder();
+            bmsDeviceNameCharacteristic.writeValue(encoder.encode(getIdValue("board-config-device-name")).buffer).then(_ => {
+                indicateBMSConfigSuccess();
+                console.log("successfully wrote config & updated name");
+
+                setTimeout(() => {
+                    readBMSConfig(()=>{});
+
+                    // update device name
+                    getDeviceName((deviceName) => {
+                        updateBMSNameFields(deviceName);
+
+                        // as the last step - re-enable data logging
+                        startBMSDataLogging();
+                    });
+
+                }, 200);
+            }).catch(e => {
+                console.log(e);
+                indicateBMSConfigFailure();
+            });
+        }else{
+            console.log("successfully wrote config");
+            indicateBMSConfigSuccess();
+        }
     }).catch(_ => {
         setTimeout( ()=>{
             writeBoardConfig(counter + 1);
