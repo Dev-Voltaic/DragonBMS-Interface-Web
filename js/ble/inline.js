@@ -69,7 +69,7 @@ async function startInlineNotifications(device) {
             zoom.out({element: selected_cell, padding: 0, pan: false});
             enableNothingConnectedOverlay();
 
-            nothingConnectedOverlayTimeout();
+            //nothingConnectedOverlayTimeout();
 
             inlineDisconnected();
             resetAutoconnectTachoSilentInstant();
@@ -105,6 +105,8 @@ async function inlineDeviceConnected(server){
         getInlineDataLoggingService(server, () => {
             setAutoconnectTachoText("Enabling Data Logging");
             inlineDataLoggingCharacteristic.startNotifications().then(_ => {
+
+                readInlineConfig();
 
                 setAutoconnectTachoText("Successfully connected!");
 

@@ -104,7 +104,7 @@
         </div>
 
         <div>
-            <span id="version-number" class="blue">2.1</span>
+            <span id="version-number" class="blue">2.4</span>
         </div>
     </div>
 
@@ -1096,7 +1096,7 @@
                         <div class="dropdown">
                             <label for="spike-sensitivity-select">Current Spike sensitivity:</label>
                             <div class="dropdown-content">
-                                The current spike sensitivity changes the instant overcurrent (short) protection value. If this is set too high, a short may be detected too late or not at all.
+                                The current spike sensitivity changes the instant over current (short) protection value. If this is set too high, a short may be detected too late or not at all.
                                 If you encounter short Faults under high loads at low speeds, your drivetrain may have a current spike problem, which means that the motor controller is seeking
                                 really high currents for short durations and is thereby potentially harming the battery. You can just turn down the sensitivity to avoid the faults, we would
                                 however advise you to look at other options of avoiding spikes (additional filter capacitors near the motor controller).
@@ -1117,7 +1117,7 @@
                         <div class="dropdown">
                             <label for="logic-max-temp">Precharge Transistor max temperature [°C]:</label>
                             <div class="dropdown-content">
-                                The precharge transistor regulated the current needed to charge the output capacitance (motorcontrollers, etc.).
+                                The precharge transistor regulated the current needed to charge the output capacitance (motor controllers, etc.).
                                 Per physics, this transistor dissipates the same energy that the capacitors are charged with, which
                                 means, that it gets warm. This max temperature may be set from experience to catch unusually high
                                 output capacities or to prolong the life of the transistor. You can't break anything with this setting
@@ -1134,7 +1134,7 @@
                         <div class="dropdown">
                             <label for="power-max-temp">Board max temperature [°C]:</label>
                             <div class="dropdown-content">
-                                The shunt temperature is a good representation of how warm the powerstage of the DragonBMS is.
+                                The shunt temperature is a good representation of how warm the power stage of the DragonBMS is.
                                 You may set the temperature as you like if you need this BMS to be below a certain temperature
                                 As with the precharge transistor, setting this max temp lower might let you catch anomalies in your
                                 setup before it's too late.
@@ -1391,10 +1391,6 @@
 
 
         <div id="board-calibration-div">
-
-            <div class="frame">
-                <img id="logo" src="img/icon/512x512.png" alt="Voltaic Logo">
-            </div>
 
             <h2>Calibration values:</h2>
             <h4 id="calib-write-warning" class="orange">Warning - might not be editable. Turn off first!</h4>

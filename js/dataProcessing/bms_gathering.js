@@ -18,10 +18,13 @@ function gatherBMSData(event){
 
     let packetSequenceNumber = (value.getUint8(2) << 8) | value.getUint8(1);
 
+    // would normally be dropped, but franz requested to ignore this for testing
+    /*
     if(loggingDataInterval < configBuffer.dataloggingUpdateInterval * 0.5){
         //console.log("dropped");
         return;
     }
+     */
 
 
 

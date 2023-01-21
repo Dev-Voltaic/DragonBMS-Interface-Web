@@ -192,15 +192,15 @@ function getInlineBufferFromConfig(config){
 
 
     //Datalogging
-    try {
+    if(typeof config.dataLoggingUpdateInterval !== "undefined") {
         configValues[15] = to16bit(config.dataLoggingUpdateInterval)[0];
         configValues[14] = to16bit(config.dataLoggingUpdateInterval)[1];
 
 
-        // wtf are they for?!
+        // update count - only needed when putting values behind it since it doesn't need to get written
         configValues[12] = 0;
         configValues[13] = 0;
-    }catch (e) {
+    }else {
         console.log("older tacho firmware");
     }
 
