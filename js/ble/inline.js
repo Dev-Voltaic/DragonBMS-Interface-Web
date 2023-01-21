@@ -99,59 +99,43 @@ async function startInlineNotifications(device) {
 async function inlineDeviceConnected(server){
     server.connect();
 
-    setAutoconnectTachoText("Getting Services");
+    setAutoconnectTachoText("Getting Config Service");
+    getInlineConfigServiceSeq(server, () => {
+        setAutoconnectTachoText("Getting Data Logging Service");
+        getInlineDataLoggingService(server, () => {
+            setAutoconnectTachoText("Enabling Data Logging");
+            inlineDataLoggingCharacteristic.startNotifications().then(_ => {
+
+                setAutoconnectTachoText("Successfully connected!");
+
+                automaticReconnectTacho = true;
+
+                bleInlineConnected = true;
 
 
-    server.getPrimaryService(inlineConfigServiceUuid).then((service)=>{
-        service.getCharacteristic(inlineConfigCharacteristicUuid).then((characteristic) => {
-            inlineConfigCharacteristic = characteristic;
-        });
-        service.getCharacteristic(inlineOdometerCharacteristicUuid).then((characteristic) => {
-            inlineOdometerCharacteristic = characteristic;
+                if (!bleBMSConnected) {
+                    setTimeout(() => {
+                        inlineConnected();
+                        disableNothingConnectedOverlay();
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        inlineConnected();
+                        disableNothingConnectedOverlay();
+                    }, 500);
+                }
+
+                inlineDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', handleInlineLoggingNotifications);
+            }).catch(error => {
+                console.log('Inline DataLogging start error: ' + error);
+
+                inlineDisconnected();
+                resetAutoconnectTacho();
+
+                connectLastInlineOverlay.innerHTML = "<h2>Connect Tacho</h2>";
+            });
         });
     });
-
-    server.getPrimaryService(inlineDataLoggingServiceUuid)
-        .then((dataLog) => {
-            dataLog.getCharacteristic(inlineDataLoggingCharacteristicUuid)
-                .then(characteristics => {
-                    inlineDataLoggingCharacteristic = characteristics;
-
-                    setAutoconnectTachoText("Enabling Datalogging");
-                    inlineDataLoggingCharacteristic.startNotifications()
-                        .then(_ => {
-
-                            setAutoconnectTachoText("Successfully connected!");
-
-                            automaticReconnectTacho = true;
-
-                            bleInlineConnected = true;
-
-
-                            if (!bleBMSConnected) {
-                                setTimeout(() => {
-                                    inlineConnected();
-                                    disableNothingConnectedOverlay();
-                                }, 1000);
-                            } else {
-                                setTimeout(() => {
-                                    inlineConnected();
-                                    disableNothingConnectedOverlay();
-                                }, 500);
-                            }
-
-                            inlineDataLoggingCharacteristic.addEventListener('characteristicvaluechanged', handleInlineLoggingNotifications);
-                        })
-                        .catch(error => {
-                            console.log('Argh! ' + error);
-
-                            inlineDisconnected();
-                            resetAutoconnectTacho();
-
-                            connectLastInlineOverlay.innerHTML = "<h2>Connect Tacho</h2>";
-                        });
-                });
-        });
 }
 
 function disconnectInline() {
