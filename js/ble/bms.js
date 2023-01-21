@@ -47,23 +47,45 @@ let automaticReconnectBMS = false;
 function connectBMS(){
     setAutoconnectBMSText("Searching");
 
+    let options;
+
     let manufacturerData = {
-        companyIdentifier: 0x030C
+        companyIdentifier: 0x6969
+    };
+
+    if(interfaceConfig.filterBMSConnection) {
+        options = {
+            optionalServices: [
+                bmsDataLoggingServiceUuid,
+                developmentServiceUuid,
+                bmsConfigServiceUuid,
+                alertWarningServiceUuid,
+                runtimeControlServiceUuid,
+                'device_information'
+            ],
+            filters: [{
+                manufacturerData: [manufacturerData]
+            }]
+        };
+    }else{
+        options = {
+            optionalServices: [
+                bmsDataLoggingServiceUuid,
+                developmentServiceUuid,
+                bmsConfigServiceUuid,
+                alertWarningServiceUuid,
+                runtimeControlServiceUuid,
+                'device_information'
+            ],
+            acceptAllDevices: true
+        };
     }
 
-    navigator.bluetooth.requestDevice({
-        optionalServices: [
-            bmsDataLoggingServiceUuid,
-            developmentServiceUuid,
-            bmsConfigServiceUuid,
-            alertWarningServiceUuid,
-            runtimeControlServiceUuid,
-            'device_information'
-        ],
-        filters: [{
-            manufacturerData: manufacturerData
-        }]
-    }).then(device => {
+    console.log(options);
+
+    navigator.bluetooth.requestDevice(
+        options
+    ).then(device => {
         setAutoconnectBMSText("Found Device");
         searchingForBMS = false;
         startBMSNotifications(device);

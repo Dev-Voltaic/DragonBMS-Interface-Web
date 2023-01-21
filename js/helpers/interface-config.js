@@ -2,6 +2,8 @@ let interfaceConfig = {};
 
 // adjust the interface according to config values
 function updateConfig(){
+    const filterBMSConnection = JSON.parse(localStorage.getItem("filterBMSConnection") || false);
+
     const lastColorMode = localStorage.getItem("lastColorMode") || "dark";
 
     const customColorForeground = localStorage.getItem("customColorForeground") || "#ffffff";
@@ -26,6 +28,8 @@ function updateConfig(){
         );
 
     interfaceConfig = {
+        filterBMSConnection: filterBMSConnection,
+
         colorMode: lastColorMode,
 
         customColorForeground: customColorForeground,
@@ -40,8 +44,6 @@ function updateConfig(){
         averagingIntervalCalib: bmsDataAveragingIntervalCalib,
         maxAveragingInterval: maxAveragingInterval
     };
-
-    console.log(interfaceConfig);
 }
 
 
@@ -67,9 +69,17 @@ function setInterfaceConfigValues(){
     interfaceAveragingTimeT.value = interfaceConfig.averagingIntervalT;
     interfaceAveragingTimeCalib.value = interfaceConfig.averagingIntervalCalib;
 
+    interfaceBMSFilterConnection.checked = interfaceConfig.filterBMSConnection;
+
     interfaceDevTileActive.checked = interfaceConfig.devTileActive;
 }
 
+
+interfaceBMSFilterConnection.addEventListener("change", ()=>{
+    localStorage.setItem('filterBMSConnection', interfaceBMSFilterConnection.checked);
+
+    updateConfig();
+});
 
 
 interfaceBMSAutoReadConfigCalib.addEventListener("change", ()=>{

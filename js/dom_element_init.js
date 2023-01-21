@@ -9,6 +9,7 @@ let zoomContent = document.getElementById("zoom-content");
 
 // INTERFACE INFO
 let interfaceInfoContainer = getId("interface-info-container");
+let interfaceBMSFilterConnection = getId("interface-filter-bms-connection");
 let interfaceBMSAutoReadConfigCalib = getId("interface-bms-auto-read-config-calib");
 let interfaceAveragingTimeU = getId("interface-averaging-time-u");
 let interfaceAveragingTimeI = getId("interface-averaging-time-i");

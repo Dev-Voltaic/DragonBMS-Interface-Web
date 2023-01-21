@@ -49,5 +49,5 @@ document.addEventListener('coloris:pick', _ => {
     localStorage.setItem('customColorForeground', getCustomForegroundColor());
     localStorage.setItem('customColorBackground', getCustomBackgroundColor());
     updateConfig();
-
+    adjustColorMode(interfaceConfig.colorMode);
 });
