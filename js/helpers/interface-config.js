@@ -10,11 +10,13 @@ function updateConfig(){
     // JSON.parse for string to boolean conversion
     const autoReadBMSConfigCalib = JSON.parse(localStorage.getItem("autoReadBMSConfigCalib") || true);
 
+    const devTileActive = JSON.parse(localStorage.getItem("devTileActive") || true);
+
     // Times for data averaging intervals
     const bmsDataAveragingIntervalU = parseFloat(localStorage.getItem('averagingIntervalU') || "0.25");
-    const bmsDataAveragingIntervalI = parseFloat(localStorage.getItem("averagingIntervalU") || "0.3");
-    const bmsDataAveragingIntervalT = parseFloat(localStorage.getItem("averagingIntervalU") || "0.6");
-    const bmsDataAveragingIntervalCalib = parseFloat(localStorage.getItem("averagingIntervalU") || "0.5");
+    const bmsDataAveragingIntervalI = parseFloat(localStorage.getItem("averagingIntervalI") || "0.3");
+    const bmsDataAveragingIntervalT = parseFloat(localStorage.getItem("averagingIntervalT") || "0.6");
+    const bmsDataAveragingIntervalCalib = parseFloat(localStorage.getItem("averagingIntervalCalib") || "0.5");
 
     const maxAveragingInterval = Math.max(
         bmsDataAveragingIntervalU,
@@ -30,6 +32,7 @@ function updateConfig(){
         customColorBackground: customColorBackground,
 
         autoReadBMSConfigCalib: autoReadBMSConfigCalib,
+        devTileActive: devTileActive,
 
         averagingIntervalU: bmsDataAveragingIntervalU,
         averagingIntervalI: bmsDataAveragingIntervalI,
@@ -38,27 +41,57 @@ function updateConfig(){
         maxAveragingInterval: maxAveragingInterval
     };
 
-
-    adjustColorMode(lastColorMode);
+    console.log(interfaceConfig);
 }
 
 
 // hack to make color pickers render before filling them with their color
 setTimeout(()=>{
+    // get config values from localStorage
     updateConfig();
+    // write values from localStorage into the input fields
+    setInterfaceConfigValues();
 }, 100);
 
 
 
 
 
+function setInterfaceConfigValues(){
+    adjustColorMode(interfaceConfig.colorMode);
 
+    interfaceBMSAutoReadConfigCalib.checked = interfaceConfig.autoReadBMSConfigCalib;
+
+    interfaceAveragingTimeU.value = interfaceConfig.averagingIntervalU;
+    interfaceAveragingTimeI.value = interfaceConfig.averagingIntervalI;
+    interfaceAveragingTimeT.value = interfaceConfig.averagingIntervalT;
+    interfaceAveragingTimeCalib.value = interfaceConfig.averagingIntervalCalib;
+
+    interfaceDevTileActive.checked = interfaceConfig.devTileActive;
+}
 
 
 
 interfaceBMSAutoReadConfigCalib.addEventListener("change", ()=>{
     localStorage.setItem('autoReadBMSConfigCalib', interfaceBMSAutoReadConfigCalib.checked);
 
+    updateConfig();
+});
+
+interfaceAveragingTimeU.addEventListener("change", ()=>{
+    localStorage.setItem('averagingIntervalU', String(parseFloat(interfaceAveragingTimeU.value)));
+    updateConfig();
+});
+interfaceAveragingTimeI.addEventListener("change", ()=>{
+    localStorage.setItem('averagingIntervalI', String(parseFloat(interfaceAveragingTimeI.value)));
+    updateConfig();
+});
+interfaceAveragingTimeT.addEventListener("change", ()=>{
+    localStorage.setItem('averagingIntervalT', String(parseFloat(interfaceAveragingTimeT.value)));
+    updateConfig();
+});
+interfaceAveragingTimeCalib.addEventListener("change", ()=>{
+    localStorage.setItem('averagingIntervalCalib', String(parseFloat(interfaceAveragingTimeCalib.value)));
     updateConfig();
 });
 
@@ -72,7 +105,8 @@ interfaceBMSAutoReadConfigCalib.addEventListener("change", ()=>{
 
 
 
-/** Default configuration **/
+
+// Color Picker configuration (don't touch xD)
 
 Coloris({
     theme: 'polaroid',

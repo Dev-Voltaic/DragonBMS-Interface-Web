@@ -28,7 +28,7 @@ getId("board-config-write").addEventListener("click", () => {
     console.log(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer);
     bmsConfigCharacteristic.writeValue(Uint8Array.from(getBMSBufferFromConfig(getBMSConfigValues())).buffer).then(_ => {
 
-        if(getIdValue("board-config-device-name") !== bleBMSDeviceName){
+        if(getIdValue("board-config-device-name") !== bleBMSDeviceName && typeof bleBMSDeviceName !== "undefined"){
             let encoder = new TextEncoder();
             bmsDeviceNameCharacteristic.writeValue(encoder.encode(getIdValue("board-config-device-name")).buffer).then(_ => {
                 indicateBMSConfigSuccess();

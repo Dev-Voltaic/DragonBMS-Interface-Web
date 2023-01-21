@@ -190,18 +190,30 @@ function getBMSCalibCharacteristic(service, cb){
     });
 }
 function getBMSNameCharacteristic(service, cb){
-    service.getCharacteristic(bleDeviceNameSetCharacteristicUuid).then((characteristic) => {
-        bmsDeviceNameCharacteristic = characteristic;
+    try{
+        service.getCharacteristic(bleDeviceNameSetCharacteristicUuid).then((characteristic) => {
+            bmsDeviceNameCharacteristic = characteristic;
 
-        cb();
-    });
+            cb();
+        }).catch(()=>{
+            console.log("older firmware - no device name write support");
+            cb();
+        });
+    }catch(e) {
+        console.log("wtf");
+    }
 }
 
 function getDeviceName(cb){
-    let decoder = new TextDecoder('utf-8');
-    bmsDeviceNameCharacteristic.readValue().then(value => {
-        cb(decoder.decode(value));
-    });
+    // only read device name if characteristic is supported
+    if(typeof bmsDeviceNameCharacteristic === "undefined"){
+        cb();
+    }else{
+        let decoder = new TextDecoder('utf-8');
+        bmsDeviceNameCharacteristic.readValue().then(value => {
+            cb(decoder.decode(value));
+        });
+    }
 }
 
 
