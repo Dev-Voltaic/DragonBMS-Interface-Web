@@ -350,7 +350,10 @@ function setBMSCalculatedValues(data){
     setValueTexts(bmsPowerLossValues, pLossString + "W");
 
     // used energy
+    // tofixed 1 for <200, tofixed 0 fpr >=200
     setValueTexts(bmsCombinedEnergyUsedValues,  (data.energyUsed.combined / 3600).toFixed(1) + "Wh");
+
+    // tofixed 3 for <200, tofixed 2 fpr >=200
     setValueTexts(bmsCh1EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
     setValueTexts(bmsCh2EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
     setValueTexts(bmsCh3EnergyUsedValues, (data.energyUsed.ch1 / 3600).toFixed(3) + "Wh");
@@ -364,8 +367,24 @@ function setBMSCalculatedValues(data){
 }
 
 function setBMSTempValues(data){
-    setValueTexts(bmsShuntTempValues, data.tShunt + "°C");
-    setValueTexts(bmsPrechargeTempValues, data.tPch + "°C");
+
+    // cap shunt temp values between -50°C and +150°C
+    if(parseFloat(data.tShunt) >= 150){
+        setValueTexts(bmsShuntTempValues, "150+°C");
+    }else if(parseFloat(data.tShunt) <= -50){
+        setValueTexts(bmsShuntTempValues, "-50-°C");
+    }else {
+        setValueTexts(bmsShuntTempValues, data.tShunt + "°C");
+    }
+
+    // cap precharge temp values between -50°C and +150°C
+    if(parseFloat(data.tPch) >= 150){
+        setValueTexts(bmsPrechargeTempValues, "150+°C");
+    }else if(parseFloat(data.tPch) <= -50){
+        setValueTexts(bmsPrechargeTempValues, "-50-°C");
+    }else {
+        setValueTexts(bmsPrechargeTempValues, data.tPch + "°C");
+    }
 }
 
 
