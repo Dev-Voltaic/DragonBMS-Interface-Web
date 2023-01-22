@@ -72,6 +72,7 @@ function processData(event) {
 
 
 
+    // init energy used offsets at first recieved datalogging packet
     if(usedEnergyOffset1 === -1){
         usedEnergyOffset1 = bmsLoggingPacket.eU1;
     }
@@ -163,8 +164,8 @@ function processData(event) {
     if(((configBuffer.boardEnabledChannels & 4) === 4) && SOC_3 < minSOC){minSOC = SOC_3}
 
 
-    let usedEnergyTotal = (bmsLoggingPacket.eU1 - usedEnergyOffset1) + (bmsLoggingPacket.eU2 - usedEnergyOffset2) + (bmsLoggingPacket.eU3 - usedEnergyOffset3);
-
+    //const usedEnergyTotal = (bmsLoggingPacket.eU1 - usedEnergyOffset1) + (bmsLoggingPacket.eU2 - usedEnergyOffset2) + (bmsLoggingPacket.eU3 - usedEnergyOffset3);
+    const usedEnergyTotal = bmsLoggingPacket.eU1 + bmsLoggingPacket.eU2 + bmsLoggingPacket.eU3;
 
     //_________________________________________________
 
@@ -176,9 +177,9 @@ function processData(event) {
         pLoss: P_loss,
         energyUsed: {
             combined: usedEnergyTotal,
-            ch1: (bmsLoggingPacket.eU1 - usedEnergyOffset1),
-            ch2: (bmsLoggingPacket.eU2 - usedEnergyOffset2),
-            ch3: (bmsLoggingPacket.eU3 - usedEnergyOffset3)
+            ch1: bmsLoggingPacket.eU1,// - usedEnergyOffset1,
+            ch2: bmsLoggingPacket.eU2,// - usedEnergyOffset2,
+            ch3: bmsLoggingPacket.eU3,// - usedEnergyOffset3
         },
         soc: {
             ch1: SOC_1,

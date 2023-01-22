@@ -34,14 +34,22 @@ html::-webkit-scrollbar {
     padding-right: 1vw;
 }
 
+
+
 @media (max-width: 1200px) {
     span{
         font-size: 4vw;
+    }
+    #tilebar-right span{
+        font-size: 3vw;
     }
 }
 @media (min-width: 1201px) {
     span{
         font-size: 1.5em;
+    }
+    #tilebar-right span{
+        font-size: 1.1em;
     }
 }
 
