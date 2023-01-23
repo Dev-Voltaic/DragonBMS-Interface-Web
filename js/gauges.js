@@ -350,47 +350,47 @@ function setBMSCalculatedValues(data){
     setValueTexts(bmsPowerLossValues, pLossString + "W");
 
     // used energy
-    if(data.energyUsed.combined / 3600 < 200){        // 0 to 199.9Wh
+    if((data.energyUsed.combined / 1000) < 200){        // 0 to 199.9Wh
         setValueTexts(bmsCombinedEnergyUsedValues,  (data.energyUsed.combined / 1000).toFixed(1) + "Wh");
-    }else if(data.energyUsed.combined / 3600 < 1000){  // 200Wh to 999Wh
+    }else if((data.energyUsed.combined / 1000) < 1000){  // 200Wh to 999Wh
         setValueTexts(bmsCombinedEnergyUsedValues,  (data.energyUsed.combined / 1000).toFixed(0) + "Wh");
-    }else if(data.energyUsed.combined / 3600 < 20000){ // 1.0kWh to 19.9kWh
+    }else if((data.energyUsed.combined / 1000) < 20000){ // 1.0kWh to 19.9kWh
         setValueTexts(bmsCombinedEnergyUsedValues,  (data.energyUsed.combined / 1000000).toFixed(1) + "kWh");
     }else{                                             //from 20kWh
-        setValueTexts(bmsCombinedEnergyUsedValues,  (data.energyUsed.combined / 1000).toFixed(0) + "kWh");
+        setValueTexts(bmsCombinedEnergyUsedValues,  (data.energyUsed.combined / 1000000).toFixed(0) + "kWh");
     }
 
-    if(data.energyUsed.ch1 / 1000 < 200){           // 0 to 199.999Wh
+    if((data.energyUsed.ch1 / 1000) < 200){           // 0 to 199.999Wh
         setValueTexts(bmsCh1EnergyUsedValues, (data.energyUsed.ch1 / 1000).toFixed(3) + "Wh");
-    }else if(data.energyUsed.ch1 / 1000 < 1000){    // 200.00Wh to 999.99Wh
+    }else if((data.energyUsed.ch1 / 1000) < 1000){    // 200.00Wh to 999.99Wh
         setValueTexts(bmsCh1EnergyUsedValues, (data.energyUsed.ch1 / 1000).toFixed(2) + "Wh");
-    }else if(data.energyUsed.ch1 / 1000 < 10000){   // 1000.0Wh to 9999.9Wh
+    }else if((data.energyUsed.ch1 / 1000) < 10000){   // 1000.0Wh to 9999.9Wh
         setValueTexts(bmsCh1EnergyUsedValues, (data.energyUsed.ch1 / 1000).toFixed(1) + "Wh");
-    }else if(data.energyUsed.ch1 / 1000 < 100000){  // 10000Wh to 99999Wh
+    }else if((data.energyUsed.ch1 / 1000) < 100000){  // 10000Wh to 99999Wh
         setValueTexts(bmsCh1EnergyUsedValues, (data.energyUsed.ch1 / 1000).toFixed(0) + "Wh");
     }else {                                         // from 100.0kWh
         setValueTexts(bmsCh1EnergyUsedValues, (data.energyUsed.ch1 / 1000000).toFixed(1) + "Wh");
     }
 
-    if(data.energyUsed.ch2 / 1000 < 200){           // 0 to 199.999Wh
+    if((data.energyUsed.ch2 / 1000 < 200)){           // 0 to 199.999Wh
         setValueTexts(bmsCh2EnergyUsedValues, (data.energyUsed.ch2 / 1000).toFixed(3) + "Wh");
-    }else if(data.energyUsed.ch2 / 1000 < 1000){    // 200.00Wh to 999.99Wh
+    }else if((data.energyUsed.ch2 / 1000 < 1000)){    // 200.00Wh to 999.99Wh
         setValueTexts(bmsCh2EnergyUsedValues, (data.energyUsed.ch2 / 1000).toFixed(2) + "Wh");
-    }else if(data.energyUsed.ch2 / 1000 < 10000){   // 1000.0Wh to 9999.9Wh
+    }else if((data.energyUsed.ch2 / 1000 < 10000)){   // 1000.0Wh to 9999.9Wh
         setValueTexts(bmsCh2EnergyUsedValues, (data.energyUsed.ch2 / 1000).toFixed(1) + "Wh");
-    }else if(data.energyUsed.ch2 / 1000 < 100000){  // 10000Wh to 99999Wh
+    }else if((data.energyUsed.ch2 / 1000 < 100000)){  // 10000Wh to 99999Wh
         setValueTexts(bmsCh2EnergyUsedValues, (data.energyUsed.ch2 / 1000).toFixed(0) + "Wh");
     }else {                                         // from 100.0kWh
         setValueTexts(bmsCh2EnergyUsedValues, (data.energyUsed.ch2 / 1000000).toFixed(1) + "Wh");
     }
 
-    if(data.energyUsed.ch3 / 1000 < 200){           // 0 to 199.999Wh
+    if((data.energyUsed.ch3 / 1000 < 200)){           // 0 to 199.999Wh
         setValueTexts(bmsCh3EnergyUsedValues, (data.energyUsed.ch3 / 1000).toFixed(3) + "Wh");
-    }else if(data.energyUsed.ch3 / 1000 < 1000){    // 200.00Wh to 999.99Wh
+    }else if((data.energyUsed.ch3 / 1000 < 1000)){    // 200.00Wh to 999.99Wh
         setValueTexts(bmsCh3EnergyUsedValues, (data.energyUsed.ch3 / 1000).toFixed(2) + "Wh");
-    }else if(data.energyUsed.ch3 / 1000 < 10000){   // 1000.0Wh to 9999.9Wh
+    }else if((data.energyUsed.ch3 / 1000 < 10000)){   // 1000.0Wh to 9999.9Wh
         setValueTexts(bmsCh3EnergyUsedValues, (data.energyUsed.ch3 / 1000).toFixed(1) + "Wh");
-    }else if(data.energyUsed.ch3 / 1000 < 100000){  // 10000Wh to 99999Wh
+    }else if((data.energyUsed.ch3 / 1000 < 100000)){  // 10000Wh to 99999Wh
         setValueTexts(bmsCh3EnergyUsedValues, (data.energyUsed.ch3 / 1000).toFixed(0) + "Wh");
     }else {                                         // from 100.0kWh
         setValueTexts(bmsCh3EnergyUsedValues, (data.energyUsed.ch3 / 1000000).toFixed(1) + "Wh");
